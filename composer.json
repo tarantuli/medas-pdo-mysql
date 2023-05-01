@@ -1,6 +1,6 @@
 {
-    "name": "morphp/medas-placeholder",
-    "description": "Medas placeholder",
+    "name": "morphp/medas-pdo-mysql",
+    "description": "Medas pdo mysql",
     "authors": [
         {
             "name": "Patrick Morpey",
@@ -11,15 +11,17 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "morphp/medas-service-manager": "dev-dev"
+        "morphp/medas-pdo-storage": "dev-dev"
     },
     "require-dev": {
+        "morphp/medas-config-manager": "dev-dev",
+        "morphp/medas-ramsey-uuid-bridge": "dev-dev",
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
-            "Medas\\Placeholder\\": "src/",
-            "Medas\\PlaceholderTest\\": "tests/"
+            "Medas\\PdoMysql\\": "src/",
+            "Medas\\PdoMysqlTest\\": "tests/"
         }
     }
 }
