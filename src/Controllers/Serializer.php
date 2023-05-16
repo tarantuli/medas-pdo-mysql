@@ -6,6 +6,6 @@ namespace Medas\PdoMysql\Controllers;
 
 use Medas\PdoStorage\Drivers\Bases\BaseSerializer;
 
-class Serializer extends BaseSerializer
+readonly class Serializer extends BaseSerializer
 {
 }

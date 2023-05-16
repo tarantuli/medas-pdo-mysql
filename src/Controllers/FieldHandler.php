@@ -7,7 +7,7 @@ namespace Medas\PdoMysql\Controllers;
 use Medas\PdoStorage\Drivers\Bases\BaseFieldHandler;
 use Medas\StorageManager\Structure\Blueprint\{Field};
 
-class FieldHandler extends BaseFieldHandler
+readonly class FieldHandler extends BaseFieldHandler
 {
     public function buildDefinition(Field $field): string|null
     {
