@@ -9,7 +9,7 @@ use Medas\StorageManager\Structure\Blueprint\{Field};
 
 class FieldHandler extends BaseFieldHandler
 {
-    public function buildDefinition(Field $field): string
+    public function buildDefinition(Field $field): string|null
     {
         if ($field->isCreationTimestamp || $field->isModificationTimestamp) {
             $default = ' default current_timestamp()';
@@ -26,7 +26,13 @@ class FieldHandler extends BaseFieldHandler
             $default = '';
         }
 
-        return $this->driver->typeHandler()->getBaseDefinition($field)
+        $baseDefinition = $this->driver->typeHandler()->getBaseDefinition($field);
+
+        if ($baseDefinition === null) {
+            return null;
+        }
+
+        return $baseDefinition
             . ($field->isNullable ? '' : ' not null')
             . ($field->isGenerated ? ' auto_increment' : '')
             . $default;
