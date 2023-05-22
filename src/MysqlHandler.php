@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql;
 
-use Medas\Core\GlobalRepository;
 use Medas\PdoStorage\Drivers\BaseHandler;
 
 class MysqlHandler extends BaseHandler
@@ -27,7 +26,7 @@ class MysqlHandler extends BaseHandler
             'database' => $this->controller->database(),
         ];
 
-        $oi = GlobalRepository::objectInstantiator();
+        $oi = medas()->objectInstantiator();
 
         $this->tableStructureFinder = $oi->instantiate(Controllers\TableStructureFinder::class, $givenArguments);
         $this->alterTableBuilder = $oi->instantiate(Controllers\AlterTableBuilder::class, $givenArguments);
