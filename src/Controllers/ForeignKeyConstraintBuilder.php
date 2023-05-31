@@ -16,7 +16,7 @@ class ForeignKeyConstraintBuilder implements BuilderInterface
             . '  foreign key (' . $driver->quote($foreignKey->field) . ")\n"
             . '  references ' . $driver->quote($foreignKey->foreignEntity)
             . ' (' . $driver->quote($foreignKey->foreignField) . ")"
-            . ($foreignKey->onDeleteCascade ? ' on delete cascade' : '');
+            . ($foreignKey->doCascade ? ' on delete cascade on update cascade' : '');
     }
 
     private function createForeignKeyName(string $entityName, ForeignKey $foreignKey): string
