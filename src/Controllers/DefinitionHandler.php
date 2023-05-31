@@ -61,8 +61,8 @@ class DefinitionHandler
 
         $type = match (true) {
             $intMatch !== null => Type::Integer,
-            $remainder->startsWith('varchar('), $remainder->startsWith('char('), $remainder->equals('text') => Type::Text,
-            $remainder->startsWith('varbinary('), $remainder->startsWith('binary('), $remainder->equals('blob') => Type::Binary,
+            $remainder->startsWith('varchar('), $remainder->startsWith('char('), $remainder->endsWith('text') => Type::Text,
+            $remainder->startsWith('varbinary('), $remainder->startsWith('binary('), $remainder->endsWith('blob') => Type::Binary,
             $remainder->equals('datetime') => Type::DateTime,
             $remainder->equals('float') => Type::Float,
             default => throw new CantDetermineTypeFromDefinition((string) $remainder, $definition),
@@ -70,9 +70,6 @@ class DefinitionHandler
 
         $minValue = 0;
         $maxValue = Integer::UNSIGNED_4_BYTE_MAX;
-
-        $minLength = 0;
-        $maxLength = Integer::UNSIGNED_1_BYTE_MAX;
 
         if ($intMatch !== null) {
             if (isset($intMatch[2])) {
@@ -101,6 +98,15 @@ class DefinitionHandler
                 };
             }
         }
+
+        $minLength = 0;
+        $maxLength = match (true) {
+            $remainder->equals('tinytext') || $remainder->equals('tinyblob') => Integer::UNSIGNED_1_BYTE_MAX,
+            $remainder->equals('text') || $remainder->equals('blob') => Integer::UNSIGNED_2_BYTE_MAX,
+            $remainder->equals('mediumtext') || $remainder->equals('mediumblob') => Integer::UNSIGNED_3_BYTE_MAX,
+            $remainder->equals('longtext') || $remainder->equals('longblob') => Integer::UNSIGNED_4_BYTE_MAX,
+            default => Integer::UNSIGNED_1_BYTE_MAX,
+        };
 
         return new Field(
             name: $name,
