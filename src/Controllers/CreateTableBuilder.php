@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Controllers;
 
 use Medas\PdoStorage\Drivers\Bases\BaseCreateTableBuilder;
+use Medas\PdoStorage\Drivers\Bases\BuildJob;
 use Medas\StorageManager\Structure\Blueprint\{Field, Index};
 
 class CreateTableBuilder extends BaseCreateTableBuilder
@@ -16,25 +17,25 @@ class CreateTableBuilder extends BaseCreateTableBuilder
         $this->foreignKeyConstraintBuilder = new ForeignKeyConstraintBuilder();
     }
 
-    protected function addKeys(): void
+    protected function addKeys(BuildJob $job): void
     {
-        foreach ($this->blueprint->indexes() as $index) {
+        foreach ($job->blueprint->indexes() as $index) {
             if ($index->isPrimary) {
-                $this->query .= ' primary key (';
+                $job->baseQuery .= ' primary key (';
             }
             else {
                 if ($index->isUnique) {
-                    $this->query .= ' unique';
+                    $job->baseQuery .= ' unique';
                 }
 
-                $this->query .= ' key ' . $this->driver->quote($this->createIndexName($index)) . ' (';
+                $job->baseQuery .= ' key ' . $this->driver->quote($this->createIndexName($index)) . ' (';
             }
 
             foreach ($index->fields() as $field) {
-                $this->query .= $this->driver->quote($field->name) . ',';
+                $job->baseQuery .= $this->driver->quote($field->name) . ',';
             }
 
-            $this->query = substr($this->query, 0, -1) . "),\n";
+            $job->baseQuery = substr($job->baseQuery, 0, -1) . "),\n";
         }
     }
 
@@ -45,11 +46,11 @@ class CreateTableBuilder extends BaseCreateTableBuilder
         return sha1((implode("\n", $names)));
     }
 
-    protected function processForeignKeys(): void
+    protected function processForeignKeys(BuildJob $job): void
     {
-        foreach ($this->blueprint->foreignKeys() as $foreignKey) {
-            $this->foreignKeys[] = $this->foreignKeyConstraintBuilder
-                ->buildAdd($this->blueprint->name(), $this->driver, $foreignKey);
+        foreach ($job->blueprint->foreignKeys() as $foreignKey) {
+            $job->foreignKeys[] = $this->foreignKeyConstraintBuilder
+                ->buildAdd($job->blueprint->name(), $this->driver, $foreignKey);
         }
     }
 }
