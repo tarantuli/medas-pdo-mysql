@@ -13,8 +13,8 @@ class ForeignKeyConstraintBuilder implements BuilderInterface
     public function buildAdd(string $entityName, Handler $driver, ForeignKey $foreignKey): string
     {
         return ' add constraint ' . $driver->quote($this->createForeignKeyName($entityName, $foreignKey)) . "\n"
-            . '   foreign key (' . $driver->quote($foreignKey->field) . ")\n"
-            . '   references ' . $driver->quote($foreignKey->foreignEntity)
+            . '  foreign key (' . $driver->quote($foreignKey->field) . ")\n"
+            . '  references ' . $driver->quote($foreignKey->foreignEntity)
             . ' (' . $driver->quote($foreignKey->foreignField) . ")"
             . ($foreignKey->onDeleteCascade ? ' on delete cascade' : '');
     }

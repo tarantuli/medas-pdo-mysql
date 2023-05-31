@@ -52,5 +52,4 @@ class CreateTableBuilder extends BaseCreateTableBuilder
                 ->buildAdd($this->blueprint->name(), $this->driver, $foreignKey);
         }
     }
-
 }
