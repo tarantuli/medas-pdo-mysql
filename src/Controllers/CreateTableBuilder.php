@@ -20,6 +20,18 @@ class CreateTableBuilder extends BaseCreateTableBuilder
     protected function addKeys(BuildJob $job): void
     {
         foreach ($job->blueprint->indexes() as $index) {
+            foreach ($index->fields() as $field) {
+                if ($field->store !== $job->blueprint->name()) {
+                    // If this is the primary key, do add it
+                    if (in_array($field, $job->blueprint->primaryIndex()->fields())) {
+                        // Do nothing
+                    }
+                    else {
+                        continue 2;
+                    }
+                }
+            }
+
             if ($index->isPrimary) {
                 $job->baseQuery .= ' primary key (';
             }
