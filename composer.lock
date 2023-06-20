@@ -308,12 +308,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-pdo-storage.git",
-                "reference": "2af3013fa1ada4ef60a616e59e12a7c1db4cf549"
+                "reference": "9fd0661a35e5b69f808d04f347e294a852e7fad9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/2af3013fa1ada4ef60a616e59e12a7c1db4cf549",
-                "reference": "2af3013fa1ada4ef60a616e59e12a7c1db4cf549",
+                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/9fd0661a35e5b69f808d04f347e294a852e7fad9",
+                "reference": "9fd0661a35e5b69f808d04f347e294a852e7fad9",
                 "shasum": ""
             },
             "require": {
@@ -346,7 +346,7 @@
                 "source": "https://github.com/tarantuli/medas-pdo-storage/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-pdo-storage/issues"
             },
-            "time": "2023-06-13T13:30:08+00:00"
+            "time": "2023-06-20T13:30:38+00:00"
         },
         {
             "name": "morphp/medas-php-class-analysis",
@@ -527,12 +527,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-storage-manager.git",
-                "reference": "4342256c7950189d92d16646ef487f4bec1b9e9c"
+                "reference": "b508a2c4a5eba0cbba42a1d9eafd7ef2d57b22eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/4342256c7950189d92d16646ef487f4bec1b9e9c",
-                "reference": "4342256c7950189d92d16646ef487f4bec1b9e9c",
+                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/b508a2c4a5eba0cbba42a1d9eafd7ef2d57b22eb",
+                "reference": "b508a2c4a5eba0cbba42a1d9eafd7ef2d57b22eb",
                 "shasum": ""
             },
             "require": {
@@ -572,7 +572,7 @@
                 "source": "https://github.com/tarantuli/medas-storage-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-storage-manager/issues"
             },
-            "time": "2023-06-20T13:04:53+00:00"
+            "time": "2023-06-20T13:25:00+00:00"
         }
     ],
     "packages-dev": [

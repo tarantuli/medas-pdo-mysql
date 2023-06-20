@@ -6,11 +6,12 @@ namespace Medas\PdoMysql\Controllers;
 
 use Medas\PdoStorage\Drivers\Bases\BaseQueryBuilder;
 use Medas\PdoStorage\Queries\Query;
+use Medas\PdoStorage\Queries\QueryCollection;
 
 class QueryBuilder extends BaseQueryBuilder
 {
-    public function showTables(?string $name): Query
+    public function showTables(?string $name): QueryCollection
     {
-        return new Query('show tables like "' . $name . '"');
+        return QueryCollection::fromQuery(new Query('show tables like "' . $name . '"'));
     }
 }
