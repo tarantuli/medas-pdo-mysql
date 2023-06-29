@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Controllers;
 
-use Medas\PdoStorage\Drivers\Bases\BaseCreateTableBuilder;
-use Medas\PdoStorage\Drivers\Bases\BuildJob;
+use Medas\PdoStorage\Drivers\Bases\{BaseCreateTableBuilder, BuildJob};
 use Medas\StorageManager\Structure\Blueprint\{Field, Index};
 
 class CreateTableBuilder extends BaseCreateTableBuilder
@@ -21,9 +20,10 @@ class CreateTableBuilder extends BaseCreateTableBuilder
     {
         foreach ($job->blueprint->indexes() as $index) {
             foreach ($index->fields() as $field) {
-                if ($field->store !== $job->blueprint->name()) {
+                if ($field->store !== null && $field->store !== $job->blueprint->name()) {
                     // If this is the primary key, do add it
-                    if (in_array($field, $job->blueprint->primaryIndex()->fields())) {
+                    $primaryIndex = $job->blueprint->primaryIndex();
+                    if ($primaryIndex && in_array($field, $job->blueprint->primaryIndex()->fields())) {
                         // Do nothing
                     }
                     else {
