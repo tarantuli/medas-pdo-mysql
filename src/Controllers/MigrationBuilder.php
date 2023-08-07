@@ -8,5 +8,4 @@ use Medas\PdoStorage\Drivers\Bases\BaseMigrationBuilder;
 
 class MigrationBuilder extends BaseMigrationBuilder
 {
-
 }
