@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Medas\PdoMysql;
 
 use Medas\Core\AsSingleton;
-use Medas\PdoStorage\DriverHandlerManager;
-use Medas\PdoStorage\PdoStoragePackage;
-use Medas\ServiceManager\BasePackage;
-use Medas\ServiceManager\ServiceConfig;
+use Medas\PdoStorage\{DriverHandlerManager, PdoStoragePackage};
+use Medas\ServiceManager\{BasePackage, ServiceConfig};
 
 class PdoMysqlPackage extends BasePackage
 {
@@ -16,9 +14,9 @@ class PdoMysqlPackage extends BasePackage
 
     public function dependencies(): array
     {
-        return $this->dependenciesByClass([
+        return [
             PdoStoragePackage::class,
-        ]);
+        ];
     }
 
     public function sourceDirectory(): string
