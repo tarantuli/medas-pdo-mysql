@@ -15,7 +15,7 @@ class PdoMysqlPackage extends BasePackage
     public function dependencies(): array
     {
         return [
-            PdoStoragePackage::class,
+            PdoStoragePackage::instance(),
         ];
     }
 
