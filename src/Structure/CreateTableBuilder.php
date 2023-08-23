@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Structure;
 
 use Medas\Core\Attributes\Service;
+use Medas\PdoMysql\Queries\ForeignKeyConstraintBuilder;
 use Medas\PdoStorage\Database;
-use Medas\PdoStorage\Drivers\Interfaces\ForeignKeyConstraintBuilder;
 use Medas\PdoStorage\JoinTableManager;
 use Medas\PdoStorage\PdoStorageController;
 use Medas\PdoStorage\Queries\{Query, QuerySet};
@@ -45,6 +45,7 @@ readonly class CreateTableBuilder
 
         $job->QuerySet[] = new Query(
             query: $job->baseQuery,
+            arguments: [],
             database: $job->database,
             priority: Priority::CreateStore
         );
@@ -58,6 +59,7 @@ readonly class CreateTableBuilder
 
             $job->QuerySet[] = new Query(
                 query: $query,
+                arguments: [],
                 database: $job->database,
                 priority: Priority::AddStoreRelations
             );
@@ -166,7 +168,7 @@ readonly class CreateTableBuilder
     {
         foreach ($job->blueprint->foreignKeys() as $foreignKey) {
             $job->foreignKeys[] = $this->foreignKeyConstraintBuilder
-                ->buildAdd($job->blueprint->name(), $job->driverHandler, $foreignKey);
+                ->buildAdd($job->blueprint->name(), $job->driverHandler, $job->database, $foreignKey);
         }
     }
 }

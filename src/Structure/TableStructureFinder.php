@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Structure;
 
+use Medas\Core\Attributes\Service;
 use Medas\PdoStorage\Drivers\Interfaces\TableStructureFinder as TableStructureFinderInterface;
 use Medas\PdoStorage\PdoStorageController;
 use Medas\PdoStorage\Table;
 use Medas\StorageManager\Structure\{Blueprint, Blueprint\ForeignKey, Blueprint\Index};
 
+#[Service]
 readonly class TableStructureFinder implements TableStructureFinderInterface
 {
     public function __construct(

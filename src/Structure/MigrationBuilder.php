@@ -11,6 +11,7 @@ use Medas\PdoStorage\Queries\Query;
 use Medas\PdoStorage\Queries\QuerySet;
 use Medas\StorageManager\Interfaces\Storage;
 use Medas\StorageManager\Migrations\MigrationBuilder as MigrationBuilderInterface;
+use Medas\StorageManager\StorageManager;
 use Medas\StorageManager\Structure\Blueprint;
 use Medas\StorageManager\Structure\Changes\ChangeFinder;
 use Medas\StorageManager\Structure\EntityStructureFinder;
@@ -44,16 +45,20 @@ readonly class MigrationBuilder implements MigrationBuilderInterface
         }
 
         $queryClass = Query::class;
+        $storageManagerClass = StorageManager::class;
         $priorityClass = Priority::class;
 
         foreach ($queries as $query) {
             $queryString = addcslashes(trim($query->query), '"');
+            $storageName = addcslashes(trim($query->storage()->name()), '"');
 
             $migrateMethod->body .= <<<PHP
 \$unitOfWork->addAction(new \\$queryClass(
     query: <<<SQL
 $queryString
 SQL,
+    arguments: [],
+    database: service(\\$storageManagerClass::class)->byName("$storageName"),
     priority: \\$priorityClass::{$query->priority()->name}
 ));
 PHP;

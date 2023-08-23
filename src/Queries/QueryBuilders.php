@@ -17,7 +17,13 @@ readonly class QueryBuilders implements QueryBuildersInterface
         return service(CreateStoreBuilder::class);
     }
 
-    public function selectorQuery(): Builders\SelectorActionBuilder
+    public function deleteStore(): Builders\DeleteStoreBuilder
+    {
+        // Don't use injection, so it's only initialized when needed
+        return service(DropTableBuilder::class);
+    }
+
+    public function selectorAction(): Builders\SelectorActionBuilder
     {
         // Don't use injection, so it's only initialized when needed
         return service(SelectorQueryBuilder::class);

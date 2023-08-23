@@ -6,15 +6,14 @@ namespace Medas\PdoMysql\Structure\TableStructureFinder;
 
 use Medas\Core\Attributes\Service;
 use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\Query;
+use Medas\PdoStorage\Queries\{Query, QueryExecutor};
 use Medas\PdoStorage\Table;
-use Medas\StorageManager\UnitOfWork\ActionExecutor;
 
 #[Service]
 readonly class TableStructureStringFinder
 {
     public function __construct(
-        public ActionExecutor       $actionExecutor,
+        public QueryExecutor        $queryExecutor,
         public PdoStorageController $pdoStorageController,
     )
     {
@@ -22,9 +21,13 @@ readonly class TableStructureStringFinder
 
     public function find(Table $table): string|null
     {
+        if (!$this->pdoStorageController->hasStore($table)) {
+            return null;
+        }
+
         $quotedTable = $this->pdoStorageController->quote($table->database, $table->name);
         $query = new Query('show create table ' . $quotedTable, [], $table->database);
-        $this->actionExecutor->execute($query);
+        $this->queryExecutor->execute($query);
 
         $data = $query->recordSet();
 

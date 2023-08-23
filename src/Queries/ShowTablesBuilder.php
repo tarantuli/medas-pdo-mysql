@@ -22,8 +22,8 @@ readonly class ShowTablesBuilder implements ShowTablesBuilderInterface
 
     public function build(Database $database, string $name): QuerySet
     {
-        $quotedName = $this->pdoStorageController->quote($database, $name);
+        $escapedName = $this->pdoStorageController->escape($database, $name);
 
-        return QuerySet::fromQuery(new Query('show tables like ' . $quotedName));
+        return QuerySet::fromQuery(new Query('show tables like ' . $escapedName, [], $database));
     }
 }

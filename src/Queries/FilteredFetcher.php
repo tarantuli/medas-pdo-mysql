@@ -6,16 +6,15 @@ namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\Attributes\Service;
 use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\Query;
+use Medas\PdoStorage\Queries\{Query, QueryExecutor};
 use Medas\StorageManager\Interfaces\{Fetchers\FilteredFetcher as FilteredFetcherInterface, Record, RecordSet, Store};
-use Medas\StorageManager\UnitOfWork\ActionExecutor;
 
 #[Service]
 readonly class FilteredFetcher implements FilteredFetcherInterface
 {
     public function __construct(
         private PdoStorageController $pdoStorageController,
-        private ActionExecutor       $actionExecutor,
+        private QueryExecutor        $queryExecutor,
     )
     {
     }
@@ -24,7 +23,7 @@ readonly class FilteredFetcher implements FilteredFetcherInterface
     {
         /** @var Query $query */
         $query = $this->pdoStorageController->getDatabaseController($store->storage())->driverHandler->queryBuilders()->get()->build([$store], $filters)[0];
-        $this->actionExecutor->execute($query);
+        $this->queryExecutor->execute($query);
 
         return $query->recordSet();
     }

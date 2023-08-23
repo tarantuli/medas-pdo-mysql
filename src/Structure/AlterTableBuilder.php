@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Structure;
 
 use Medas\Core\Attributes\Service;
+use Medas\PdoMysql\Queries\ForeignKeyConstraintBuilder;
 use Medas\PdoStorage\Database;
-use Medas\PdoStorage\Drivers\Interfaces\ForeignKeyConstraintBuilder;
 use Medas\PdoStorage\JoinTableManager;
 use Medas\PdoStorage\PdoStorageController;
 use Medas\PdoStorage\Queries\Query;
@@ -44,6 +44,7 @@ readonly class AlterTableBuilder
         if ($job->baseQuery !== null) {
             $job->QuerySet[] = new Query(
                 query: substr($job->baseQuery, 0, -2),
+                arguments: [],
                 database: $job->database,
                 priority: Priority::AlterStore
             );
@@ -52,6 +53,7 @@ readonly class AlterTableBuilder
         if ($job->dropForeignKeysQuery !== null) {
             $job->QuerySet[] = new Query(
                 query: substr($job->dropForeignKeysQuery, 0, -2),
+                arguments: [],
                 database: $job->database,
                 priority: Priority::DeleteStoreRelations
             );
@@ -60,6 +62,7 @@ readonly class AlterTableBuilder
         if ($job->addForeignKeysQuery !== null) {
             $job->QuerySet[] = new Query(
                 query: substr($job->addForeignKeysQuery, 0, -2),
+                arguments: [],
                 database: $job->database,
                 priority: Priority::AddStoreRelations
             );
@@ -129,7 +132,7 @@ readonly class AlterTableBuilder
 
             foreach ($job->changes->changeForeignKey as $foreignKey) {
                 $job->dropForeignKeysQuery .= $this->foreignKeyConstraintBuilder
-                        ->buildDrop($job->changes->name, $job->driverHandler, $foreignKey) . ",\n";
+                        ->buildDrop($job->changes->name, $job->driverHandler, $job->database, $foreignKey) . ",\n";
             }
         }
 
@@ -138,7 +141,7 @@ readonly class AlterTableBuilder
 
         foreach ($foreignKeys as $foreignKey) {
             $job->addForeignKeysQuery .= $this->foreignKeyConstraintBuilder
-                    ->buildAdd($job->changes->name, $job->driverHandler, $foreignKey) . ",\n";
+                    ->buildAdd($job->changes->name, $job->driverHandler, $job->database, $foreignKey) . ",\n";
         }
     }
 
