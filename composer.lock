@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a66c67861efd1daa0e584f40ff41fd3",
+    "content-hash": "63bfcf439e0d67da068aa91f31978601",
     "packages": [
         {
             "name": "morphp/medas-cache",
@@ -400,16 +400,16 @@
         },
         {
             "name": "morphp/medas-pdo-storage",
-            "version": "dev-with-controllers",
+            "version": "dev-dev",
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-pdo-storage.git",
-                "reference": "3cdf5b1563b49bb59ab9d9b19ca42896f3d59921"
+                "reference": "12bd25fa17fa0353511bc8a8269205a4e5600802"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/3cdf5b1563b49bb59ab9d9b19ca42896f3d59921",
-                "reference": "3cdf5b1563b49bb59ab9d9b19ca42896f3d59921",
+                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/12bd25fa17fa0353511bc8a8269205a4e5600802",
+                "reference": "12bd25fa17fa0353511bc8a8269205a4e5600802",
                 "shasum": ""
             },
             "require": {
@@ -418,7 +418,7 @@
                 "morphp/medas-entity-manager": "dev-dev",
                 "morphp/medas-file-builder": "dev-dev",
                 "morphp/medas-service-manager": "dev-dev",
-                "morphp/medas-storage-manager": "dev-with-controllers"
+                "morphp/medas-storage-manager": "dev-dev"
             },
             "require-dev": {
                 "morphp/medas-config-manager": "dev-dev",
@@ -441,10 +441,10 @@
             ],
             "description": "Medas pdo storage",
             "support": {
-                "source": "https://github.com/tarantuli/medas-pdo-storage/tree/with-controllers",
+                "source": "https://github.com/tarantuli/medas-pdo-storage/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-pdo-storage/issues"
             },
-            "time": "2023-08-23T10:08:35+00:00"
+            "time": "2023-08-23T12:17:35+00:00"
         },
         {
             "name": "morphp/medas-php-class-analysis",
@@ -627,7 +627,7 @@
         },
         {
             "name": "morphp/medas-storage-manager",
-            "version": "dev-with-controllers",
+            "version": "dev-dev",
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-storage-manager.git",
@@ -675,7 +675,7 @@
             ],
             "description": "Medas storage manager",
             "support": {
-                "source": "https://github.com/tarantuli/medas-storage-manager/tree/with-controllers",
+                "source": "https://github.com/tarantuli/medas-storage-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-storage-manager/issues"
             },
             "time": "2023-08-23T10:08:40+00:00"

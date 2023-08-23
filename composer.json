@@ -13,8 +13,8 @@
     "require": {
         "morphp/medas-core": "dev-dev",
         "morphp/medas-entity-manager": "dev-dev",
-        "morphp/medas-pdo-storage": "dev-with-controllers",
-        "morphp/medas-storage-manager": "dev-with-controllers"
+        "morphp/medas-pdo-storage": "dev-dev",
+        "morphp/medas-storage-manager": "dev-dev"
     },
     "require-dev": {
         "morphp/medas-config-manager": "dev-dev",
