@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Medas\PdoMysql\Structure\TableBuilders;
+
+use Medas\PdoStorage\Database;
+use Medas\PdoStorage\Drivers\DriverHandler;
+use Medas\PdoStorage\Queries\QuerySet;
+use Medas\StorageManager\Structure\{Blueprint, Blueprint\Field, Changes\Changes};
+
+class Job
+{
+    public Changes $changes;
+    public string|null $baseQuery = null;
+    public string|null $dropForeignKeysQuery = null;
+    public string|null $addForeignKeysQuery = null;
+
+    /** @var Field[] */
+    public array $collections = [];
+
+    public array $foreignKeys = [];
+    public QuerySet $QuerySet;
+
+    public function __construct(
+        public Database      $database,
+        public DriverHandler $driverHandler,
+        public Blueprint     $blueprint,
+    )
+    {
+        $this->QuerySet = new QuerySet();
+    }
+}

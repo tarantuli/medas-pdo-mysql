@@ -4,38 +4,112 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql;
 
-use Medas\PdoStorage\Drivers\BaseHandler;
+use Medas\Core\Attributes\Service;
+use Medas\Core\Interfaces\Serializer;
+use Medas\PdoMysql\DataControl\Escaper;
+use Medas\PdoMysql\Queries\QueryBuilders;
+use Medas\PdoMysql\Queries\RecordFetchers;
+use Medas\PdoMysql\Structure\{FieldToDefinitionConverter, MigrationBuilder, TableStructureFinder};
+use Medas\PdoMysql\Types\TypeHandler;
+use Medas\PdoStorage\Database;
+use Medas\PdoStorage\Drivers\{DriverHandler,
+    Interfaces\FieldHandler,
+    Interfaces\QueryBuilders as QueryBuildersInterface,
+    Interfaces\TableStructureFinder as TableStructureFinderInterface,
+    Interfaces\TypeHandler as TypeHandlerInterface};
+use Medas\PdoStorage\Table;
+use Medas\PdoStorage\ValueSerializer;
+use Medas\StorageManager\Interfaces\RecordFetchers as RecordFetchersInterface;
+use Medas\StorageManager\Migrations\MigrationBuilder as MigrationBuilderInterface;
 
-class MysqlHandler extends BaseHandler
+#[Service]
+class MysqlHandler implements DriverHandler
 {
-    public function quote(string $identifier): string
+    private array $tables = [];
+
+    public function __construct(
+        private readonly Escaper         $escaper,
+        private readonly ValueSerializer $valueSerializer,
+    )
+    {
+    }
+
+    public function canHandle(string $driverName): bool
+    {
+        return $driverName === 'mysql';
+    }
+
+    public function priority(): int
+    {
+        return -100;
+    }
+
+    public function quote(Database $database, string $identifier): string
     {
         return '`' . $identifier . '`';
     }
 
-    public function escape(mixed $value): string
+    public function escape(Database $database, mixed $value): string
     {
-        return $this->controller->escapeValue($value);
+        return $this->escaper->escape($database, $value);
     }
 
-    protected function initialize(): void
+    public function table(Database $database, string $name): Table
     {
-        $givenArguments = [
-            'driver' => $this,
-            'controller' => $this->controller,
-            'database' => $this->controller->database(),
-        ];
+        if (!isset($this->tables[$database->name()])) {
+            $this->tables[$database->name()] = [];
+        }
+        if (!isset($this->tables[$database->name()][$name])) {
+            $this->tables[$database->name()][$name] = new Table($database, $name);
+        }
 
-        $oi = medas()->objectInstantiator();
+        return $this->tables[$database->name()][$name];
+    }
 
-        $this->tableStructureFinder = $oi->instantiate(Controllers\TableStructureFinder::class, $givenArguments);
-        $this->alterTableBuilder = $oi->instantiate(Controllers\AlterTableBuilder::class, $givenArguments);
-        $this->createTableBuilder = $oi->instantiate(Controllers\CreateTableBuilder::class, $givenArguments);
-        $this->fieldHandler = $oi->instantiate(Controllers\FieldHandler::class, $givenArguments);
-        $this->migrationBuilder = $oi->instantiate(Controllers\MigrationBuilder::class, $givenArguments);
-        $this->queryBuilder = $oi->instantiate(Controllers\QueryBuilder::class, $givenArguments);
-        $this->selectQueryBuilder = $oi->instantiate(Controllers\SelectQueryBuilder::class, $givenArguments);
-        $this->serializer = $oi->instantiate(Controllers\Serializer::class, $givenArguments);
-        $this->typeHandler = $oi->instantiate(Controllers\TypeHandler::class, $givenArguments);
+    public function tableStructureFinder(): TableStructureFinderInterface
+    {
+        // Don't use injection, so it's only initialized when needed
+        return service(TableStructureFinder::class);
+    }
+
+    public function fieldHandler(): FieldHandler
+    {
+        // Don't use injection, so it's only initialized when needed
+        return service(FieldToDefinitionConverter::class);
+    }
+
+    public function migrationBuilder(): MigrationBuilderInterface
+    {
+        // Don't use injection, so it's only initialized when needed
+        return service(MigrationBuilder::class);
+    }
+
+    public function queryBuilders(): QueryBuildersInterface
+    {
+        // Don't use injection, so it's only initialized when needed
+        return service(QueryBuilders::class);
+    }
+
+    public function serializer(): Serializer
+    {
+        return $this->valueSerializer;
+    }
+
+    public function typeHandler(): TypeHandlerInterface
+    {
+        // Don't use injection, so it's only initialized when needed
+        return service(TypeHandler::class);
+    }
+
+    public function recordFetchers(): RecordFetchersInterface
+    {
+        // Don't use injection, so it's only initialized when needed
+        return service(RecordFetchers::class);
+    }
+
+    public function tableStructureString(Table $table): string|null
+    {
+        // Don't use injection, so it's only initialized when needed
+        return service(TableStructureFinder\TableStructureStringFinder::class)->find($table);
     }
 }

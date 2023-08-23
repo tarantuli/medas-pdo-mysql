@@ -2,19 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Medas\PdoMysql\Controllers;
+namespace Medas\PdoMysql\Structure;
 
+use Medas\Core\Attributes\Service;
 use Medas\Core\CaseInsensitiveString;
 use Medas\EntityManager\Types\Integer;
-use Medas\PdoStorage\Exceptions\{CantDetermineTypeFromDefinition, CantTurnDefinitionIntoVariable};
-use Medas\StorageManager\Structure\Blueprint\{Field, Type};
+use Medas\PdoStorage\Exceptions\CantDetermineTypeFromDefinition;
+use Medas\PdoStorage\Exceptions\CantTurnDefinitionIntoVariable;
+use Medas\StorageManager\Structure\Blueprint\Field;
+use Medas\StorageManager\Structure\Blueprint\Type;
 
-class DefinitionHandler
+#[Service]
+class DefinitionToFieldConverter
 {
     const CREATION_TIMESTAMP_DEFINITION = ' default current_timestamp()';
     const MODIFICATION_TIMESTAMP_DEFINITION = ' default current_timestamp() on update current_timestamp()';
 
-    public function convertToField(string $name, string $definition): Field
+    public function convert(string $name, string $definition): Field
     {
         $remainder = new CaseInsensitiveString($definition);
 

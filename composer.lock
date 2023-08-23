@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "63bfcf439e0d67da068aa91f31978601",
+    "content-hash": "5a66c67861efd1daa0e584f40ff41fd3",
     "packages": [
         {
             "name": "morphp/medas-cache",
@@ -188,12 +188,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-core.git",
-                "reference": "7ef384b512fe8bebf94c4038fba2af403a9429cc"
+                "reference": "0debff84a62c16032b7e0f8e056a6361de5db50b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-core/zipball/7ef384b512fe8bebf94c4038fba2af403a9429cc",
-                "reference": "7ef384b512fe8bebf94c4038fba2af403a9429cc",
+                "url": "https://api.github.com/repos/tarantuli/medas-core/zipball/0debff84a62c16032b7e0f8e056a6361de5db50b",
+                "reference": "0debff84a62c16032b7e0f8e056a6361de5db50b",
                 "shasum": ""
             },
             "require": {
@@ -226,7 +226,7 @@
                 "source": "https://github.com/tarantuli/medas-core/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-core/issues"
             },
-            "time": "2023-08-16T13:02:05+00:00"
+            "time": "2023-08-21T12:50:33+00:00"
         },
         {
             "name": "morphp/medas-entity-manager",
@@ -400,16 +400,16 @@
         },
         {
             "name": "morphp/medas-pdo-storage",
-            "version": "dev-dev",
+            "version": "dev-with-controllers",
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-pdo-storage.git",
-                "reference": "7d0333e93360ce960195ef2910f93150273814a3"
+                "reference": "452ed1731aad88ebe4acab39670a27d75e0ad693"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/7d0333e93360ce960195ef2910f93150273814a3",
-                "reference": "7d0333e93360ce960195ef2910f93150273814a3",
+                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/452ed1731aad88ebe4acab39670a27d75e0ad693",
+                "reference": "452ed1731aad88ebe4acab39670a27d75e0ad693",
                 "shasum": ""
             },
             "require": {
@@ -418,12 +418,11 @@
                 "morphp/medas-entity-manager": "dev-dev",
                 "morphp/medas-file-builder": "dev-dev",
                 "morphp/medas-service-manager": "dev-dev",
-                "morphp/medas-storage-manager": "dev-dev"
+                "morphp/medas-storage-manager": "dev-with-controllers"
             },
             "require-dev": {
                 "morphp/medas-config-manager": "dev-dev",
                 "morphp/medas-config-options": "dev-dev",
-                "morphp/medas-pdo-mysql": "dev-dev",
                 "morphp/medas-ramsey-uuid-bridge": "dev-dev",
                 "phpunit/phpunit": "^9.5"
             },
@@ -442,10 +441,10 @@
             ],
             "description": "Medas pdo storage",
             "support": {
-                "source": "https://github.com/tarantuli/medas-pdo-storage/tree/dev",
+                "source": "https://github.com/tarantuli/medas-pdo-storage/tree/with-controllers",
                 "issues": "https://github.com/tarantuli/medas-pdo-storage/issues"
             },
-            "time": "2023-08-17T07:11:24+00:00"
+            "time": "2023-08-22T14:52:12+00:00"
         },
         {
             "name": "morphp/medas-php-class-analysis",
@@ -628,16 +627,16 @@
         },
         {
             "name": "morphp/medas-storage-manager",
-            "version": "dev-dev",
+            "version": "dev-with-controllers",
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-storage-manager.git",
-                "reference": "0a3f29915aefe79cd512c56e5709ef29e1e9fe06"
+                "reference": "7f834dc1cd2e8f27b6db8ac1987112be834f7834"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/0a3f29915aefe79cd512c56e5709ef29e1e9fe06",
-                "reference": "0a3f29915aefe79cd512c56e5709ef29e1e9fe06",
+                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/7f834dc1cd2e8f27b6db8ac1987112be834f7834",
+                "reference": "7f834dc1cd2e8f27b6db8ac1987112be834f7834",
                 "shasum": ""
             },
             "require": {
@@ -652,8 +651,6 @@
             },
             "require-dev": {
                 "morphp/medas-config-manager": "dev-dev",
-                "morphp/medas-pdo-mysql": "dev-dev",
-                "morphp/medas-pdo-storage": "dev-dev",
                 "morphp/medas-ramsey-uuid-bridge": "dev-dev",
                 "morphp/medas-service-manager": "dev-dev",
                 "phpunit/phpunit": "^9.5"
@@ -678,10 +675,10 @@
             ],
             "description": "Medas storage manager",
             "support": {
-                "source": "https://github.com/tarantuli/medas-storage-manager/tree/dev",
+                "source": "https://github.com/tarantuli/medas-storage-manager/tree/with-controllers",
                 "issues": "https://github.com/tarantuli/medas-storage-manager/issues"
             },
-            "time": "2023-08-17T07:41:04+00:00"
+            "time": "2023-08-22T14:17:19+00:00"
         }
     ],
     "packages-dev": [
@@ -1579,16 +1576,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.6.10",
+            "version": "9.6.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a6d351645c3fe5a30f5e86be6577d946af65a328"
+                "reference": "810500e92855eba8a7a5319ae913be2da6f957b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a6d351645c3fe5a30f5e86be6577d946af65a328",
-                "reference": "a6d351645c3fe5a30f5e86be6577d946af65a328",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/810500e92855eba8a7a5319ae913be2da6f957b0",
+                "reference": "810500e92855eba8a7a5319ae913be2da6f957b0",
                 "shasum": ""
             },
             "require": {
@@ -1662,7 +1659,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.10"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.11"
             },
             "funding": [
                 {
@@ -1678,7 +1675,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-10T04:04:23+00:00"
+            "time": "2023-08-19T07:10:56+00:00"
         },
         {
             "name": "ramsey/collection",
