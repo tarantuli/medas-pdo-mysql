@@ -13,7 +13,7 @@ use Medas\StorageManager\Structure\Blueprint\Field;
 use Medas\StorageManager\Structure\Blueprint\Type;
 
 #[Service]
-class DefinitionToFieldConverter
+readonly class DefinitionToFieldConverter
 {
     const CREATION_TIMESTAMP_DEFINITION = ' default current_timestamp()';
     const MODIFICATION_TIMESTAMP_DEFINITION = ' default current_timestamp() on update current_timestamp()';

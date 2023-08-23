@@ -23,15 +23,16 @@ use Medas\StorageManager\Interfaces\RecordFetchers as RecordFetchersInterface;
 use Medas\StorageManager\Migrations\MigrationBuilder as MigrationBuilderInterface;
 
 #[Service]
-class MysqlHandler implements DriverHandler
+readonly class MysqlHandler implements DriverHandler
 {
-    private array $tables = [];
+    private TableCollection $tableCollection;
 
     public function __construct(
-        private readonly Escaper         $escaper,
-        private readonly ValueSerializer $valueSerializer,
+        private Escaper         $escaper,
+        private ValueSerializer $valueSerializer,
     )
     {
+        $this->tableCollection = new TableCollection();
     }
 
     public function canHandle(string $driverName): bool
@@ -56,14 +57,7 @@ class MysqlHandler implements DriverHandler
 
     public function table(Database $database, string $name): Table
     {
-        if (!isset($this->tables[$database->name()])) {
-            $this->tables[$database->name()] = [];
-        }
-        if (!isset($this->tables[$database->name()][$name])) {
-            $this->tables[$database->name()][$name] = new Table($database, $name);
-        }
-
-        return $this->tables[$database->name()][$name];
+        return $this->tableCollection->get($database, $name);
     }
 
     public function tableStructureFinder(): TableStructureFinderInterface
