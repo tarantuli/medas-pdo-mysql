@@ -54,12 +54,12 @@ readonly class MigrationBuilder implements MigrationBuilderInterface
 
             $migrateMethod->body .= <<<PHP
 \$unitOfWork->addAction(new \\$queryClass(
-    query: <<<SQL
+    <<<SQL
 $queryString
 SQL,
-    arguments: [],
-    database: service(\\$storageManagerClass::class)->byName("$storageName"),
-    priority: \\$priorityClass::{$query->priority()->name}
+    [],
+    service(\\$storageManagerClass::class)->byName("$storageName"),
+    \\$priorityClass::{$query->priority()->name}
 ));
 PHP;
         }

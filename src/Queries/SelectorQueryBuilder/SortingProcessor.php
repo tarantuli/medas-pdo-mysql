@@ -8,8 +8,7 @@ use Medas\Core\Attributes\Service;
 use Medas\EntityManager\Selector\{Exceptions\UnhandledSortType,
     Operants\Property,
     Sorting\SortBy,
-    Sorting\SortDirection
-};
+    Sorting\SortDirection};
 
 #[Service]
 readonly class SortingProcessor

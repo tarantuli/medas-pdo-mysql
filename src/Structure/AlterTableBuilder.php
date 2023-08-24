@@ -42,35 +42,35 @@ readonly class AlterTableBuilder
         $this->processForeignKeys($job);
 
         if ($job->baseQuery !== null) {
-            $job->QuerySet[] = new Query(
-                query: substr($job->baseQuery, 0, -2),
-                arguments: [],
-                database: $job->database,
-                priority: Priority::AlterStore
+            $job->querySet[] = new Query(
+                substr($job->baseQuery, 0, -2),
+                [],
+                $job->database,
+                Priority::AlterStore
             );
         }
 
         if ($job->dropForeignKeysQuery !== null) {
-            $job->QuerySet[] = new Query(
-                query: substr($job->dropForeignKeysQuery, 0, -2),
-                arguments: [],
-                database: $job->database,
-                priority: Priority::DeleteStoreRelations
+            $job->querySet[] = new Query(
+                substr($job->dropForeignKeysQuery, 0, -2),
+                [],
+                $job->database,
+                Priority::DeleteStoreRelations
             );
         }
 
         if ($job->addForeignKeysQuery !== null) {
-            $job->QuerySet[] = new Query(
-                query: substr($job->addForeignKeysQuery, 0, -2),
-                arguments: [],
-                database: $job->database,
-                priority: Priority::AddStoreRelations
+            $job->querySet[] = new Query(
+                substr($job->addForeignKeysQuery, 0, -2),
+                [],
+                $job->database,
+                Priority::AddStoreRelations
             );
         }
 
         $this->processCollections($job);
 
-        return $job->QuerySet;
+        return $job->querySet;
     }
 
     private function processFields(TableBuilders\Job $job): void
@@ -156,7 +156,7 @@ readonly class AlterTableBuilder
 
             if ($queries) {
                 foreach ($queries as $query) {
-                    $job->QuerySet[] = $query;
+                    $job->querySet[] = $query;
                 }
             }
         }

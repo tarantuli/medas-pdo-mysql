@@ -12,15 +12,16 @@ use Medas\StorageManager\Structure\{Blueprint, Blueprint\Field, Changes\Changes}
 class Job
 {
     public Changes $changes;
+
     public string|null $baseQuery = null;
     public string|null $dropForeignKeysQuery = null;
     public string|null $addForeignKeysQuery = null;
 
     /** @var Field[] */
     public array $collections = [];
-
     public array $foreignKeys = [];
-    public QuerySet $QuerySet;
+
+    public QuerySet $querySet;
 
     public function __construct(
         public Database      $database,
@@ -28,6 +29,6 @@ class Job
         public Blueprint     $blueprint,
     )
     {
-        $this->QuerySet = new QuerySet();
+        $this->querySet = new QuerySet();
     }
 }

@@ -43,11 +43,11 @@ readonly class CreateTableBuilder
         $job->baseQuery = substr($job->baseQuery, 0, -2);
         $job->baseQuery .= "\n)\n";
 
-        $job->QuerySet[] = new Query(
-            query: $job->baseQuery,
-            arguments: [],
-            database: $job->database,
-            priority: Priority::CreateStore
+        $job->querySet[] = new Query(
+            $job->baseQuery,
+            [],
+            $job->database,
+            Priority::CreateStore
         );
 
         if ($job->foreignKeys) {
@@ -57,17 +57,17 @@ readonly class CreateTableBuilder
                 implode(",\n", $job->foreignKeys)
             );
 
-            $job->QuerySet[] = new Query(
-                query: $query,
-                arguments: [],
-                database: $job->database,
-                priority: Priority::AddStoreRelations
+            $job->querySet[] = new Query(
+                $query,
+                [],
+                $job->database,
+                Priority::AddStoreRelations
             );
         }
 
         $this->processCollections($job);
 
-        return $job->QuerySet;
+        return $job->querySet;
     }
 
     protected function addFields(TableBuilders\Job $job): void
@@ -116,7 +116,7 @@ readonly class CreateTableBuilder
 
             if ($queries) {
                 foreach ($queries as $query) {
-                    $job->QuerySet[] = $query;
+                    $job->querySet[] = $query;
                 }
             }
         }
