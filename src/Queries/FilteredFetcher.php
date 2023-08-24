@@ -22,7 +22,9 @@ readonly class FilteredFetcher implements FilteredFetcherInterface
     public function fetch(Store $store, array $filters): RecordSet
     {
         /** @var Query $query */
-        $query = $this->pdoStorageController->getDatabaseController($store->storage())->driverHandler->queryBuilders()->get()->build([$store], $filters)[0];
+        $query = $this->pdoStorageController->getDatabaseController($store->storage())->driverHandler
+            ->queryBuilders()->get()->build([$store], $filters)[0];
+
         $this->queryExecutor->execute($query);
 
         return $query->recordSet();
