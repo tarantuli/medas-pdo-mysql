@@ -24,7 +24,7 @@ readonly class CollectionRecordFetcher implements CollectionRecordFetcherInterfa
 
     public function fetch(Store $store, object $entity, Property $property): iterable
     {
-        $joinTableName = $this->joinTableManager->determineName($store->storage()->name(), $property->name);
+        $joinTableName = $this->joinTableManager->determineName($store->name(), $property->name);
         $joinTable = $this->pdoStorageController->store($joinTableName, $store->storage());
 
         return $this->filteredFetcher->fetch($joinTable, ['id' => $entity])->fetchRecords();
