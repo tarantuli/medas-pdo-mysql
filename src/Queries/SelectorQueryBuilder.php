@@ -52,7 +52,7 @@ readonly class SelectorQueryBuilder implements SelectorActionBuilder
     private function buildParameterizedQuery(Selector $selector): ParameterizedQuery
     {
         $definition = $selector->definition();
-        $metaData = $this->metaDataManager->get($definition->entity);
+        $metaData = $this->metaDataManager->get($selector->entity());
         $database = $this->storageManager->byName($metaData->entity->storage);
 
         /** @noinspection PhpConditionAlreadyCheckedInspection */
