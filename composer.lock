@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d87cdd95f12f82f592142426d76c081",
+    "content-hash": "0f3a622018b8a67e34ebb82a106b4ae0",
     "packages": [
         {
             "name": "morphp/medas-cache",
@@ -188,16 +188,17 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-core.git",
-                "reference": "5135c5c15d8a50458d3205a9c656aa47a29cd296"
+                "reference": "bafc10a773629b7698a0d86d8ccce7ccec0c488c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-core/zipball/5135c5c15d8a50458d3205a9c656aa47a29cd296",
-                "reference": "5135c5c15d8a50458d3205a9c656aa47a29cd296",
+                "url": "https://api.github.com/repos/tarantuli/medas-core/zipball/bafc10a773629b7698a0d86d8ccce7ccec0c488c",
+                "reference": "bafc10a773629b7698a0d86d8ccce7ccec0c488c",
                 "shasum": ""
             },
             "require": {
-                "ext-mbstring": "*"
+                "ext-mbstring": "*",
+                "psr/event-dispatcher": "^1.0"
             },
             "require-dev": {
                 "morphp/medas-service-manager": "dev-dev",
@@ -226,7 +227,7 @@
                 "source": "https://github.com/tarantuli/medas-core/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-core/issues"
             },
-            "time": "2023-08-29T08:23:44+00:00"
+            "time": "2023-08-29T11:44:57+00:00"
         },
         {
             "name": "morphp/medas-entity-manager",
@@ -234,24 +235,24 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-entity-manager.git",
-                "reference": "5ac4b65d3a787f8d267b95b7252c2f7e58506de4"
+                "reference": "167cbacd2033003f78f1f7927b740dc14726fb58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-entity-manager/zipball/5ac4b65d3a787f8d267b95b7252c2f7e58506de4",
-                "reference": "5ac4b65d3a787f8d267b95b7252c2f7e58506de4",
+                "url": "https://api.github.com/repos/tarantuli/medas-entity-manager/zipball/167cbacd2033003f78f1f7927b740dc14726fb58",
+                "reference": "167cbacd2033003f78f1f7927b740dc14726fb58",
                 "shasum": ""
             },
             "require": {
                 "ext-pdo": "*",
                 "morphp/medas-console": "dev-dev",
                 "morphp/medas-core": "dev-dev",
-                "morphp/medas-events": "dev-dev",
                 "morphp/medas-service-manager": "dev-dev"
             },
             "require-dev": {
                 "morphp/medas-config-manager": "dev-dev",
                 "morphp/medas-config-options": "dev-dev",
+                "morphp/medas-events": "dev-dev",
                 "morphp/medas-file-system": "dev-dev",
                 "phpunit/phpunit": "^9.5"
             },
@@ -273,49 +274,7 @@
                 "source": "https://github.com/tarantuli/medas-entity-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-entity-manager/issues"
             },
-            "time": "2023-08-29T11:16:30+00:00"
-        },
-        {
-            "name": "morphp/medas-events",
-            "version": "dev-dev",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:tarantuli/medas-events.git",
-                "reference": "28fb5f054c224bba7471312fe8a8866f24a3c6e8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-events/zipball/28fb5f054c224bba7471312fe8a8866f24a3c6e8",
-                "reference": "28fb5f054c224bba7471312fe8a8866f24a3c6e8",
-                "shasum": ""
-            },
-            "require": {
-                "morphp/medas-core": "dev-dev",
-                "psr/event-dispatcher": "^1.0"
-            },
-            "require-dev": {
-                "morphp/medas-service-manager": "dev-dev",
-                "phpunit/phpunit": "^9.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Medas\\Events\\": "src/",
-                    "Medas\\EventsTest\\": "tests/"
-                }
-            },
-            "authors": [
-                {
-                    "name": "Patrick Morpey",
-                    "email": "patrick@morphp.nl"
-                }
-            ],
-            "description": "Medas events",
-            "support": {
-                "source": "https://github.com/tarantuli/medas-events/tree/dev",
-                "issues": "https://github.com/tarantuli/medas-events/issues"
-            },
-            "time": "2023-08-16T14:30:19+00:00"
+            "time": "2023-08-29T11:50:27+00:00"
         },
         {
             "name": "morphp/medas-file-builder",
@@ -447,26 +406,25 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-pdo-storage.git",
-                "reference": "0f486894a37345a00ca1682db13d156dcb1011aa"
+                "reference": "88150f6011a518cbd910fc8ba32f6e8b775d6684"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/0f486894a37345a00ca1682db13d156dcb1011aa",
-                "reference": "0f486894a37345a00ca1682db13d156dcb1011aa",
+                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/88150f6011a518cbd910fc8ba32f6e8b775d6684",
+                "reference": "88150f6011a518cbd910fc8ba32f6e8b775d6684",
                 "shasum": ""
             },
             "require": {
                 "ext-pdo": "*",
                 "morphp/medas-core": "dev-dev",
                 "morphp/medas-entity-manager": "dev-dev",
-                "morphp/medas-file-builder": "dev-dev",
-                "morphp/medas-service-manager": "dev-dev",
                 "morphp/medas-storage-manager": "dev-dev"
             },
             "require-dev": {
                 "morphp/medas-config-manager": "dev-dev",
                 "morphp/medas-config-options": "dev-dev",
                 "morphp/medas-ramsey-uuid-bridge": "dev-dev",
+                "morphp/medas-service-manager": "dev-dev",
                 "phpunit/phpunit": "^9.5"
             },
             "type": "library",
@@ -487,7 +445,7 @@
                 "source": "https://github.com/tarantuli/medas-pdo-storage/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-pdo-storage/issues"
             },
-            "time": "2023-08-25T09:10:57+00:00"
+            "time": "2023-08-29T11:51:42+00:00"
         },
         {
             "name": "morphp/medas-php-class-analysis",
@@ -674,12 +632,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-storage-manager.git",
-                "reference": "eab34a8900187a9cf3beb63df9639f72eaecd728"
+                "reference": "84ab1c00478f3baad19dda70021d237f9deab15f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/eab34a8900187a9cf3beb63df9639f72eaecd728",
-                "reference": "eab34a8900187a9cf3beb63df9639f72eaecd728",
+                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/84ab1c00478f3baad19dda70021d237f9deab15f",
+                "reference": "84ab1c00478f3baad19dda70021d237f9deab15f",
                 "shasum": ""
             },
             "require": {
@@ -721,7 +679,7 @@
                 "source": "https://github.com/tarantuli/medas-storage-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-storage-manager/issues"
             },
-            "time": "2023-08-29T08:40:15+00:00"
+            "time": "2023-08-29T11:48:18+00:00"
         },
         {
             "name": "psr/event-dispatcher",
@@ -3445,9 +3403,11 @@
     "stability-flags": {
         "morphp/medas-core": 20,
         "morphp/medas-entity-manager": 20,
+        "morphp/medas-file-builder": 20,
         "morphp/medas-pdo-storage": 20,
         "morphp/medas-storage-manager": 20,
         "morphp/medas-config-manager": 20,
+        "morphp/medas-config-options": 20,
         "morphp/medas-console-printer": 20,
         "morphp/medas-service-manager": 20,
         "morphp/medas-ramsey-uuid-bridge": 20
