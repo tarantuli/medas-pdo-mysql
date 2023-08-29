@@ -1,0 +1,22 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Medas\PdoMysqlTest\MockUps\ManyToMany;
+
+use Medas\Core\Interfaces\HasId;
+use Medas\EntityManager\Attributes\{Entity, Id, IsGeneratedValue};
+
+#[Entity(store: 'books')]
+class Book implements HasId
+{
+    #[Id, IsGeneratedValue]
+    private int $id;
+
+    public Labels $labels;
+
+    public function id(): int
+    {
+        return $this->id;
+    }
+}
