@@ -4,24 +4,15 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql;
 
-use Medas\PdoStorage\{Database, Table};
+use Medas\PdoStorage\Table;
+use Medas\StorageManager\Interfaces\{Storage, Store};
+use Medas\StorageManager\Shared\StoreCollection;
 
-class TableCollection
+/** @extends StoreCollection<Table> */
+class TableCollection extends StoreCollection
 {
-    private array $tables = [];
-
-    public function get(Database $database, string $tableName): Table
+    protected function createStore(Storage $storage, string $storeName): Store
     {
-        $databaseName = $database->name();
-
-        if (!isset($this->tables[$databaseName])) {
-            $this->tables[$databaseName] = [];
-        }
-
-        if (!isset($this->tables[$databaseName][$tableName])) {
-            $this->tables[$databaseName][$tableName] = new Table($database, $tableName);
-        }
-
-        return $this->tables[$databaseName][$tableName];
+        return new Table($storage, $storeName);
     }
 }
