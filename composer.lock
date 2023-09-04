@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f3a622018b8a67e34ebb82a106b4ae0",
+    "content-hash": "86b214e5d305dddb796a73fa47e2ca0b",
     "packages": [
         {
             "name": "morphp/medas-cache",
@@ -188,12 +188,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-core.git",
-                "reference": "bafc10a773629b7698a0d86d8ccce7ccec0c488c"
+                "reference": "fd1db78f5f68e7fd59dbd142e3d3a4140c4ca5a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-core/zipball/bafc10a773629b7698a0d86d8ccce7ccec0c488c",
-                "reference": "bafc10a773629b7698a0d86d8ccce7ccec0c488c",
+                "url": "https://api.github.com/repos/tarantuli/medas-core/zipball/fd1db78f5f68e7fd59dbd142e3d3a4140c4ca5a9",
+                "reference": "fd1db78f5f68e7fd59dbd142e3d3a4140c4ca5a9",
                 "shasum": ""
             },
             "require": {
@@ -227,7 +227,7 @@
                 "source": "https://github.com/tarantuli/medas-core/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-core/issues"
             },
-            "time": "2023-08-29T11:44:57+00:00"
+            "time": "2023-09-04T08:00:50+00:00"
         },
         {
             "name": "morphp/medas-entity-manager",
@@ -632,12 +632,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-storage-manager.git",
-                "reference": "84ab1c00478f3baad19dda70021d237f9deab15f"
+                "reference": "c3196afd69a19da11a596d9f84197a9e9ba7c723"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/84ab1c00478f3baad19dda70021d237f9deab15f",
-                "reference": "84ab1c00478f3baad19dda70021d237f9deab15f",
+                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/c3196afd69a19da11a596d9f84197a9e9ba7c723",
+                "reference": "c3196afd69a19da11a596d9f84197a9e9ba7c723",
                 "shasum": ""
             },
             "require": {
@@ -679,7 +679,7 @@
                 "source": "https://github.com/tarantuli/medas-storage-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-storage-manager/issues"
             },
-            "time": "2023-08-29T11:48:18+00:00"
+            "time": "2023-09-04T07:12:32+00:00"
         },
         {
             "name": "psr/event-dispatcher",
@@ -926,12 +926,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-config-manager.git",
-                "reference": "60e5780de31be4b8798039902d91ae51dfc7574f"
+                "reference": "85ee4079b025178a16e941e7a5f5b5c9146c23e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-config-manager/zipball/60e5780de31be4b8798039902d91ae51dfc7574f",
-                "reference": "60e5780de31be4b8798039902d91ae51dfc7574f",
+                "url": "https://api.github.com/repos/tarantuli/medas-config-manager/zipball/85ee4079b025178a16e941e7a5f5b5c9146c23e2",
+                "reference": "85ee4079b025178a16e941e7a5f5b5c9146c23e2",
                 "shasum": ""
             },
             "require": {
@@ -961,7 +961,48 @@
                 "source": "https://github.com/tarantuli/medas-config-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-config-manager/issues"
             },
-            "time": "2023-08-16T14:16:54+00:00"
+            "time": "2023-09-04T08:01:20+00:00"
+        },
+        {
+            "name": "morphp/medas-events",
+            "version": "dev-dev",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:tarantuli/medas-events.git",
+                "reference": "3678e737b347eae2b879dec741beac4d123297dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tarantuli/medas-events/zipball/3678e737b347eae2b879dec741beac4d123297dd",
+                "reference": "3678e737b347eae2b879dec741beac4d123297dd",
+                "shasum": ""
+            },
+            "require": {
+                "morphp/medas-core": "dev-dev"
+            },
+            "require-dev": {
+                "morphp/medas-service-manager": "dev-dev",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Medas\\Events\\": "src/",
+                    "Medas\\EventsTest\\": "tests/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Patrick Morpey",
+                    "email": "patrick@morphp.nl"
+                }
+            ],
+            "description": "Medas events",
+            "support": {
+                "source": "https://github.com/tarantuli/medas-events/tree/dev",
+                "issues": "https://github.com/tarantuli/medas-events/issues"
+            },
+            "time": "2023-08-29T11:46:57+00:00"
         },
         {
             "name": "morphp/medas-ramsey-uuid-bridge",
@@ -1004,6 +1045,53 @@
                 "issues": "https://github.com/tarantuli/medas-ramsey-uuid-bridge/issues"
             },
             "time": "2023-08-17T07:08:23+00:00"
+        },
+        {
+            "name": "morphp/medas-storage-manager-tests",
+            "version": "dev-dev",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:tarantuli/medas-storage-manager-tests.git",
+                "reference": "0815939f81aaf68947f6d0e9f112fb7a46f3541d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager-tests/zipball/0815939f81aaf68947f6d0e9f112fb7a46f3541d",
+                "reference": "0815939f81aaf68947f6d0e9f112fb7a46f3541d",
+                "shasum": ""
+            },
+            "require": {
+                "morphp/medas-config-manager": "dev-dev",
+                "morphp/medas-config-options": "dev-dev",
+                "morphp/medas-console-printer": "dev-dev",
+                "morphp/medas-core": "dev-dev",
+                "morphp/medas-entity-manager": "dev-dev",
+                "morphp/medas-events": "dev-dev",
+                "morphp/medas-ramsey-uuid-bridge": "dev-dev",
+                "morphp/medas-storage-manager": "dev-dev"
+            },
+            "require-dev": {
+                "morphp/medas-service-manager": "dev-dev",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Medas\\StorageManagerTests\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Patrick Morpey",
+                    "email": "patrick@morphp.nl"
+                }
+            ],
+            "description": "Medas storage manager tests",
+            "support": {
+                "source": "https://github.com/tarantuli/medas-storage-manager-tests/tree/dev",
+                "issues": "https://github.com/tarantuli/medas-storage-manager-tests/issues"
+            },
+            "time": "2023-09-04T08:36:05+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3406,11 +3494,7 @@
         "morphp/medas-file-builder": 20,
         "morphp/medas-pdo-storage": 20,
         "morphp/medas-storage-manager": 20,
-        "morphp/medas-config-manager": 20,
-        "morphp/medas-config-options": 20,
-        "morphp/medas-console-printer": 20,
-        "morphp/medas-service-manager": 20,
-        "morphp/medas-ramsey-uuid-bridge": 20
+        "morphp/medas-storage-manager-tests": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
