@@ -18,11 +18,7 @@
         "morphp/medas-storage-manager": "dev-dev"
     },
     "require-dev": {
-        "morphp/medas-config-manager": "dev-dev",
-        "morphp/medas-config-options": "dev-dev",
-        "morphp/medas-console-printer": "dev-dev",
-        "morphp/medas-service-manager": "dev-dev",
-        "morphp/medas-ramsey-uuid-bridge": "dev-dev",
+        "morphp/medas-storage-manager-tests": "dev-dev",
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
