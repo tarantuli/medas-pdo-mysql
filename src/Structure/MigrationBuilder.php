@@ -7,37 +7,32 @@ namespace Medas\PdoMysql\Structure;
 use Medas\Core\Attributes\Service;
 use Medas\FileBuilder\PhpClass\MethodDefinition;
 use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\Query;
-use Medas\PdoStorage\Queries\QuerySet;
+use Medas\PdoStorage\Queries\{Query, QuerySet};
 use Medas\StorageManager\Interfaces\Storage;
 use Medas\StorageManager\Migrations\MigrationBuilder as MigrationBuilderInterface;
 use Medas\StorageManager\StorageManager;
-use Medas\StorageManager\Structure\Blueprint;
-use Medas\StorageManager\Structure\Changes\ChangeFinder;
-use Medas\StorageManager\Structure\EntityStructureFinder;
+use Medas\StorageManager\Structure\{Blueprint, Changes\ChangeFinder};
 use Medas\StorageManager\UnitOfWork\Priority;
 
 #[Service]
 readonly class MigrationBuilder implements MigrationBuilderInterface
 {
     public function __construct(
-        private AlterTableBuilder     $alterTableBuilder,
-        private ChangeFinder          $changeFinder,
-        private CreateTableBuilder    $createTableBuilder,
-        private EntityStructureFinder $entityStructureFinder,
-        private PdoStorageController  $pdoStorageController,
+        private AlterTableBuilder    $alterTableBuilder,
+        private ChangeFinder         $changeFinder,
+        private CreateTableBuilder   $createTableBuilder,
+        private PdoStorageController $pdoStorageController,
     )
     {
     }
 
     public function build(
         Storage          $storage,
-        string           $className,
+        Blueprint        $expectedStructure,
         MethodDefinition $migrateMethod,
         MethodDefinition $undoMethod,
     ): bool
     {
-        $expectedStructure = $this->entityStructureFinder->find($className);
         $queries = $this->buildQueries($storage, $expectedStructure);
 
         if (count($queries) === 0) {
