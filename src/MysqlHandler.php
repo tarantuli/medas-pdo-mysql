@@ -14,13 +14,13 @@ use Medas\PdoMysql\Types\TypeHandler;
 use Medas\PdoStorage\Database;
 use Medas\PdoStorage\Drivers\{DriverHandler,
     Interfaces\FieldHandler,
+    Interfaces\PdoMigrationBuilder,
     Interfaces\QueryBuilders as QueryBuildersInterface,
     Interfaces\TableStructureFinder as TableStructureFinderInterface,
     Interfaces\TypeHandler as TypeHandlerInterface};
 use Medas\PdoStorage\Table;
 use Medas\PdoStorage\ValueSerializer;
 use Medas\StorageManager\Interfaces\RecordFetchers as RecordFetchersInterface;
-use Medas\StorageManager\Migrations\MigrationBuilder as MigrationBuilderInterface;
 
 #[Service]
 readonly class MysqlHandler implements DriverHandler
@@ -72,7 +72,7 @@ readonly class MysqlHandler implements DriverHandler
         return service(FieldToDefinitionConverter::class);
     }
 
-    public function migrationBuilder(): MigrationBuilderInterface
+    public function migrationBuilder(): PdoMigrationBuilder
     {
         // Don't use injection, so it's only initialized when needed
         return service(MigrationBuilder::class);

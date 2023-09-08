@@ -6,16 +6,16 @@ namespace Medas\PdoMysql\Structure;
 
 use Medas\Core\Attributes\Service;
 use Medas\FileBuilder\PhpClass\MethodDefinition;
+use Medas\PdoStorage\Drivers\Interfaces\PdoMigrationBuilder;
 use Medas\PdoStorage\PdoStorageController;
 use Medas\PdoStorage\Queries\{Query, QuerySet};
 use Medas\StorageManager\Interfaces\Storage;
-use Medas\StorageManager\Migrations\MigrationBuilder as MigrationBuilderInterface;
 use Medas\StorageManager\StorageManager;
 use Medas\StorageManager\Structure\{Blueprint, Changes\ChangeFinder};
 use Medas\StorageManager\UnitOfWork\Priority;
 
 #[Service]
-readonly class MigrationBuilder implements MigrationBuilderInterface
+readonly class MigrationBuilder implements PdoMigrationBuilder
 {
     public function __construct(
         private AlterTableBuilder    $alterTableBuilder,
