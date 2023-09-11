@@ -50,24 +50,6 @@ readonly class AlterTableBuilder
             );
         }
 
-        if ($job->dropForeignKeysQuery !== null) {
-            $job->querySet[] = new Query(
-                substr($job->dropForeignKeysQuery, 0, -2),
-                [],
-                $job->database,
-                Priority::DeleteStoreRelations
-            );
-        }
-
-        if ($job->addForeignKeysQuery !== null) {
-            $job->querySet[] = new Query(
-                substr($job->addForeignKeysQuery, 0, -2),
-                [],
-                $job->database,
-                Priority::AddStoreRelations
-            );
-        }
-
         $this->processCollections($job);
 
         return $job->querySet;
@@ -128,21 +110,35 @@ readonly class AlterTableBuilder
         }
 
         if ($job->changes->changeForeignKey) {
-            $job->dropForeignKeysQuery = $this->startAlterQuery($job);
+            $query = $this->startAlterQuery($job);
 
             foreach ($job->changes->changeForeignKey as $foreignKey) {
-                $job->dropForeignKeysQuery .= $this->foreignKeyConstraintBuilder
+                $query .= $this->foreignKeyConstraintBuilder
                         ->buildDrop($job->changes->name, $job->driverHandler, $job->database, $foreignKey) . ",\n";
             }
+
+            $job->querySet[] = new Query(
+                substr($query, 0, -2),
+                [],
+                $job->database,
+                Priority::DeleteStoreRelations
+            );
         }
 
-        $job->addForeignKeysQuery = $this->startAlterQuery($job);
+        $query = $this->startAlterQuery($job);
         $foreignKeys = array_merge($job->changes->changeForeignKey, $job->changes->addForeignKey);
 
         foreach ($foreignKeys as $foreignKey) {
-            $job->addForeignKeysQuery .= $this->foreignKeyConstraintBuilder
+            $query .= $this->foreignKeyConstraintBuilder
                     ->buildAdd($job->changes->name, $job->driverHandler, $job->database, $foreignKey) . ",\n";
         }
+
+        $job->querySet[] = new Query(
+            substr($query, 0, -2),
+            [],
+            $job->database,
+            Priority::AddStoreRelations
+        );
     }
 
     protected function processCollections(TableBuilders\Job $job): void

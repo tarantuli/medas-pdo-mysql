@@ -6,16 +6,17 @@ namespace Medas\PdoMysql\Structure;
 
 use Medas\Core\Attributes\Service;
 use Medas\FileBuilder\PhpClass\MethodDefinition;
-use Medas\PdoStorage\Drivers\Interfaces\PdoMigrationBuilder;
 use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\{Query, QuerySet};
+use Medas\PdoStorage\Queries\{Query};
 use Medas\StorageManager\Interfaces\Storage;
+use Medas\StorageManager\Migrations\MigrationBuilder as MigrationBuilderInterface;
 use Medas\StorageManager\StorageManager;
 use Medas\StorageManager\Structure\{Blueprint, Changes\ChangeFinder};
+use Medas\StorageManager\UnitOfWork\ActionSet;
 use Medas\StorageManager\UnitOfWork\Priority;
 
 #[Service]
-readonly class MigrationBuilder implements PdoMigrationBuilder
+readonly class MigrationBuilder implements MigrationBuilderInterface
 {
     public function __construct(
         private AlterTableBuilder    $alterTableBuilder,
@@ -33,7 +34,7 @@ readonly class MigrationBuilder implements PdoMigrationBuilder
         MethodDefinition $undoMethod,
     ): bool
     {
-        $queries = $this->buildQueries($storage, $expectedStructure);
+        $queries = $this->buildActions($storage, $expectedStructure);
 
         if (count($queries) === 0) {
             return false;
@@ -62,18 +63,18 @@ PHP;
         return true;
     }
 
-    public function buildQueries(Storage $storage, Blueprint $expectedStructure): QuerySet|null
+    public function buildActions(Storage $storage, Blueprint $blueprint): ActionSet
     {
         $driverHandler = $this->pdoStorageController->getDatabaseController($storage)->driverHandler;
 
-        $existingStructure = $driverHandler->tableStructureFinder()->find($this->pdoStorageController->store($expectedStructure->name(), $storage));
+        $existingStructure = $driverHandler->tableStructureFinder()->find($this->pdoStorageController->store($blueprint->name, $storage));
 
         if ($existingStructure === null) {
-            return $this->createTableBuilder->create($storage, $expectedStructure);
+            return $this->createTableBuilder->create($storage, $blueprint);
         }
         else {
-            $changes = $this->changeFinder->find($expectedStructure, $existingStructure);
-            return $changes ? $this->alterTableBuilder->create($storage, $expectedStructure, $changes) : null;
+            $changes = $this->changeFinder->find($blueprint, $existingStructure);
+            return $changes ? $this->alterTableBuilder->create($storage, $blueprint, $changes) : new ActionSet();
         }
     }
 }

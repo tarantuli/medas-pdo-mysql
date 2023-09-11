@@ -14,7 +14,6 @@ use Medas\PdoMysql\Types\TypeHandler;
 use Medas\PdoStorage\Database;
 use Medas\PdoStorage\Drivers\{DriverHandler,
     Interfaces\FieldHandler,
-    Interfaces\PdoMigrationBuilder,
     Interfaces\QueryBuilders as QueryBuildersInterface,
     Interfaces\TableStructureFinder as TableStructureFinderInterface,
     Interfaces\TypeHandler as TypeHandlerInterface};
@@ -72,7 +71,7 @@ readonly class MysqlHandler implements DriverHandler
         return service(FieldToDefinitionConverter::class);
     }
 
-    public function migrationBuilder(): PdoMigrationBuilder
+    public function migrationBuilder(): MigrationBuilder
     {
         // Don't use injection, so it's only initialized when needed
         return service(MigrationBuilder::class);

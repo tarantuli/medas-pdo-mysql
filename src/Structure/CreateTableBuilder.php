@@ -10,6 +10,7 @@ use Medas\PdoStorage\Database;
 use Medas\PdoStorage\JoinTableManager;
 use Medas\PdoStorage\PdoStorageController;
 use Medas\PdoStorage\Queries\{Query, QuerySet};
+use Medas\StorageManager\Inheritance\OriginalClassStorageStrategy;
 use Medas\StorageManager\Structure\{Blueprint, Blueprint\Field, Blueprint\Index};
 use Medas\StorageManager\UnitOfWork\Priority;
 
@@ -32,13 +33,14 @@ readonly class CreateTableBuilder
             $blueprint,
         );
 
-        $tableName = $job->driverHandler->quote($database, $job->blueprint->name());
+        $tableName = $job->driverHandler->quote($database, $job->blueprint->name);
 
         $job->baseQuery = sprintf(/** @lang text */ "create table %s (\n", $tableName);
 
         $this->addFields($job);
         $this->addKeys($job);
         $this->processForeignKeys($job);
+        $this->handleOriginalEntityType($job);
 
         $job->baseQuery = substr($job->baseQuery, 0, -2);
         $job->baseQuery .= "\n)\n";
@@ -72,8 +74,8 @@ readonly class CreateTableBuilder
 
     protected function addFields(TableBuilders\Job $job): void
     {
-        foreach ($job->blueprint->fields() as $field) {
-            if ($field->store !== null && $field->store !== $job->blueprint->name()) {
+        foreach ($job->blueprint->fields as $field) {
+            if ($field->store !== null && $field->store !== $job->blueprint->name) {
                 // If this is the primary key, add it without generating value
                 $primaryIndex = $job->blueprint->primaryIndex();
 
@@ -124,9 +126,9 @@ readonly class CreateTableBuilder
 
     protected function addKeys(TableBuilders\Job $job): void
     {
-        foreach ($job->blueprint->indexes() as $index) {
+        foreach ($job->blueprint->indexes as $index) {
             foreach ($index->fields() as $field) {
-                if ($field->store !== null && $field->store !== $job->blueprint->name()) {
+                if ($field->store !== null && $field->store !== $job->blueprint->name) {
                     // If this is the primary key, do add it
                     $primaryIndex = $job->blueprint->primaryIndex();
                     if ($primaryIndex && in_array($field, $job->blueprint->primaryIndex()->fields())) {
@@ -166,9 +168,24 @@ readonly class CreateTableBuilder
 
     protected function processForeignKeys(TableBuilders\Job $job): void
     {
-        foreach ($job->blueprint->foreignKeys() as $foreignKey) {
+        foreach ($job->blueprint->foreignKeys as $foreignKey) {
             $job->foreignKeys[] = $this->foreignKeyConstraintBuilder
-                ->buildAdd($job->blueprint->name(), $job->driverHandler, $job->database, $foreignKey);
+                ->buildAdd($job->blueprint->name, $job->driverHandler, $job->database, $foreignKey);
+        }
+    }
+
+    private function handleOriginalEntityType(TableBuilders\Job $job): void
+    {
+        if (!$job->blueprint->storeOriginalClass) {
+            return;
+        }
+
+        if ($job->blueprint->storeRequestingOriginalClassStorage !== $job->blueprint->name) {
+            return;
+        }
+
+        foreach (service(OriginalClassStorageStrategy::class)->buildStoreActions($job->blueprint, $job->database) as $query) {
+            $job->querySet[] = $query;
         }
     }
 }

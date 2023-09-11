@@ -44,7 +44,7 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
             return;
         }
 
-        $job->blueprint->setName($match[1]);
+        $job->blueprint->name = $match[1];
     }
 
     protected function findFields(TableStructureFinder\Job $job): void

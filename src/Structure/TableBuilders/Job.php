@@ -14,8 +14,6 @@ class Job
     public Changes $changes;
 
     public string|null $baseQuery = null;
-    public string|null $dropForeignKeysQuery = null;
-    public string|null $addForeignKeysQuery = null;
 
     /** @var Field[] */
     public array $collections = [];
