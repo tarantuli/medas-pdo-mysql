@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Structure;
 
-use Medas\Core\Attributes\Service;
+use Medas\Core\Attributes\{ConfigValue, Service};
 use Medas\PdoMysql\Queries\ForeignKeyConstraintBuilder;
 use Medas\PdoStorage\Database;
 use Medas\PdoStorage\JoinTableManager;
 use Medas\PdoStorage\PdoStorageController;
 use Medas\PdoStorage\Queries\{Query, QuerySet};
+use Medas\StorageManager\ConfigOptions\DefaultOriginalClassStorageStrategy;
 use Medas\StorageManager\Inheritance\OriginalClassStorageStrategy;
 use Medas\StorageManager\Structure\{Blueprint, Blueprint\Field, Blueprint\Index};
 use Medas\StorageManager\UnitOfWork\Priority;
@@ -18,9 +19,12 @@ use Medas\StorageManager\UnitOfWork\Priority;
 readonly class CreateTableBuilder
 {
     public function __construct(
-        private ForeignKeyConstraintBuilder $foreignKeyConstraintBuilder,
-        private JoinTableManager            $joinTableManager,
-        private PdoStorageController        $pdoStorageController,
+        private ForeignKeyConstraintBuilder  $foreignKeyConstraintBuilder,
+        private JoinTableManager             $joinTableManager,
+        private PdoStorageController         $pdoStorageController,
+
+        #[ConfigValue(DefaultOriginalClassStorageStrategy::class)]
+        private OriginalClassStorageStrategy $originalClassStorageStrategy,
     )
     {
     }
@@ -184,7 +188,7 @@ readonly class CreateTableBuilder
             return;
         }
 
-        foreach (service(OriginalClassStorageStrategy::class)->buildStoreActions($job->blueprint, $job->database) as $query) {
+        foreach ($this->originalClassStorageStrategy->buildStoreActions($job->blueprint, $job->database) as $query) {
             $job->querySet[] = $query;
         }
     }
