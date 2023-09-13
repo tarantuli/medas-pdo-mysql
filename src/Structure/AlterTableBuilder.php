@@ -7,13 +7,10 @@ namespace Medas\PdoMysql\Structure;
 use Medas\Core\Attributes\Service;
 use Medas\PdoMysql\Queries\ForeignKeyConstraintBuilder;
 use Medas\PdoStorage\Database;
-use Medas\PdoStorage\JoinTableManager;
+use Medas\PdoStorage\JoinTables\JoinTableManager;
 use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\Query;
-use Medas\PdoStorage\Queries\QuerySet;
-use Medas\StorageManager\Structure\Blueprint;
-use Medas\StorageManager\Structure\Blueprint\Type;
-use Medas\StorageManager\Structure\Changes\Changes;
+use Medas\PdoStorage\Queries\{Query, QuerySet};
+use Medas\StorageManager\Structure\{Blueprint, Blueprint\Type, Changes\Changes};
 use Medas\StorageManager\UnitOfWork\Priority;
 
 #[Service]

@@ -7,10 +7,10 @@ namespace Medas\PdoMysql\Structure;
 use Medas\Core\Attributes\{ConfigValue, Service};
 use Medas\PdoMysql\Queries\ForeignKeyConstraintBuilder;
 use Medas\PdoStorage\Database;
-use Medas\PdoStorage\JoinTableManager;
+use Medas\PdoStorage\JoinTables\JoinTableManager;
 use Medas\PdoStorage\PdoStorageController;
 use Medas\PdoStorage\Queries\{Query, QuerySet};
-use Medas\StorageManager\ConfigOptions\DefaultOriginalClassStorageStrategy;
+use Medas\StorageManager\ConfigOptions\OriginalClassStorage\DefaultStrategy;
 use Medas\StorageManager\Inheritance\OriginalClassStorageStrategy;
 use Medas\StorageManager\Structure\{Blueprint, Blueprint\Field, Blueprint\Index};
 use Medas\StorageManager\UnitOfWork\Priority;
@@ -23,7 +23,7 @@ readonly class CreateTableBuilder
         private JoinTableManager             $joinTableManager,
         private PdoStorageController         $pdoStorageController,
 
-        #[ConfigValue(DefaultOriginalClassStorageStrategy::class)]
+        #[ConfigValue(DefaultStrategy::class)]
         private OriginalClassStorageStrategy $originalClassStorageStrategy,
     )
     {

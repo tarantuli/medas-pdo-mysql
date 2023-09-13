@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Queries;
 
-use Medas\Core\Attributes\Service;
+use Medas\Core\Attributes\{ConfigValue, Service};
 use Medas\Core\Interfaces\ManagedCollection;
 use Medas\EntityManager\Types\Collection;
-use Medas\PdoStorage\JoinTableManager;
+use Medas\PdoStorage\ConfigOptions\JoinTables\TableNamingStrategy;
+use Medas\PdoStorage\JoinTables\NamingStrategy;
 use Medas\PdoStorage\PdoStorageController;
 use Medas\PdoStorage\Queries\QuerySet;
 use Medas\StorageManager\Interfaces\{Builders\CollectionUpdateBuilder as CollectionUpdateBuilderInterface, Store};
@@ -19,8 +20,10 @@ readonly class CollectionUpdateBuilder implements CollectionUpdateBuilderInterfa
     public function __construct(
         public DeleteBuilder        $deleteBuilder,
         public InsertBuilder        $insertBuilder,
-        public JoinTableManager     $joinTableManager,
         public PdoStorageController $pdoStorageController,
+
+        #[ConfigValue(TableNamingStrategy::class)]
+        private NamingStrategy $namingStrategy,
     )
     {
     }
@@ -28,7 +31,7 @@ readonly class CollectionUpdateBuilder implements CollectionUpdateBuilderInterfa
     public function build(Store $store, object $entity, string $name, Collection $type, ManagedCollection $values): ActionSet
     {
         $joinTable = $this->pdoStorageController->store(
-            $this->joinTableManager->determineName($store->name(), $name),
+            $this->namingStrategy->determine($store->name(), $name),
             $store->storage()
         );
 
