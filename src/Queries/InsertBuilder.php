@@ -5,13 +5,9 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\Attributes\Service;
-use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\Query;
-use Medas\PdoStorage\Queries\QuerySet;
-use Medas\StorageManager\Interfaces\Builders\InsertBuilder as InsertBuilderInterface;
-use Medas\StorageManager\Interfaces\Store;
-use Medas\StorageManager\UnitOfWork\ActionSet;
-use Medas\StorageManager\UnitOfWork\Priority;
+use Medas\PdoStorage\{PdoStorageController, Queries\Query, Queries\QuerySet};
+use Medas\StorageManager\Interfaces\{Builders\InsertBuilder as InsertBuilderInterface, Store};
+use Medas\StorageManager\UnitOfWork\{ActionSet, Priority};
 
 #[Service]
 readonly class InsertBuilder implements InsertBuilderInterface

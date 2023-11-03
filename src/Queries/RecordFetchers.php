@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\Attributes\Service;
-use Medas\StorageManager\Interfaces\Fetchers;
-use Medas\StorageManager\Interfaces\RecordFetchers as RecordFetchersInterface;
+use Medas\StorageManager\Interfaces\{Fetchers, RecordFetchers as RecordFetchersInterface};
 
 #[Service]
 readonly class RecordFetchers implements RecordFetchersInterface

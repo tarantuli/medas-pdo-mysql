@@ -8,8 +8,7 @@ use Medas\Core\Attributes\Service;
 use Medas\PdoStorage\Database;
 use Medas\PdoStorage\Drivers\Interfaces\ShowTablesBuilder as ShowTablesBuilderInterface;
 use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\Query;
-use Medas\PdoStorage\Queries\QuerySet;
+use Medas\PdoStorage\Queries\{Query, QuerySet};
 
 #[Service]
 readonly class ShowTablesBuilder implements ShowTablesBuilderInterface

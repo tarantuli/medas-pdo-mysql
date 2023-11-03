@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\Attributes\Service;
-use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\Query;
-use Medas\PdoStorage\Queries\QuerySet;
-use Medas\StorageManager\Interfaces\Builders\DeleteStoreBuilder;
-use Medas\StorageManager\Interfaces\Store;
+use Medas\PdoStorage\{PdoStorageController, Queries\Query, Queries\QuerySet};
+use Medas\StorageManager\Interfaces\{Builders\DeleteStoreBuilder, Store};
 use Medas\StorageManager\UnitOfWork\ActionSet;
 
 #[Service]

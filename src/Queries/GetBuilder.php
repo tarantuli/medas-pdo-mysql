@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\Attributes\Service;
-use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\{Query, QuerySet};
+use Medas\PdoStorage\{PdoStorageController, Queries\Query, Queries\QuerySet};
 use Medas\StorageManager\Interfaces\Builders\GetBuilder as GetBuilderInterface;
 use Medas\StorageManager\UnitOfWork\ActionSet;
 
@@ -23,9 +22,7 @@ readonly class GetBuilder implements GetBuilderInterface
     public function build(array $stores, array $filters): ActionSet
     {
         $database = $stores[0]->storage();
-
-        $query =
-            'select * from ';
+        $query = 'select * from ';
         $arguments = [];
 
         foreach ($stores as $table) {

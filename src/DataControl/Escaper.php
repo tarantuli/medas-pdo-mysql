@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\DataControl;
 
 use Medas\Core\Attributes\Service;
-use Medas\PdoStorage\Database;
-use Medas\PdoStorage\PdoStorageController;
+use Medas\PdoStorage\{Database, PdoStorageController};
 
 #[Service]
 readonly class Escaper

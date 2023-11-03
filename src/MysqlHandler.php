@@ -4,13 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql;
 
-use Medas\Core\Attributes\Service;
-use Medas\Core\Interfaces\Serializer;
-use Medas\PdoMysql\DataControl\Escaper;
-use Medas\PdoMysql\Queries\QueryBuilders;
-use Medas\PdoMysql\Queries\RecordFetchers;
-use Medas\PdoMysql\Structure\{FieldToDefinitionConverter, MigrationBuilder, TableStructureFinder};
-use Medas\PdoMysql\Types\TypeHandler;
+use Medas\Core\{Attributes\Service, Interfaces\Serializer};
 use Medas\PdoStorage\Database;
 use Medas\PdoStorage\Drivers\{DriverHandler,
     Interfaces\FieldHandler,
@@ -27,8 +21,8 @@ readonly class MysqlHandler implements DriverHandler
     private TableCollection $tableCollection;
 
     public function __construct(
-        private Escaper         $escaper,
-        private ValueSerializer $valueSerializer,
+        private DataControl\Escaper $escaper,
+        private ValueSerializer     $valueSerializer,
     )
     {
         $this->tableCollection = new TableCollection();
@@ -62,25 +56,25 @@ readonly class MysqlHandler implements DriverHandler
     public function tableStructureFinder(): TableStructureFinderInterface
     {
         // Don't use injection, so it's only initialized when needed
-        return service(TableStructureFinder::class);
+        return service(Structure\TableStructureFinder::class);
     }
 
     public function fieldHandler(): FieldHandler
     {
         // Don't use injection, so it's only initialized when needed
-        return service(FieldToDefinitionConverter::class);
+        return service(Structure\FieldToDefinitionConverter::class);
     }
 
-    public function migrationBuilder(): MigrationBuilder
+    public function migrationBuilder(): Structure\MigrationBuilder
     {
         // Don't use injection, so it's only initialized when needed
-        return service(MigrationBuilder::class);
+        return service(Structure\MigrationBuilder::class);
     }
 
     public function queryBuilders(): QueryBuildersInterface
     {
         // Don't use injection, so it's only initialized when needed
-        return service(QueryBuilders::class);
+        return service(Queries\QueryBuilders::class);
     }
 
     public function serializer(): Serializer
@@ -91,18 +85,18 @@ readonly class MysqlHandler implements DriverHandler
     public function typeHandler(): TypeHandlerInterface
     {
         // Don't use injection, so it's only initialized when needed
-        return service(TypeHandler::class);
+        return service(Types\TypeHandler::class);
     }
 
     public function recordFetchers(): RecordFetchersInterface
     {
         // Don't use injection, so it's only initialized when needed
-        return service(RecordFetchers::class);
+        return service(Queries\RecordFetchers::class);
     }
 
     public function tableStructureString(Table $table): string|null
     {
         // Don't use injection, so it's only initialized when needed
-        return service(TableStructureFinder\TableStructureStringFinder::class)->find($table);
+        return service(Structure\TableStructureFinder\TableStructureStringFinder::class)->find($table);
     }
 }

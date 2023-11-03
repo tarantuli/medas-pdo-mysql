@@ -5,13 +5,9 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\Attributes\Service;
-use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\Query;
-use Medas\PdoStorage\Queries\QuerySet;
-use Medas\StorageManager\Interfaces\Builders\DeleteBuilder as DeleteBuilderInterface;
-use Medas\StorageManager\Interfaces\Store;
-use Medas\StorageManager\UnitOfWork\ActionSet;
-use Medas\StorageManager\UnitOfWork\Priority;
+use Medas\PdoStorage\{PdoStorageController, Queries\Query, Queries\QuerySet};
+use Medas\StorageManager\Interfaces\{Builders\DeleteBuilder as DeleteBuilderInterface, Store};
+use Medas\StorageManager\UnitOfWork\{ActionSet, Priority};
 
 #[Service]
 readonly class DeleteBuilder implements DeleteBuilderInterface
@@ -26,7 +22,6 @@ readonly class DeleteBuilder implements DeleteBuilderInterface
     public function build(Store $store, array $conditions, Priority $priority = Priority::DeleteRecord): ActionSet
     {
         $arguments = [];
-
         $query = 'delete from ' . $this->pdoStorageController->quote($store->storage(), $store->name) . ' where ';
         $this->conditionAppender->append($store->storage(), $query, $arguments, $conditions);
 

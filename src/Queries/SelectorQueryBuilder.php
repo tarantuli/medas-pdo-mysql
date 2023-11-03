@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Queries;
 
-use Medas\Core\Attributes\Service;
-use Medas\Core\Interfaces\{CacheManager, NotCacheable};
-use Medas\EntityManager\MetaDataManager;
-use Medas\EntityManager\Selector\Selector;
-use Medas\PdoStorage\Database;
-use Medas\PdoStorage\Exceptions\StorageIsNotDatabase;
-use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\{ParameterizedQuery, Query, QuerySet};
+use Medas\Core\{Attributes\Service, Interfaces\CacheManager, Interfaces\NotCacheable};
+use Medas\EntityManager\{MetaDataManager, Selector\Selector};
+use Medas\PdoStorage\{Database, Exceptions\StorageIsNotDatabase, PdoStorageController, Queries\ParameterizedQuery, Queries\Query, Queries\QuerySet};
 use Medas\StorageManager\Interfaces\Builders\SelectorActionBuilder;
 use Medas\StorageManager\StorageManager;
 use Medas\StorageManager\UnitOfWork\ActionSet;
@@ -40,10 +35,7 @@ readonly class SelectorQueryBuilder implements SelectorActionBuilder
         }
         else {
             /** @var ParameterizedQuery $paraQuery */
-            $paraQuery = $this->cacheManager->get()->get(
-                [static::class, $selector::class],
-                fn() => $this->buildParameterizedQuery($selector)
-            );
+            $paraQuery = $this->cacheManager->get()->get([static::class, $selector::class], fn() => $this->buildParameterizedQuery($selector));
         }
 
         return $this->compileToQuery($paraQuery, $arguments);
@@ -60,13 +52,14 @@ readonly class SelectorQueryBuilder implements SelectorActionBuilder
             throw new StorageIsNotDatabase($metaData->entity->storage);
         }
 
-        $job = new SelectorQueryBuilder\Job($database, $this->pdoStorageController->getDatabaseController($database)->driverHandler, $metaData->className,);
-
+        $job = new SelectorQueryBuilder\Job(
+            $database,
+            $this->pdoStorageController->getDatabaseController($database)->driverHandler,
+            $metaData->className,
+        );
         $quotedMainStore = $job->driverHandler->quote($database, $metaData->entity->store);
-
         $job->stores = [$job->mainEntity => $quotedMainStore];
         $job->query = 'select * from ' . $quotedMainStore;
-
         $this->relationsProcessor->process($job, $definition->relations);
         $this->conditionsProcessor->process($job, $definition->conditions);
         $this->sortingProcessor->process($job, $definition->sorts);
