@@ -23,9 +23,7 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
     public function find(Table $table): Blueprint|null
     {
         $job = new TableStructureFinder\Job($table->storage(), $table);
-
-        $job->createTable
-            = $this->pdoStorageController->getDatabaseController($table->database)->driverHandler->tableStructureString($table);
+        $job->createTable = $this->pdoStorageController->getDatabaseController($table->database)->driverHandler->tableStructureString($table);
 
         if ($job->createTable === null) {
             return null;

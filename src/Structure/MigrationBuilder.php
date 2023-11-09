@@ -46,15 +46,13 @@ readonly class MigrationBuilder implements MigrationBuilderInterface
             $queryString = addcslashes(trim($query->query), '"');
             $storageName = addcslashes(trim($query->storage()->name()), '"');
             $migrateMethod->body .= <<<PHP
-\$unitOfWork->addAction(new \\   $queryClass(
+\$unitOfWork->addAction(new \\$queryClass(
     <<<SQL
-   $queryString
+$queryString
 SQL,
     [],
-    service(\\   $storageManagerClass::class)->byName("   $storageName"),
-    \\   $priorityClass::{$query->priority()->name}
-
-            
+    service(\\$storageManagerClass::class)->byName("$storageName"),
+    \\$priorityClass::{$query->priority()->name}
 ));
 PHP;
         }
@@ -66,8 +64,10 @@ PHP;
     {
         $driverHandler = $this->pdoStorageController->getDatabaseController($storage)->driverHandler;
 
-        $existingStructure
-            = $driverHandler->tableStructureFinder()->find($this->pdoStorageController->store($blueprint->name, $storage));
+        $existingStructure = $driverHandler->tableStructureFinder()->find($this->pdoStorageController->store(
+            $blueprint->name,
+            $storage
+        ));
 
         if ($existingStructure === null) {
             return $this->createTableBuilder->create($storage, $blueprint);
