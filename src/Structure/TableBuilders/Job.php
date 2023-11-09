@@ -4,21 +4,17 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Structure\TableBuilders;
 
-use Medas\PdoStorage\Database;
-use Medas\PdoStorage\Drivers\DriverHandler;
-use Medas\PdoStorage\Queries\QuerySet;
+use Medas\PdoStorage\{Database, Drivers\DriverHandler, Queries\QuerySet};
 use Medas\StorageManager\Structure\{Blueprint, Blueprint\Field, Changes\Changes};
 
 class Job
 {
     public Changes $changes;
-
     public string|null $baseQuery = null;
 
     /** @var Field[] */
     public array $collections = [];
     public array $foreignKeys = [];
-
     public QuerySet $querySet;
 
     public function __construct(

@@ -17,7 +17,13 @@ readonly class ConditionAppender
     {
     }
 
-    public function append(Database $database, string &$query, array &$arguments, array $filters, string $separator = 'and'): void
+    public function append(
+        Database $database,
+        string & $query,
+        array &  $arguments,
+        array    $filters,
+        string   $separator = 'and'
+    ): void
     {
         $driverHandler = $this->pdoStorageController->getDatabaseController($database)->driverHandler;
 

@@ -18,7 +18,6 @@ readonly class PaginationProcessor
 
         $limit = $pagination->perPage;
         $offset = ($pagination->page - 1) * $pagination->perPage;
-
         $job->query .= ' limit ' . $offset . ', ' . $limit;
     }
 }

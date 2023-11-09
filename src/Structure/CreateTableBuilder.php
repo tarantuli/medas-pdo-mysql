@@ -6,10 +6,7 @@ namespace Medas\PdoMysql\Structure;
 
 use Medas\Core\Attributes\{ConfigValue, Service};
 use Medas\PdoMysql\Queries\ForeignKeyConstraintBuilder;
-use Medas\PdoStorage\Database;
-use Medas\PdoStorage\JoinTables\JoinTableManager;
-use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\{Query, QuerySet};
+use Medas\PdoStorage\{Database, JoinTables\JoinTableManager, PdoStorageController, Queries\Query, Queries\QuerySet};
 use Medas\StorageManager\ConfigOptions\OriginalClassStorage\DefaultStrategy;
 use Medas\StorageManager\Inheritance\OriginalClassStorageStrategy;
 use Medas\StorageManager\Structure\{Blueprint, Blueprint\Field, Blueprint\Index};
@@ -22,7 +19,6 @@ readonly class CreateTableBuilder
         private ForeignKeyConstraintBuilder  $foreignKeyConstraintBuilder,
         private JoinTableManager             $joinTableManager,
         private PdoStorageController         $pdoStorageController,
-
         #[ConfigValue(DefaultStrategy::class)]
         private OriginalClassStorageStrategy $originalClassStorageStrategy,
     )
@@ -38,7 +34,6 @@ readonly class CreateTableBuilder
         );
 
         $tableName = $job->driverHandler->quote($database, $job->blueprint->name);
-
         $job->baseQuery = sprintf(/** @lang text */ "create table %s (\n", $tableName);
 
         $this->addFields($job);
@@ -48,27 +43,11 @@ readonly class CreateTableBuilder
 
         $job->baseQuery = substr($job->baseQuery, 0, -2);
         $job->baseQuery .= "\n)\n";
-
-        $job->querySet[] = new Query(
-            $job->baseQuery,
-            [],
-            $job->database,
-            Priority::CreateStore
-        );
+        $job->querySet[] = new Query($job->baseQuery, [], $job->database, Priority::CreateStore);
 
         if ($job->foreignKeys) {
-            $query = sprintf(
-                "alter table %s\n%s",
-                $tableName,
-                implode(",\n", $job->foreignKeys)
-            );
-
-            $job->querySet[] = new Query(
-                $query,
-                [],
-                $job->database,
-                Priority::AddStoreRelations
-            );
+            $query = sprintf("alter table %s\n%s", $tableName, implode(",\n", $job->foreignKeys));
+            $job->querySet[] = new Query($query, [], $job->database, Priority::AddStoreRelations);
         }
 
         $this->processCollections($job);
@@ -87,6 +66,7 @@ readonly class CreateTableBuilder
                     $foreignKey = new Blueprint\ForeignKey($field->name, $field->store, $field->name, true);
 
                     $job->blueprint->addForeignKey($foreignKey);
+
                     $field->isGenerated = false;
                 }
                 else {
@@ -96,6 +76,7 @@ readonly class CreateTableBuilder
 
             if ($field->type === Blueprint\Type::Collection) {
                 $job->collections[] = $field;
+
                 continue;
             }
 
@@ -135,6 +116,7 @@ readonly class CreateTableBuilder
                 if ($field->store !== null && $field->store !== $job->blueprint->name) {
                     // If this is the primary key, do add it
                     $primaryIndex = $job->blueprint->primaryIndex();
+
                     if ($primaryIndex && in_array($field, $job->blueprint->primaryIndex()->fields())) {
                         // Do nothing
                     }
@@ -152,7 +134,10 @@ readonly class CreateTableBuilder
                     $job->baseQuery .= ' unique';
                 }
 
-                $job->baseQuery .= ' key ' . $job->driverHandler->quote($job->database, $this->createIndexName($index)) . ' (';
+                $job->baseQuery .= ' key ' . $job->driverHandler->quote(
+                    $job->database,
+                    $this->createIndexName($index)
+                ) . ' (';
             }
 
             foreach ($index->fields() as $field) {

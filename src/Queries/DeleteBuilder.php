@@ -23,6 +23,7 @@ readonly class DeleteBuilder implements DeleteBuilderInterface
     {
         $arguments = [];
         $query = 'delete from ' . $this->pdoStorageController->quote($store->storage(), $store->name) . ' where ';
+
         $this->conditionAppender->append($store->storage(), $query, $arguments, $conditions);
 
         return QuerySet::fromQuery(new Query($query, $arguments, $store->storage(), $priority));

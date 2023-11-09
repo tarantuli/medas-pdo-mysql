@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Queries;
 
-use Medas\Core\Attributes\{ConfigValue, Service};
-use Medas\Core\Interfaces\ManagedCollection;
+use Medas\Core\{Attributes\ConfigValue, Attributes\Service, Interfaces\ManagedCollection};
 use Medas\EntityManager\Types\Collection;
 use Medas\PdoStorage\ConfigOptions\JoinTables\TableNamingStrategy;
 use Medas\PdoStorage\JoinTables\NamingStrategy;
@@ -21,14 +20,19 @@ readonly class CollectionUpdateBuilder implements CollectionUpdateBuilderInterfa
         public DeleteBuilder        $deleteBuilder,
         public InsertBuilder        $insertBuilder,
         public PdoStorageController $pdoStorageController,
-
         #[ConfigValue(TableNamingStrategy::class)]
-        private NamingStrategy $namingStrategy,
+        private NamingStrategy      $namingStrategy,
     )
     {
     }
 
-    public function build(Store $store, object $entity, string $name, Collection $type, ManagedCollection $values): ActionSet
+    public function build(
+        Store             $store,
+        object            $entity,
+        string            $name,
+        Collection        $type,
+        ManagedCollection $values
+    ): ActionSet
     {
         $joinTable = $this->pdoStorageController->store(
             $this->namingStrategy->determine($store->name(), $name),
@@ -38,13 +42,21 @@ readonly class CollectionUpdateBuilder implements CollectionUpdateBuilderInterfa
         $queries = new QuerySet();
 
         foreach ($values->getAdditions() as $value) {
-            foreach ($this->insertBuilder->build($joinTable, ['id' => $entity, 'value' => $value], Priority::UpdateCollection) as $query) {
+            foreach ($this->insertBuilder->build(
+                $joinTable,
+                ['id' => $entity, 'value' => $value],
+                Priority::UpdateCollection
+            ) as $query) {
                 $queries[] = $query;
             }
         }
 
         foreach ($values->getDeletions() as $value) {
-            foreach ($this->deleteBuilder->build($joinTable, ['id' => $entity, 'value' => $value], Priority::UpdateCollection) as $query) {
+            foreach ($this->deleteBuilder->build(
+                $joinTable,
+                ['id' => $entity, 'value' => $value],
+                Priority::UpdateCollection
+            ) as $query) {
                 $queries[] = $query;
             }
         }

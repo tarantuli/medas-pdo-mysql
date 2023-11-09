@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Structure\TableStructureFinder;
 
 use Medas\Core\Attributes\Service;
-use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\{Query, QueryExecutor};
-use Medas\PdoStorage\Table;
+use Medas\PdoStorage\{PdoStorageController, Queries\Query, Queries\QueryExecutor, Table};
 
 #[Service]
 readonly class TableStructureStringFinder
@@ -27,6 +25,7 @@ readonly class TableStructureStringFinder
 
         $quotedTable = $this->pdoStorageController->quote($table->database, $table->name);
         $query = new Query('show create table ' . $quotedTable, [], $table->database);
+
         $this->queryExecutor->execute($query);
 
         $data = $query->recordSet();

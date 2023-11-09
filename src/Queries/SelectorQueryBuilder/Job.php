@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Queries\SelectorQueryBuilder;
 
-use Medas\PdoStorage\Database;
-use Medas\PdoStorage\Drivers\DriverHandler;
+use Medas\PdoStorage\{Database, Drivers\DriverHandler};
 
 class Job
 {

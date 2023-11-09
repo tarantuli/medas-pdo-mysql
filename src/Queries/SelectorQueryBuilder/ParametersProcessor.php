@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries\SelectorQueryBuilder;
 
 use Medas\Core\Attributes\Service;
-use Medas\EntityManager\Selector\Exceptions\UndeclaredParameters;
-use Medas\EntityManager\Selector\Parameter;
+use Medas\EntityManager\Selector\{Exceptions\UndeclaredParameters, Parameter};
 
 #[Service]
 readonly class ParametersProcessor

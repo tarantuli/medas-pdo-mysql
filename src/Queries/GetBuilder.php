@@ -33,6 +33,7 @@ readonly class GetBuilder implements GetBuilderInterface
 
         if ($filters) {
             $query .= ' where ';
+
             $this->conditionAppender->append($database, $query, $arguments, $filters);
         }
 

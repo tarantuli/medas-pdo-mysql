@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Medas\PdoMysql;
 
 use Medas\PdoStorage\Table;
-use Medas\StorageManager\Interfaces\{Storage, Store};
-use Medas\StorageManager\Shared\StoreCollection;
+use Medas\StorageManager\{Interfaces\Storage, Interfaces\Store, Shared\StoreCollection};
 
 /** @extends StoreCollection<Table> */
 class TableCollection extends StoreCollection

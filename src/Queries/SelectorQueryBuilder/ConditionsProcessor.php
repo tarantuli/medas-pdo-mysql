@@ -5,16 +5,23 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries\SelectorQueryBuilder;
 
 use Medas\Core\Attributes\Service;
-use Medas\EntityManager\Selector\Conditions\{Condition,
-    WhereIs,
-    WhereIsAtLeast,
-    WhereIsAtMost,
-    WhereIsLessThan,
-    WhereIsMoreThan,
-    WhereIsNotNull,
-    WhereIsNull};
-use Medas\EntityManager\Selector\Exceptions\{UnhandledConditionType, UnhandledOperantType};
-use Medas\EntityManager\Selector\Operants\{Argument, Operant, Property, Value};
+
+use Medas\EntityManager\Selector\{
+    Conditions\Condition,
+    Conditions\WhereIs,
+    Conditions\WhereIsAtLeast,
+    Conditions\WhereIsAtMost,
+    Conditions\WhereIsLessThan,
+    Conditions\WhereIsMoreThan,
+    Conditions\WhereIsNotNull,
+    Conditions\WhereIsNull,
+    Exceptions\UnhandledConditionType,
+    Exceptions\UnhandledOperantType,
+    Operants\Argument,
+    Operants\Operant,
+    Operants\Property,
+    Operants\Value
+};
 use Medas\PdoStorage\ValueSerializer;
 
 #[Service]
@@ -35,14 +42,14 @@ readonly class ConditionsProcessor
             }
 
             match ($condition::class) {
-                WhereIs::class => $this->processComparison($job, $condition, '='),
-                WhereIsMoreThan::class => $this->processComparison($job, $condition, '>'),
-                WhereIsLessThan::class => $this->processComparison($job, $condition, '<'),
-                WhereIsAtLeast::class => $this->processComparison($job, $condition, '>='),
-                WhereIsAtMost::class => $this->processComparison($job, $condition, '<='),
-                WhereIsNull::class => $this->processNullComparison($job, $condition, true),
-                WhereIsNotNull::class => $this->processNullComparison($job, $condition, false),
-                default => throw new UnhandledConditionType($condition),
+                WhereIs::class => $this->processComparison($job,
+                $condition, '='), WhereIsMoreThan::class => $this->processComparison($job,
+                $condition, '>'), WhereIsLessThan::class => $this->processComparison($job,
+                $condition, '<'), WhereIsAtLeast::class => $this->processComparison($job,
+                $condition, '>='), WhereIsAtMost::class => $this->processComparison($job,
+                $condition, '<='), WhereIsNull::class => $this->processNullComparison($job,
+                $condition, true), WhereIsNotNull::class => $this->processNullComparison($job,
+                $condition, false), default => throw new UnhandledConditionType($condition),
             };
 
             $isFirstCondition = false;
@@ -51,21 +58,24 @@ readonly class ConditionsProcessor
 
     private function processComparison(Job $job, WhereIs $condition, string $operator): void
     {
-        $job->query .= $this->operantToQuery($job, $condition->property)
-            . $operator
-            . $this->operantToQuery($job, $condition->value);
+        $job->query .= $this->operantToQuery(
+            $job,
+            $condition->property
+        ) . $operator . $this->operantToQuery($job, $condition->value);
     }
 
     private function operantToQuery(Job $job, Operant $operant): string
     {
         if ($operant instanceof Property) {
-            return $job->stores[$operant->entity ?? $job->mainEntity]
-                . '.'
-                . $job->driverHandler->quote($job->database, $operant->name);
+            return $job->stores[$operant->entity ?? $job->mainEntity] . '.' . $job->driverHandler->quote(
+                $job->database,
+                $operant->name
+            );
         }
 
         if ($operant instanceof Argument) {
             $job->foundArguments[$operant->name] = true;
+
             return ':' . $operant->name;
         }
 
@@ -73,6 +83,7 @@ readonly class ConditionsProcessor
             $operant->value = service(ValueSerializer::class)->serialize($operant->value);
             $name = sha1(serialize($operant->value));
             $job->foundConstants[$name] = $operant->value;
+
             return ':' . $name;
         }
 
@@ -81,7 +92,6 @@ readonly class ConditionsProcessor
 
     private function processNullComparison(Job $job, WhereIsNull $condition, bool $isNull): void
     {
-        $job->query .= $this->operantToQuery($job, $condition->property)
-            . ($isNull ? ' is null' : ' is not null');
+        $job->query .= $this->operantToQuery($job, $condition->property) . ($isNull ? ' is null' : ' is not null');
     }
 }

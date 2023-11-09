@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Structure;
 
-use Medas\Core\Attributes\Service;
-use Medas\Core\CaseInsensitiveString;
+use Medas\Core\{Attributes\Service, CaseInsensitiveString};
 use Medas\EntityManager\Types\Integer;
-use Medas\PdoStorage\Exceptions\CantDetermineTypeFromDefinition;
-use Medas\PdoStorage\Exceptions\CantTurnDefinitionIntoVariable;
-use Medas\StorageManager\Structure\Blueprint\Field;
-use Medas\StorageManager\Structure\Blueprint\Type;
+use Medas\PdoStorage\Exceptions\{CantDetermineTypeFromDefinition, CantTurnDefinitionIntoVariable};
+use Medas\StorageManager\Structure\Blueprint\{Field, Type};
 
 #[Service]
 readonly class DefinitionToFieldConverter
@@ -21,13 +18,10 @@ readonly class DefinitionToFieldConverter
     public function convert(string $name, string $definition): Field
     {
         $remainder = new CaseInsensitiveString($definition);
-
         $isNullable = true;
         $isGenerated = false;
-
         $hasDefault = false;
         $default = null;
-
         $isCreationTimestamp = false;
         $isModificationTimestamp = false;
 
@@ -49,7 +43,9 @@ readonly class DefinitionToFieldConverter
 
         if ($match = $remainder->regexMatch('/ default (.+)$/i')) {
             $hasDefault = true;
+
             $remainder->chopFromEnd($match[0]);
+
             $default = $this->parseString($match[1]);
 
             if ($default === null) {
@@ -62,14 +58,18 @@ readonly class DefinitionToFieldConverter
         }
 
         $intMatch = $remainder->regexMatch('/((?:tiny|small|medium|big)?int)(?:\(\d+\))?( unsigned)?/i');
-
         $type = match (true) {
             $intMatch !== null => Type::Integer,
-            $remainder->startsWith('varchar('), $remainder->startsWith('char('), $remainder->endsWith('text') => Type::Text,
-            $remainder->startsWith('varbinary('), $remainder->startsWith('binary('), $remainder->endsWith('blob') => Type::Binary,
+            $remainder->startsWith('varchar('), $remainder
+                ->startsWith('char('), $remainder->endsWith('text') => Type::Text,
+
+            $remainder->startsWith('varbinary('), $remainder
+                ->startsWith('binary('), $remainder->endsWith('blob') => Type::Binary,
+
             $remainder->equals('datetime') => Type::DateTime,
             $remainder->equals('float') => Type::Float,
-            default => throw new CantDetermineTypeFromDefinition((string) $remainder, $definition),
+            default => throw new CantDetermineTypeFromDefinition((string) $remainder,
+            $definition),
         };
 
         $minValue = 0;
@@ -93,6 +93,7 @@ readonly class DefinitionToFieldConverter
                     'int' => Integer::SIGNED_4_BYTE_MIN,
                     default => Integer::SIGNED_8_BYTE_MIN,
                 };
+
                 $maxValue = match ($intMatch[1]) {
                     'tinyint' => Integer::SIGNED_1_BYTE_MAX,
                     'smallint' => Integer::SIGNED_2_BYTE_MAX,

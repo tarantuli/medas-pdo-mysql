@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries\SelectorQueryBuilder;
 
 use Medas\Core\Attributes\Service;
-use Medas\EntityManager\Selector\{Exceptions\UnhandledSortType,
+
+use Medas\EntityManager\Selector\{
+    Exceptions\UnhandledSortType,
     Operants\Property,
     Sorting\SortBy,
-    Sorting\SortDirection};
+    Sorting\SortDirection
+
+};
 
 #[Service]
 readonly class SortingProcessor
@@ -22,9 +26,14 @@ readonly class SortingProcessor
     public function process(Job $job, array $sorts): void
     {
         $parts = [];
+
         foreach ($sorts as $sort) {
             if ($sort instanceof SortBy && $sort->operant instanceof Property) {
-                $parts[] = $job->driverHandler->quote($job->database, $sort->operant->name) . ' ' . self::SORTING_DIRECTIONS[$sort->direction->name];
+                $parts[] = $job->driverHandler->quote(
+                    $job->database,
+                    $sort->operant->name
+                ) . ' ' . self::SORTING_DIRECTIONS[$sort->direction->name];
+
                 continue;
             }
 

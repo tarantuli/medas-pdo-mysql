@@ -6,14 +6,12 @@ namespace Medas\PdoMysql\Structure;
 
 use Medas\Core\Attributes\Service;
 use Medas\FileBuilder\PhpClass\MethodDefinition;
-use Medas\PdoStorage\PdoStorageController;
-use Medas\PdoStorage\Queries\{Query};
+use Medas\PdoStorage\{PdoStorageController, Queries\Query};
 use Medas\StorageManager\Interfaces\Storage;
 use Medas\StorageManager\Migrations\MigrationBuilder as MigrationBuilderInterface;
 use Medas\StorageManager\StorageManager;
 use Medas\StorageManager\Structure\{Blueprint, Changes\ChangeFinder};
-use Medas\StorageManager\UnitOfWork\ActionSet;
-use Medas\StorageManager\UnitOfWork\Priority;
+use Medas\StorageManager\UnitOfWork\{ActionSet, Priority};
 
 #[Service]
 readonly class MigrationBuilder implements MigrationBuilderInterface
@@ -47,15 +45,16 @@ readonly class MigrationBuilder implements MigrationBuilderInterface
         foreach ($queries as $query) {
             $queryString = addcslashes(trim($query->query), '"');
             $storageName = addcslashes(trim($query->storage()->name()), '"');
-
             $migrateMethod->body .= <<<PHP
-\$unitOfWork->addAction(new \\$queryClass(
+\$unitOfWork->addAction(new \\   $queryClass(
     <<<SQL
-$queryString
+   $queryString
 SQL,
     [],
-    service(\\$storageManagerClass::class)->byName("$storageName"),
-    \\$priorityClass::{$query->priority()->name}
+    service(\\   $storageManagerClass::class)->byName("   $storageName"),
+    \\   $priorityClass::{$query->priority()->name}
+
+            
 ));
 PHP;
         }
@@ -67,13 +66,15 @@ PHP;
     {
         $driverHandler = $this->pdoStorageController->getDatabaseController($storage)->driverHandler;
 
-        $existingStructure = $driverHandler->tableStructureFinder()->find($this->pdoStorageController->store($blueprint->name, $storage));
+        $existingStructure
+            = $driverHandler->tableStructureFinder()->find($this->pdoStorageController->store($blueprint->name, $storage));
 
         if ($existingStructure === null) {
             return $this->createTableBuilder->create($storage, $blueprint);
         }
         else {
             $changes = $this->changeFinder->find($blueprint, $existingStructure);
+
             return $changes ? $this->alterTableBuilder->create($storage, $blueprint, $changes) : new ActionSet();
         }
     }

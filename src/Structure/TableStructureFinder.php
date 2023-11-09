@@ -23,7 +23,9 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
     public function find(Table $table): Blueprint|null
     {
         $job = new TableStructureFinder\Job($table->storage(), $table);
-        $job->createTable = $this->pdoStorageController->getDatabaseController($table->database)->driverHandler->tableStructureString($table);
+
+        $job->createTable
+            = $this->pdoStorageController->getDatabaseController($table->database)->driverHandler->tableStructureString($table);
 
         if ($job->createTable === null) {
             return null;
@@ -71,6 +73,7 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
         }
 
         $index->isUnique = true;
+
         $job->blueprint->addIndex($index);
     }
 
@@ -83,7 +86,12 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
 
     protected function findKeys(TableStructureFinder\Job $job): void
     {
-        if (!preg_match_all('/(?<isUnique>unique )?key `(?<name>[^`]+)` \((?<fields>[^)]+)\)/i', $job->createTable, $matches, PREG_SET_ORDER)) {
+        if (!preg_match_all(
+            '/(?<isUnique>unique )?key `(?<name>[^`]+)` \((?<fields>[^)]+)\)/i',
+            $job->createTable,
+            $matches,
+            PREG_SET_ORDER
+        )) {
             return;
         }
 
@@ -95,18 +103,30 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
             }
 
             $index->isUnique = isset($match['isUnique']);
+
             $job->blueprint->addIndex($index);
         }
     }
 
     protected function findForeignKeys(TableStructureFinder\Job $job): void
     {
-        if (!preg_match_all('/constraint `(?<name>[^`]+)` foreign key \(`(?<field>[^`]+)`\) references `(?<table>[^`]+)` \(`(?<reference>[^`]+)`\)(?<onDeleteCascade> on delete cascade)?/i', $job->createTable, $matches, PREG_SET_ORDER)) {
+        if (!preg_match_all(
+            '/constraint `(?<name>[^`]+)` foreign key \(`(?<field>[^`]+)`\) references `(?<table>[^`]+)` \(`(?<reference>[^`]+)`\)(?<onDeleteCascade> on delete cascade)?/i',
+            $job->createTable,
+            $matches,
+            PREG_SET_ORDER
+        )) {
             return;
         }
 
         foreach ($matches as $match) {
-            $foreignKey = new ForeignKey($match['field'], $match['table'], $match['reference'], isset($match['onDeleteCascade']));
+            $foreignKey = new ForeignKey(
+                $match['field'],
+                $match['table'],
+                $match['reference'],
+                isset($match['onDeleteCascade'])
+            );
+
             $job->blueprint->addForeignKey($foreignKey);
         }
     }

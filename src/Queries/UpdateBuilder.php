@@ -24,8 +24,11 @@ readonly class UpdateBuilder implements UpdateBuilderInterface
     {
         $arguments = [];
         $query = 'update ' . $this->pdoStorageController->quote($store->storage(), $store->name) . ' set ';
+
         $this->fieldAppender->append($store->storage(), $query, $arguments, $updates);
+
         $query .= ' where ';
+
         $this->conditionAppender->append($store->storage(), $query, $arguments, $conditions);
 
         return QuerySet::fromQuery(new Query($query, $arguments, $store->storage(), Priority::UpdateRecord));

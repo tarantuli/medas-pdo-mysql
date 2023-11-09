@@ -7,8 +7,7 @@ namespace Medas\PdoMysql\Types;
 use Medas\Core\Attributes\Service;
 use Medas\PdoStorage\Database;
 use Medas\PdoStorage\Drivers\Interfaces\TypeHandler as TypeHandlerInterface;
-use Medas\StorageManager\Structure\Blueprint\Field;
-use Medas\StorageManager\Structure\Blueprint\Type;
+use Medas\StorageManager\Structure\Blueprint\{Field, Type};
 
 #[Service]
 readonly class TypeHandler implements TypeHandlerInterface
