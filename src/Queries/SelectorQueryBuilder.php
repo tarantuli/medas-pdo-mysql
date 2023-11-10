@@ -6,7 +6,6 @@ namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\{Attributes\Service, Interfaces\CacheManager, Interfaces\NotCacheable};
 use Medas\EntityManager\{MetaDataManager, Selector\Selector};
-
 use Medas\PdoStorage\{
     Database,
     Exceptions\StorageIsNotDatabase,

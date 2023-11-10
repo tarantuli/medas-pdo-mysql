@@ -6,7 +6,6 @@ namespace Medas\PdoMysql;
 
 use Medas\Core\{Attributes\Service, Interfaces\Serializer};
 use Medas\PdoStorage\Database;
-
 use Medas\PdoStorage\Drivers\{
     DriverHandler,
     Interfaces\FieldHandler,

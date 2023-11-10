@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries\SelectorQueryBuilder;
 
 use Medas\Core\Attributes\Service;
-
 use Medas\EntityManager\Selector\{
     Conditions\Condition,
     Conditions\WhereIs,

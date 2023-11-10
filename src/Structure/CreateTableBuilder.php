@@ -19,6 +19,7 @@ readonly class CreateTableBuilder
         private ForeignKeyConstraintBuilder  $foreignKeyConstraintBuilder,
         private JoinTableManager             $joinTableManager,
         private PdoStorageController         $pdoStorageController,
+
         #[ConfigValue(DefaultStrategy::class)]
         private OriginalClassStorageStrategy $originalClassStorageStrategy,
     )

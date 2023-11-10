@@ -17,6 +17,7 @@ readonly class CollectionRecordFetcher implements CollectionRecordFetcherInterfa
     public function __construct(
         public FilteredFetcher      $filteredFetcher,
         public PdoStorageController $pdoStorageController,
+
         #[ConfigValue(TableNamingStrategy::class)]
         private NamingStrategy      $namingStrategy,
     )

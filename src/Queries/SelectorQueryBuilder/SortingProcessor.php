@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries\SelectorQueryBuilder;
 
 use Medas\Core\Attributes\Service;
-
 use Medas\EntityManager\Selector\{
     Exceptions\UnhandledSortType,
     Operants\Property,
     Sorting\SortBy,
     Sorting\SortDirection
-
 };
 
 #[Service]

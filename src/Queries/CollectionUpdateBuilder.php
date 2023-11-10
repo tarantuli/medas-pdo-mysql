@@ -20,6 +20,7 @@ readonly class CollectionUpdateBuilder implements CollectionUpdateBuilderInterfa
         public DeleteBuilder        $deleteBuilder,
         public InsertBuilder        $insertBuilder,
         public PdoStorageController $pdoStorageController,
+
         #[ConfigValue(TableNamingStrategy::class)]
         private NamingStrategy      $namingStrategy,
     )
