@@ -19,8 +19,8 @@ readonly class ConditionAppender
 
     public function append(
         Database $database,
-        string & $query,
-        array &  $arguments,
+        string   &$query,
+        array    &$arguments,
         array    $filters,
         string   $separator = 'and'
     ): void

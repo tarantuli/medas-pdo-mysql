@@ -27,6 +27,7 @@ class PdoMysqlPackage extends BasePackage
     public function initialize(ServiceConfig $config): void
     {
         parent::initialize($config);
+
         service(DriverHandlerManager::class)->addHandler(service(MysqlHandler::class));
     }
 }
