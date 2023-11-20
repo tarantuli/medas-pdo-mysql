@@ -41,14 +41,14 @@ readonly class ConditionsProcessor
             }
 
             match ($condition::class) {
-                WhereIs::class => $this->processComparison($job,
-                $condition, '='), WhereIsMoreThan::class => $this->processComparison($job,
-                $condition, '>'), WhereIsLessThan::class => $this->processComparison($job,
-                $condition, '<'), WhereIsAtLeast::class => $this->processComparison($job,
-                $condition, '>='), WhereIsAtMost::class => $this->processComparison($job,
-                $condition, '<='), WhereIsNull::class => $this->processNullComparison($job,
-                $condition, true), WhereIsNotNull::class => $this->processNullComparison($job,
-                $condition, false), default => throw new UnhandledConditionType($condition),
+                WhereIs::class => $this->processComparison($job, $condition, '='),
+                WhereIsMoreThan::class => $this->processComparison($job, $condition, '>'),
+                WhereIsLessThan::class => $this->processComparison($job, $condition, '<'),
+                WhereIsAtLeast::class => $this->processComparison($job, $condition, '>='),
+                WhereIsAtMost::class => $this->processComparison($job, $condition, '<='),
+                WhereIsNull::class => $this->processNullComparison($job, $condition, true),
+                WhereIsNotNull::class => $this->processNullComparison($job, $condition, false),
+                default => throw new UnhandledConditionType($condition),
             };
 
             $isFirstCondition = false;
@@ -57,19 +57,17 @@ readonly class ConditionsProcessor
 
     private function processComparison(Job $job, WhereIs $condition, string $operator): void
     {
-        $job->query .= $this->operantToQuery(
-            $job,
-            $condition->property
-        ) . $operator . $this->operantToQuery($job, $condition->value);
+        $job->query .= $this->operantToQuery($job, $condition->property)
+            . $operator
+            . $this->operantToQuery($job, $condition->value);
     }
 
     private function operantToQuery(Job $job, Operant $operant): string
     {
         if ($operant instanceof Property) {
-            return $job->stores[$operant->entity ?? $job->mainEntity] . '.' . $job->driverHandler->quote(
-                $job->database,
-                $operant->name
-            );
+            return $job->stores[$operant->entity ?? $job->mainEntity]
+                . '.'
+                . $job->driverHandler->quote($job->database, $operant->name);
         }
 
         if ($operant instanceof Argument) {

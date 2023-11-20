@@ -14,6 +14,7 @@ class Job
 
     /** @var Field[] */
     public array $collections = [];
+
     public array $foreignKeys = [];
     public QuerySet $querySet;
 

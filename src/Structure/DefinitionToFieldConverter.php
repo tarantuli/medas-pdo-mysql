@@ -60,16 +60,16 @@ readonly class DefinitionToFieldConverter
         $intMatch = $remainder->regexMatch('/((?:tiny|small|medium|big)?int)(?:\(\d+\))?( unsigned)?/i');
         $type = match (true) {
             $intMatch !== null => Type::Integer,
-            $remainder->startsWith('varchar('), $remainder
-                ->startsWith('char('), $remainder->endsWith('text') => Type::Text,
 
-            $remainder->startsWith('varbinary('), $remainder
-                ->startsWith('binary('), $remainder->endsWith('blob') => Type::Binary,
+            $remainder->startsWith('varchar('), $remainder->startsWith('char('), $remainder->endsWith('text')
+                => Type::Text,
+
+            $remainder->startsWith('varbinary('), $remainder->startsWith('binary('), $remainder->endsWith('blob')
+                => Type::Binary,
 
             $remainder->equals('datetime') => Type::DateTime,
             $remainder->equals('float') => Type::Float,
-            default => throw new CantDetermineTypeFromDefinition((string) $remainder,
-            $definition),
+            default => throw new CantDetermineTypeFromDefinition((string) $remainder, $definition),
         };
 
         $minValue = 0;

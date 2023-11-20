@@ -18,22 +18,18 @@ readonly class ForeignKeyConstraintBuilder
         ForeignKey    $foreignKey
     ): string
     {
-        return ' add constraint ' . $driver->quote($database, $this->createForeignKeyName(
-            $entityName,
-            $foreignKey
-
-        )) . "\n" . '  foreign key (' . $driver->quote(
-            $database,
-            $foreignKey->field
-        ) . ")\n" . '  references ' . $driver->quote(
-            $database,
-            $foreignKey->foreignEntity
-
-        ) . ' (' . $driver->quote($database, $foreignKey->foreignField) . ")" . (
-            $foreignKey->doCascade
-            ? ' on delete cascade on update cascade'
-            : ''
-        );
+        return ' add constraint '
+            . $driver->quote($database, $this->createForeignKeyName($entityName, $foreignKey))
+            . "\n"
+            . '  foreign key ('
+            . $driver->quote($database, $foreignKey->field)
+            . ")\n"
+            . '  references '
+            . $driver->quote($database, $foreignKey->foreignEntity)
+            . ' ('
+            . $driver->quote($database, $foreignKey->foreignField)
+            . ")"
+            . ($foreignKey->doCascade ? ' on delete cascade on update cascade' : '');
     }
 
     public function buildDrop(

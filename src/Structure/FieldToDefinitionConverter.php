@@ -44,10 +44,9 @@ readonly class FieldToDefinitionConverter implements FieldHandler
             return null;
         }
 
-        return $baseDefinition . ($field->isNullable ? '' : ' not null') . (
-            $field->isGenerated
-            ? ' auto_increment'
-            : ''
-        ) . $default;
+        return $baseDefinition
+            . ($field->isNullable ? '' : ' not null')
+            . ($field->isGenerated ? ' auto_increment' : '')
+            . $default;
     }
 }

@@ -135,10 +135,9 @@ readonly class CreateTableBuilder
                     $job->baseQuery .= ' unique';
                 }
 
-                $job->baseQuery .= ' key ' . $job->driverHandler->quote(
-                    $job->database,
-                    $this->createIndexName($index)
-                ) . ' (';
+                $job->baseQuery .= ' key '
+                    . $job->driverHandler->quote($job->database, $this->createIndexName($index))
+                    . ' (';
             }
 
             foreach ($index->fields() as $field) {

@@ -28,10 +28,14 @@ readonly class InsertBuilder implements InsertBuilderInterface
             $arguments[] = $value;
         }
 
-        $query = 'insert into ' . $this->pdoStorageController->quote(
-            $store->storage(),
-            $store->name
-        ) . ' (' . implode(',', $names) . ')' . ' values (' . implode(',', array_fill(0, count($names), '?')) . ')';
+        $query = 'insert into '
+            . $this->pdoStorageController->quote($store->storage(), $store->name)
+            . ' ('
+            . implode(',', $names)
+            . ')'
+            . ' values ('
+            . implode(',', array_fill(0, count($names), '?'))
+            . ')';
 
         return QuerySet::fromQuery(new Query($query, $arguments, $store->storage(), $priority));
     }
