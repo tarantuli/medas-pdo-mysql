@@ -6,7 +6,13 @@ namespace Medas\PdoMysql\Structure;
 
 use Medas\Core\Attributes\Service;
 use Medas\PdoMysql\Queries\ForeignKeyConstraintBuilder;
-use Medas\PdoStorage\{Database, JoinTables\JoinTableManager, PdoStorageController, Queries\Query, Queries\QuerySet};
+use Medas\PdoStorage\{
+    Database,
+    JoinTables\JoinTableManager,
+    PdoStorageController,
+    Queries\Query,
+    Queries\QuerySet
+};
 use Medas\StorageManager\Structure\{Blueprint, Blueprint\Type, Changes\Changes};
 use Medas\StorageManager\UnitOfWork\Priority;
 
@@ -36,7 +42,12 @@ readonly class AlterTableBuilder
         $this->processForeignKeys($job);
 
         if ($job->baseQuery !== null) {
-            $job->querySet[] = new Query(substr($job->baseQuery, 0, -2), [], $job->database, Priority::AlterStore);
+            $job->querySet[] = new Query(
+                substr($job->baseQuery, 0, -2),
+                [],
+                $job->database,
+                Priority::AlterStore
+            );
         }
 
         $this->processCollections($job);
@@ -53,7 +64,10 @@ readonly class AlterTableBuilder
                 continue;
             }
 
-            $definition = $job->driverHandler->fieldHandler()->buildDefinition($job->database, $field);
+            $definition = $job->driverHandler->fieldHandler()->buildDefinition(
+                $job->database,
+                $field
+            );
 
             if ($definition !== null) {
                 if ($job->baseQuery === null) {
@@ -69,7 +83,10 @@ readonly class AlterTableBuilder
         }
 
         foreach ($job->changes->changeFields as $field) {
-            $definition = $job->driverHandler->fieldHandler()->buildDefinition($job->database, $field);
+            $definition = $job->driverHandler->fieldHandler()->buildDefinition(
+                $job->database,
+                $field
+            );
 
             if ($definition !== null) {
                 if ($job->baseQuery === null) {
@@ -87,7 +104,9 @@ readonly class AlterTableBuilder
 
     private function startAlterQuery(TableBuilders\Job $job): string
     {
-        return 'alter table ' . $job->driverHandler->quote($job->database, $job->changes->name) . "\n";
+        return 'alter table '
+            . $job->driverHandler->quote($job->database, $job->changes->name)
+            . "\n";
     }
 
     private function processIndexes(TableBuilders\Job $job): void
@@ -106,10 +125,16 @@ readonly class AlterTableBuilder
 
             foreach ($job->changes->changeForeignKey as $foreignKey) {
                 $query .= $this->foreignKeyConstraintBuilder
-                    ->buildDrop($job->changes->name, $job->driverHandler, $job->database, $foreignKey) . ",\n";
+                    ->buildDrop($job->changes->name, $job->driverHandler, $job->database, $foreignKey)
+                        . ",\n";
             }
 
-            $job->querySet[] = new Query(substr($query, 0, -2), [], $job->database, Priority::DeleteStoreRelations);
+            $job->querySet[] = new Query(
+                substr($query, 0, -2),
+                [],
+                $job->database,
+                Priority::DeleteStoreRelations
+            );
         }
 
         $query = $this->startAlterQuery($job);
@@ -117,10 +142,16 @@ readonly class AlterTableBuilder
 
         foreach ($foreignKeys as $foreignKey) {
             $query .= $this->foreignKeyConstraintBuilder
-                ->buildAdd($job->changes->name, $job->driverHandler, $job->database, $foreignKey) . ",\n";
+                ->buildAdd($job->changes->name, $job->driverHandler, $job->database, $foreignKey)
+                    . ",\n";
         }
 
-        $job->querySet[] = new Query(substr($query, 0, -2), [], $job->database, Priority::AddStoreRelations);
+        $job->querySet[] = new Query(
+            substr($query, 0, -2),
+            [],
+            $job->database,
+            Priority::AddStoreRelations
+        );
     }
 
     protected function processCollections(TableBuilders\Job $job): void
@@ -130,7 +161,11 @@ readonly class AlterTableBuilder
         }
 
         foreach ($job->collections as $collectionField) {
-            $queries = $this->joinTableManager->createQueries($job->database, $job->blueprint, $collectionField);
+            $queries = $this->joinTableManager->createQueries(
+                $job->database,
+                $job->blueprint,
+                $collectionField
+            );
 
             if ($queries) {
                 foreach ($queries as $query) {

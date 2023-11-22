@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\Attributes\Service;
-use Medas\PdoStorage\Drivers\Interfaces\{QueryBuilders as QueryBuildersInterface, ShowTablesBuilder};
+use Medas\PdoStorage\Drivers\Interfaces\{
+    QueryBuilders as QueryBuildersInterface,
+    ShowTablesBuilder
+};
 use Medas\StorageManager\Interfaces\Builders;
 
 #[Service]

@@ -9,7 +9,10 @@ use Medas\EntityManager\MetaData\Property;
 use Medas\PdoStorage\ConfigOptions\JoinTables\TableNamingStrategy;
 use Medas\PdoStorage\JoinTables\NamingStrategy;
 use Medas\PdoStorage\PdoStorageController;
-use Medas\StorageManager\Interfaces\{Fetchers\CollectionRecordFetcher as CollectionRecordFetcherInterface, Store};
+use Medas\StorageManager\Interfaces\{
+    Fetchers\CollectionRecordFetcher as CollectionRecordFetcherInterface,
+    Store
+};
 
 #[Service]
 readonly class CollectionRecordFetcher implements CollectionRecordFetcherInterface

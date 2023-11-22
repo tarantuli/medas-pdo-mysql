@@ -39,7 +39,8 @@ readonly class ForeignKeyConstraintBuilder
         ForeignKey    $foreignKey
     ): string
     {
-        return ' drop constraint ' . $driver->quote($database, $this->createForeignKeyName($entityName, $foreignKey));
+        return ' drop constraint '
+            . $driver->quote($database, $this->createForeignKeyName($entityName, $foreignKey));
     }
 
     private function createForeignKeyName(string $entityName, ForeignKey $foreignKey): string

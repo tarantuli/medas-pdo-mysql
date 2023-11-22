@@ -22,7 +22,10 @@ readonly class DeleteBuilder implements DeleteBuilderInterface
     public function build(Store $store, array $conditions, Priority $priority = Priority::DeleteRecord): ActionSet
     {
         $arguments = [];
-        $query = 'delete from ' . $this->pdoStorageController->quote($store->storage(), $store->name) . ' where ';
+
+        $query = 'delete from '
+            . $this->pdoStorageController->quote($store->storage(), $store->name)
+            . ' where ';
 
         $this->conditionAppender->append($store->storage(), $query, $arguments, $conditions);
 

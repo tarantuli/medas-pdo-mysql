@@ -78,7 +78,12 @@ readonly class SelectorQueryBuilder implements SelectorActionBuilder
         $this->parametersProcessor->process($job, $definition->parameters);
         $this->paginationProcessor->process($job, $definition->pagination);
 
-        return new ParameterizedQuery($job->query, $definition->parameters, $job->foundConstants, $database);
+        return new ParameterizedQuery(
+            $job->query,
+            $definition->parameters,
+            $job->foundConstants,
+            $database
+        );
     }
 
     private function compileToQuery(ParameterizedQuery $paraQuery, array $arguments): QuerySet

@@ -89,6 +89,7 @@ readonly class ConditionsProcessor
 
     private function processNullComparison(Job $job, WhereIsNull $condition, bool $isNull): void
     {
-        $job->query .= $this->operantToQuery($job, $condition->property) . ($isNull ? ' is null' : ' is not null');
+        $job->query .= $this->operantToQuery($job, $condition->property)
+            . ($isNull ? ' is null' : ' is not null');
     }
 }

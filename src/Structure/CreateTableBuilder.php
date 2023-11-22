@@ -6,7 +6,13 @@ namespace Medas\PdoMysql\Structure;
 
 use Medas\Core\Attributes\{ConfigValue, Service};
 use Medas\PdoMysql\Queries\ForeignKeyConstraintBuilder;
-use Medas\PdoStorage\{Database, JoinTables\JoinTableManager, PdoStorageController, Queries\Query, Queries\QuerySet};
+use Medas\PdoStorage\{
+    Database,
+    JoinTables\JoinTableManager,
+    PdoStorageController,
+    Queries\Query,
+    Queries\QuerySet
+};
 use Medas\StorageManager\ConfigOptions\OriginalClassStorage\DefaultStrategy;
 use Medas\StorageManager\Inheritance\OriginalClassStorageStrategy;
 use Medas\StorageManager\Structure\{Blueprint, Blueprint\Field, Blueprint\Index};
@@ -64,7 +70,12 @@ readonly class CreateTableBuilder
                 $primaryIndex = $job->blueprint->primaryIndex();
 
                 if ($primaryIndex && in_array($field, $primaryIndex->fields())) {
-                    $foreignKey = new Blueprint\ForeignKey($field->name, $field->store, $field->name, true);
+                    $foreignKey = new Blueprint\ForeignKey(
+                        $field->name,
+                        $field->store,
+                        $field->name,
+                        true
+                    );
 
                     $job->blueprint->addForeignKey($foreignKey);
 
@@ -81,7 +92,10 @@ readonly class CreateTableBuilder
                 continue;
             }
 
-            $definition = $job->driverHandler->fieldHandler()->buildDefinition($job->database, $field);
+            $definition = $job->driverHandler->fieldHandler()->buildDefinition(
+                $job->database,
+                $field
+            );
 
             if ($definition !== null) {
                 $job->baseQuery .= sprintf(
@@ -100,7 +114,11 @@ readonly class CreateTableBuilder
         }
 
         foreach ($job->collections as $collectionField) {
-            $queries = $this->joinTableManager->createQueries($job->database, $job->blueprint, $collectionField);
+            $queries = $this->joinTableManager->createQueries(
+                $job->database,
+                $job->blueprint,
+                $collectionField
+            );
 
             if ($queries) {
                 foreach ($queries as $query) {

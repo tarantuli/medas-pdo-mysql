@@ -7,7 +7,10 @@ namespace Medas\PdoMysql\Queries;
 use Medas\Core\Attributes\Service;
 use Medas\PdoMysql\Structure\CreateTableBuilder;
 use Medas\PdoStorage\Queries\QuerySet;
-use Medas\StorageManager\Interfaces\{Builders\CreateStoreBuilder as CreateStoreBuilderInterface, Storage};
+use Medas\StorageManager\Interfaces\{
+    Builders\CreateStoreBuilder as CreateStoreBuilderInterface,
+    Storage
+};
 use Medas\StorageManager\Structure\Blueprint;
 
 #[Service]

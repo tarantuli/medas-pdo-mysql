@@ -10,7 +10,10 @@ use Medas\PdoStorage\ConfigOptions\JoinTables\TableNamingStrategy;
 use Medas\PdoStorage\JoinTables\NamingStrategy;
 use Medas\PdoStorage\PdoStorageController;
 use Medas\PdoStorage\Queries\QuerySet;
-use Medas\StorageManager\Interfaces\{Builders\CollectionUpdateBuilder as CollectionUpdateBuilderInterface, Store};
+use Medas\StorageManager\Interfaces\{
+    Builders\CollectionUpdateBuilder as CollectionUpdateBuilderInterface,
+    Store
+};
 use Medas\StorageManager\UnitOfWork\{ActionSet, Priority};
 
 #[Service]

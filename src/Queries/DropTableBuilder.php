@@ -21,7 +21,8 @@ readonly class DropTableBuilder implements DeleteStoreBuilder
     public function build(Store $store): ActionSet
     {
         $query = new Query(
-            'drop table if exists ' . $this->pdoStorageController->quote($store->storage(), $store->name()),
+            'drop table if exists '
+                . $this->pdoStorageController->quote($store->storage(), $store->name()),
             [],
             $store->storage()
         );

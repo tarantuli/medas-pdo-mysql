@@ -29,21 +29,36 @@ readonly class ConditionAppender
 
         foreach ($filters as $field => $value) {
             if ($value instanceof LessThan) {
-                $query .= $driverHandler->quote($database, $value->field) . ' < ? ' . $separator . ' ';
+                $query .= $driverHandler->quote($database, $value->field)
+                    . ' < ? '
+                    . $separator
+                    . ' ';
+
                 $arguments[] = $value->value;
             }
             elseif ($value instanceof MoreThan) {
-                $query .= $driverHandler->quote($database, $value->field) . ' > ? ' . $separator . ' ';
+                $query .= $driverHandler->quote($database, $value->field)
+                    . ' > ? '
+                    . $separator
+                    . ' ';
+
                 $arguments[] = $value->value;
             }
             elseif ($value instanceof Between) {
-                $query .= $driverHandler->quote($database, $value->field) . 'between ? and ? ' . $separator . ' ';
+                $query .= $driverHandler->quote($database, $value->field)
+                    . 'between ? and ? '
+                    . $separator
+                    . ' ';
+
                 $arguments[] = $value->lowerValue;
                 $arguments[] = $value->upperValue;
             }
             else {
                 if ($value === null && $separator === 'and') {
-                    $query .= $driverHandler->quote($database, $field) . ' is null ' . $separator . ' ';
+                    $query .= $driverHandler->quote($database, $field)
+                        . ' is null '
+                        . $separator
+                        . ' ';
                 }
                 else {
                     $query .= $driverHandler->quote($database, $field) . ' = ? ' . $separator . ' ';

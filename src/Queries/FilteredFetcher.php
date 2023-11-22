@@ -6,7 +6,12 @@ namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\Attributes\Service;
 use Medas\PdoStorage\{PdoStorageController, Queries\Query, Queries\QueryExecutor};
-use Medas\StorageManager\Interfaces\{Fetchers\FilteredFetcher as FilteredFetcherInterface, Record, RecordSet, Store};
+use Medas\StorageManager\Interfaces\{
+    Fetchers\FilteredFetcher as FilteredFetcherInterface,
+    Record,
+    RecordSet,
+    Store
+};
 
 #[Service]
 readonly class FilteredFetcher implements FilteredFetcherInterface

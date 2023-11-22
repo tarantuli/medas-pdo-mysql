@@ -75,7 +75,9 @@ PHP;
         else {
             $changes = $this->changeFinder->find($blueprint, $existingStructure);
 
-            return $changes ? $this->alterTableBuilder->create($storage, $blueprint, $changes) : new ActionSet();
+            return $changes
+                ? $this->alterTableBuilder->create($storage, $blueprint, $changes)
+                : new ActionSet();
         }
     }
 }

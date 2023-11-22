@@ -23,7 +23,10 @@ readonly class UpdateBuilder implements UpdateBuilderInterface
     public function build(Store $store, array $updates, array $conditions): ActionSet
     {
         $arguments = [];
-        $query = 'update ' . $this->pdoStorageController->quote($store->storage(), $store->name) . ' set ';
+
+        $query = 'update '
+            . $this->pdoStorageController->quote($store->storage(), $store->name)
+            . ' set ';
 
         $this->fieldAppender->append($store->storage(), $query, $arguments, $updates);
 
