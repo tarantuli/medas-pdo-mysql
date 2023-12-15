@@ -20,12 +20,12 @@ use Medas\StorageManager\UnitOfWork\{ActionSet, Priority};
 readonly class CollectionUpdateBuilder implements CollectionUpdateBuilderInterface
 {
     public function __construct(
-        public DeleteBuilder        $deleteBuilder,
-        public InsertBuilder        $insertBuilder,
-        public PdoStorageController $pdoStorageController,
+        private DeleteBuilder        $deleteBuilder,
+        private InsertBuilder        $insertBuilder,
+        private PdoStorageController $pdoStorageController,
 
         #[ConfigValue(TableNamingStrategy::class)]
-        private NamingStrategy      $namingStrategy,
+        private NamingStrategy       $namingStrategy,
     )
     {
     }

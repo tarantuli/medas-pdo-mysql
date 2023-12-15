@@ -14,8 +14,10 @@ use Medas\PdoStorage\Drivers\{
     Interfaces\TypeHandler as TypeHandlerInterface
 };
 use Medas\PdoStorage\Table;
-use Medas\PdoStorage\ValueSerializer;
-use Medas\StorageManager\Interfaces\RecordFetchers as RecordFetchersInterface;
+use Medas\StorageManager\{
+    Interfaces\RecordFetchers as RecordFetchersInterface,
+    Shared\ValueSerializer
+};
 
 #[Service]
 readonly class MysqlHandler implements DriverHandler

@@ -21,7 +21,7 @@ use Medas\EntityManager\Selector\{
     Operants\Property,
     Operants\Value
 };
-use Medas\PdoStorage\ValueSerializer;
+use Medas\StorageManager\Shared\ValueSerializer;
 
 #[Service]
 readonly class ConditionsProcessor

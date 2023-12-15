@@ -3,8 +3,11 @@
 declare(strict_types=1);
 
 use Medas\ConfigManager\ConfigManager;
+use Medas\ConfigManager\ConfigManagerPackage;
+use Medas\Events\EventsPackage;
 use Medas\PdoMysql\PdoMysqlPackage;
 use Medas\PdoStorage\Database;
+use Medas\RamseyUuidBridge\RamseyUuidBridgePackage;
 use Medas\ServiceManager\{ServiceConfig, ServiceManager};
 use Medas\StorageManager\StorageManager;
 use Medas\StorageManagerTests\StorageManagerTestsPackage;
@@ -17,7 +20,10 @@ new ServiceManager(function (): ServiceConfig {
     $config = new ServiceConfig();
 
     $config->addPackages([
+        ConfigManagerPackage::instance(),
+        EventsPackage::instance(),
         PdoMysqlPackage::instance(),
+        RamseyUuidBridgePackage::instance(),
         StorageManagerTestsPackage::instance(),
     ]);
 
