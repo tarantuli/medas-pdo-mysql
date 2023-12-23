@@ -77,13 +77,6 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
         $job->blueprint->addIndex($index);
     }
 
-    protected function getNames(string $nameString): array
-    {
-        $names = explode(',', $nameString);
-
-        return array_map(fn($name) => trim($name, '`'), $names);
-    }
-
     protected function findKeys(TableStructureFinder\Job $job): void
     {
         if (!preg_match_all(
@@ -106,6 +99,13 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
 
             $job->blueprint->addIndex($index);
         }
+    }
+
+    protected function getNames(string $nameString): array
+    {
+        $names = explode(',', $nameString);
+
+        return array_map(fn($name) => trim($name, '`'), $names);
     }
 
     protected function findForeignKeys(TableStructureFinder\Job $job): void

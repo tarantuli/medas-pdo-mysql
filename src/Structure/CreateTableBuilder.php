@@ -107,27 +107,6 @@ readonly class CreateTableBuilder
         }
     }
 
-    protected function processCollections(TableBuilders\Job $job): void
-    {
-        if (!$job->collections) {
-            return;
-        }
-
-        foreach ($job->collections as $collectionField) {
-            $queries = $this->joinTableManager->createQueries(
-                $job->database,
-                $job->blueprint,
-                $collectionField
-            );
-
-            if ($queries) {
-                foreach ($queries as $query) {
-                    $job->querySet[] = $query;
-                }
-            }
-        }
-    }
-
     protected function addKeys(TableBuilders\Job $job): void
     {
         foreach ($job->blueprint->indexes as $index) {
@@ -193,6 +172,27 @@ readonly class CreateTableBuilder
 
         foreach ($this->originalClassStorageStrategy->buildStoreActions($job->blueprint, $job->database) as $query) {
             $job->querySet[] = $query;
+        }
+    }
+
+    protected function processCollections(TableBuilders\Job $job): void
+    {
+        if (!$job->collections) {
+            return;
+        }
+
+        foreach ($job->collections as $collectionField) {
+            $queries = $this->joinTableManager->createQueries(
+                $job->database,
+                $job->blueprint,
+                $collectionField
+            );
+
+            if ($queries) {
+                foreach ($queries as $query) {
+                    $job->querySet[] = $query;
+                }
+            }
         }
     }
 }

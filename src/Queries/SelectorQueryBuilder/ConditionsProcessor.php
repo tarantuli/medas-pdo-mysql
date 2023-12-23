@@ -62,6 +62,12 @@ readonly class ConditionsProcessor
             . $this->operantToQuery($job, $condition->value);
     }
 
+    private function processNullComparison(Job $job, WhereIsNull $condition, bool $isNull): void
+    {
+        $job->query .= $this->operantToQuery($job, $condition->property)
+            . ($isNull ? ' is null' : ' is not null');
+    }
+
     private function operantToQuery(Job $job, Operant $operant): string
     {
         if ($operant instanceof Property) {
@@ -85,11 +91,5 @@ readonly class ConditionsProcessor
         }
 
         throw new UnhandledOperantType($operant);
-    }
-
-    private function processNullComparison(Job $job, WhereIsNull $condition, bool $isNull): void
-    {
-        $job->query .= $this->operantToQuery($job, $condition->property)
-            . ($isNull ? ' is null' : ' is not null');
     }
 }

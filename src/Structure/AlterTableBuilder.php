@@ -102,13 +102,6 @@ readonly class AlterTableBuilder
         }
     }
 
-    private function startAlterQuery(TableBuilders\Job $job): string
-    {
-        return 'alter table '
-            . $job->driverHandler->quote($job->database, $job->changes->name)
-            . "\n";
-    }
-
     private function processIndexes(TableBuilders\Job $job): void
     {
         // TODO need to be implemented
@@ -152,6 +145,13 @@ readonly class AlterTableBuilder
             $job->database,
             Priority::AddStoreRelations
         );
+    }
+
+    private function startAlterQuery(TableBuilders\Job $job): string
+    {
+        return 'alter table '
+            . $job->driverHandler->quote($job->database, $job->changes->name)
+            . "\n";
     }
 
     protected function processCollections(TableBuilders\Job $job): void
