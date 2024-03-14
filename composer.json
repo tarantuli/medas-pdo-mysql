@@ -1,6 +1,9 @@
 {
     "name": "morphp/medas-pdo-mysql",
     "description": "Medas pdo mysql",
+    "keywords": [
+        "storage"
+    ],
     "authors": [
         {
             "name": "Patrick Morpey",
