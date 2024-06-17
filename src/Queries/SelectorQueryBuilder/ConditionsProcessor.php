@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries\SelectorQueryBuilder;
 
 use Medas\Core\Attributes\Service;
-use Medas\EntityManager\Selector\{
-    Conditions\Condition,
+use Medas\EntityManager\Selector\{Conditions\Condition,
     Conditions\WhereIs,
     Conditions\WhereIsAtLeast,
     Conditions\WhereIsAtMost,
     Conditions\WhereIsLessThan,
     Conditions\WhereIsMoreThan,
+    Conditions\WhereIsNot,
     Conditions\WhereIsNotNull,
     Conditions\WhereIsNull,
     Exceptions\UnhandledConditionType,
@@ -19,8 +19,7 @@ use Medas\EntityManager\Selector\{
     Operants\Argument,
     Operants\Operant,
     Operants\Property,
-    Operants\Value
-};
+    Operants\Value};
 use Medas\StorageManager\Shared\ValueSerializer;
 
 #[Service]
@@ -42,6 +41,7 @@ readonly class ConditionsProcessor
 
             match ($condition::class) {
                 WhereIs::class => $this->processComparison($job, $condition, '='),
+                WhereIsNot::class => $this->processComparison($job, $condition, '!='),
                 WhereIsMoreThan::class => $this->processComparison($job, $condition, '>'),
                 WhereIsLessThan::class => $this->processComparison($job, $condition, '<'),
                 WhereIsAtLeast::class => $this->processComparison($job, $condition, '>='),
