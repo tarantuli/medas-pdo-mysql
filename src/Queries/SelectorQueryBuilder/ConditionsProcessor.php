@@ -84,7 +84,7 @@ readonly class ConditionsProcessor
 
         if ($operant instanceof Value) {
             $operant->value = service(ValueSerializer::class)->serialize($operant->value);
-            $name = sha1(serialize($operant->value));
+            $name = sha1(serialize($operant->value) . "\0" . count($job->foundConstants));
             $job->foundConstants[$name] = $operant->value;
 
             return ':' . $name;
