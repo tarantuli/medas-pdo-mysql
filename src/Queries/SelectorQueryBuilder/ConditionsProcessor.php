@@ -64,9 +64,17 @@ readonly class ConditionsProcessor
 
     private function processComparison(Job $job, WhereIs $condition, string $operator): void
     {
-        $job->query .= $this->operantToQuery($job, $condition->property)
-            . $operator
-            . $this->operantToQuery($job, $condition->value);
+        $nameQuery = $this->operantToQuery($job, $condition->property);
+        $addOrIsNull = false;
+        $valueQuery = $this->operantToQuery($job, $condition->value, $addOrIsNull);
+        $baseQuery = $nameQuery . $operator . $valueQuery;
+
+        if ($addOrIsNull) {
+            $job->query .= '(' . $baseQuery . ' or ' . $nameQuery . ' is null)';
+        }
+        else {
+            $job->query .= $baseQuery;
+        }
     }
 
     private function processNullComparison(Job $job, WhereIsNull $condition, bool $isNull): void
@@ -75,7 +83,7 @@ readonly class ConditionsProcessor
             . ($isNull ? ' is null' : ' is not null');
     }
 
-    private function operantToQuery(Job $job, Operant $operant): string
+    private function operantToQuery(Job $job, Operant $operant, bool &$addOrIsNull = null): string
     {
         if ($operant instanceof Property) {
             return $job->stores[$operant->entity ?? $job->mainEntity]
@@ -97,7 +105,12 @@ readonly class ConditionsProcessor
             $names = [];
 
             foreach ($operant->value as $value) {
-                $names[] = $this->addValue($value, $job);
+                if ($value === null) {
+                    $addOrIsNull = true;
+                }
+                else {
+                    $names[] = $this->addValue($value, $job);
+                }
             }
 
             return '(' . implode(',', $names) . ')';
