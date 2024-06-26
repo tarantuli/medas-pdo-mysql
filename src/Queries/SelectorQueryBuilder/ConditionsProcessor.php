@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries\SelectorQueryBuilder;
 
 use Medas\Core\Attributes\Service;
-use Medas\EntityManager\Selector\{Conditions\Condition,
+use Medas\EntityManager\Selector\{
+    Conditions\Condition,
+    Conditions\WhereIn,
     Conditions\WhereIs,
     Conditions\WhereIsAtLeast,
     Conditions\WhereIsAtMost,
@@ -14,12 +16,15 @@ use Medas\EntityManager\Selector\{Conditions\Condition,
     Conditions\WhereIsNot,
     Conditions\WhereIsNotNull,
     Conditions\WhereIsNull,
+    Conditions\WhereNotIn,
     Exceptions\UnhandledConditionType,
     Exceptions\UnhandledOperantType,
     Operants\Argument,
     Operants\Operant,
     Operants\Property,
-    Operants\Value};
+    Operants\Value,
+    Operants\Values
+};
 use Medas\StorageManager\Shared\ValueSerializer;
 
 #[Service]
@@ -42,6 +47,8 @@ readonly class ConditionsProcessor
             match ($condition::class) {
                 WhereIs::class => $this->processComparison($job, $condition, '='),
                 WhereIsNot::class => $this->processComparison($job, $condition, '!='),
+                WhereIn::class => $this->processComparison($job, $condition, ' in '),
+                WhereNotIn::class => $this->processComparison($job, $condition, ' not in '),
                 WhereIsMoreThan::class => $this->processComparison($job, $condition, '>'),
                 WhereIsLessThan::class => $this->processComparison($job, $condition, '<'),
                 WhereIsAtLeast::class => $this->processComparison($job, $condition, '>='),
@@ -83,13 +90,28 @@ readonly class ConditionsProcessor
         }
 
         if ($operant instanceof Value) {
-            $operant->value = service(ValueSerializer::class)->serialize($operant->value);
-            $name = sha1(serialize($operant->value) . "\0" . count($job->foundConstants));
-            $job->foundConstants[$name] = $operant->value;
+            return $this->addValue($operant->value, $job);
+        }
 
-            return ':' . $name;
+        if ($operant instanceof Values) {
+            $names = [];
+
+            foreach ($operant->value as $value) {
+                $names[] = $this->addValue($value, $job);
+            }
+
+            return '(' . implode(',', $names) . ')';
         }
 
         throw new UnhandledOperantType($operant);
+    }
+
+    private function addValue(mixed &$value, Job $job): string
+    {
+        $value = service(ValueSerializer::class)->serialize($value);
+        $name = 'c' . count($job->foundConstants);
+        $job->foundConstants[$name] = $value;
+
+        return ':' . $name;
     }
 }
