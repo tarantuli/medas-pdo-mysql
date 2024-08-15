@@ -10,7 +10,7 @@ use Medas\PdoStorage\Queries\{ParameterizedQuery, Query, QuerySet};
 #[Service]
 readonly class ParameterizedQueryToActionSet
 {
-    public function compile(ParameterizedQuery $paraQuery, array $arguments): QuerySet
+    public function compile(ParameterizedQuery $paraQuery, array $arguments = []): QuerySet
     {
         $query = new Query($paraQuery->query, $paraQuery->constants, $paraQuery->database);
 
