@@ -6,13 +6,7 @@ namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\{Attributes\Service, Interfaces\CacheManager, Interfaces\NotCacheable};
 use Medas\EntityManager\{MetaDataManager, Selector\Selector};
-use Medas\PdoStorage\{
-    Database,
-    Exceptions\StorageIsNotDatabase,
-    Queries\ParameterizedQuery,
-    Queries\Query,
-    Queries\QuerySet
-};
+use Medas\PdoStorage\{Database, Exceptions\StorageIsNotDatabase, Queries\ParameterizedQuery};
 use Medas\StorageManager\Interfaces\Builders\SelectorActionBuilder;
 use Medas\StorageManager\StorageManager;
 use Medas\StorageManager\UnitOfWork\ActionSet;
@@ -21,10 +15,11 @@ use Medas\StorageManager\UnitOfWork\ActionSet;
 readonly class SelectorQueryBuilder implements SelectorActionBuilder
 {
     public function __construct(
-        public CacheManager      $cacheManager,
-        public MetaDataManager   $metaDataManager,
-        public StorageManager    $storageManager,
-        public StoreQueryBuilder $storeQueryBuilder,
+        private CacheManager                  $cacheManager,
+        private MetaDataManager               $metaDataManager,
+        private StorageManager                $storageManager,
+        private StoreQueryBuilder             $storeQueryBuilder,
+        private ParameterizedQueryToActionSet $parameterizedQueryToActionSet,
     )
     {
     }
@@ -42,7 +37,7 @@ readonly class SelectorQueryBuilder implements SelectorActionBuilder
             );
         }
 
-        return $this->compileToQuery($paraQuery, $arguments);
+        return $this->parameterizedQueryToActionSet->compile($paraQuery, $arguments);
     }
 
     private function buildParameterizedQuery(Selector $selector): ParameterizedQuery
@@ -62,26 +57,5 @@ readonly class SelectorQueryBuilder implements SelectorActionBuilder
             $metaData->entity->store,
             $metaData->className
         );
-    }
-
-    private function compileToQuery(ParameterizedQuery $paraQuery, array $arguments): QuerySet
-    {
-        $query = new Query($paraQuery->query, $paraQuery->constants, $paraQuery->database);
-
-        foreach ($paraQuery->parameters as $parameter) {
-            if (array_key_exists($parameter->name, $arguments)) {
-                $value = $arguments[$parameter->name];
-            }
-            elseif ($parameter->hasDefault) {
-                $value = $parameter->default;
-            }
-            else {
-                throw new \Exception('no value given for parameter ' . $parameter->name);
-            }
-
-            $query->arguments[$parameter->name] = $value;
-        }
-
-        return QuerySet::fromQuery($query);
     }
 }
