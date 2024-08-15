@@ -9,7 +9,6 @@ use Medas\EntityManager\{MetaDataManager, Selector\Selector};
 use Medas\PdoStorage\{
     Database,
     Exceptions\StorageIsNotDatabase,
-    PdoStorageController,
     Queries\ParameterizedQuery,
     Queries\Query,
     Queries\QuerySet
@@ -22,15 +21,10 @@ use Medas\StorageManager\UnitOfWork\ActionSet;
 readonly class SelectorQueryBuilder implements SelectorActionBuilder
 {
     public function __construct(
-        public CacheManager                             $cacheManager,
-        public MetaDataManager                          $metaDataManager,
-        public PdoStorageController                     $pdoStorageController,
-        public SelectorQueryBuilder\ConditionsProcessor $conditionsProcessor,
-        public SelectorQueryBuilder\PaginationProcessor $paginationProcessor,
-        public SelectorQueryBuilder\ParametersProcessor $parametersProcessor,
-        public SelectorQueryBuilder\RelationsProcessor  $relationsProcessor,
-        public SelectorQueryBuilder\SortingProcessor    $sortingProcessor,
-        public StorageManager                           $storageManager,
+        public CacheManager      $cacheManager,
+        public MetaDataManager   $metaDataManager,
+        public StorageManager    $storageManager,
+        public StoreQueryBuilder $storeQueryBuilder,
     )
     {
     }
@@ -62,27 +56,11 @@ readonly class SelectorQueryBuilder implements SelectorActionBuilder
             throw new StorageIsNotDatabase($metaData->entity->storage);
         }
 
-        $job = new SelectorQueryBuilder\Job(
+        return $this->storeQueryBuilder->buildQuery(
             $database,
-            $this->pdoStorageController->getDatabaseController($database)->driverHandler,
-            $metaData->className,
-        );
-
-        $quotedMainStore = $job->driverHandler->quote($database, $metaData->entity->store);
-        $job->stores = [$job->mainEntity => $quotedMainStore];
-        $job->query = 'select * from ' . $quotedMainStore;
-
-        $this->relationsProcessor->process($job, $definition->relations);
-        $this->conditionsProcessor->process($job, $definition->conditions);
-        $this->sortingProcessor->process($job, $definition->sorts);
-        $this->parametersProcessor->process($job, $definition->parameters);
-        $this->paginationProcessor->process($job, $definition->pagination);
-
-        return new ParameterizedQuery(
-            $job->query,
-            $definition->parameters,
-            $job->foundConstants,
-            $database
+            $definition,
+            $metaData->entity->store,
+            $metaData->className
         );
     }
 
