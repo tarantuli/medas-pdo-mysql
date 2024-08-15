@@ -12,12 +12,12 @@ use Medas\PdoStorage\{Database, PdoStorageController, Queries\ParameterizedQuery
 readonly class StoreQueryBuilder
 {
     public function __construct(
-        public PdoStorageController                     $pdoStorageController,
-        public SelectorQueryBuilder\ConditionsProcessor $conditionsProcessor,
-        public SelectorQueryBuilder\PaginationProcessor $paginationProcessor,
-        public SelectorQueryBuilder\ParametersProcessor $parametersProcessor,
-        public SelectorQueryBuilder\RelationsProcessor  $relationsProcessor,
-        public SelectorQueryBuilder\SortingProcessor    $sortingProcessor,
+        private PdoStorageController                     $pdoStorageController,
+        private SelectorQueryBuilder\ConditionsProcessor $conditionsProcessor,
+        private SelectorQueryBuilder\PaginationProcessor $paginationProcessor,
+        private SelectorQueryBuilder\ParametersProcessor $parametersProcessor,
+        private SelectorQueryBuilder\RelationsProcessor  $relationsProcessor,
+        private SelectorQueryBuilder\SortingProcessor    $sortingProcessor,
     )
     {
     }
