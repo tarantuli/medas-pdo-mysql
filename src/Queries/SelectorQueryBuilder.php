@@ -6,7 +6,12 @@ namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\{Attributes\Service, Interfaces\CacheManager, Interfaces\NotCacheable};
 use Medas\EntityManager\{MetaDataManager, Selector\Selector};
-use Medas\PdoStorage\{Database, Exceptions\StorageIsNotDatabase, Queries\ParameterizedQuery};
+use Medas\PdoStorage\{
+    Database,
+    Exceptions\StorageIsNotDatabase,
+    Queries\ParameterizedQuery,
+    Queries\QuerySet
+};
 use Medas\StorageManager\Interfaces\Builders\SelectorActionBuilder;
 use Medas\StorageManager\StorageManager;
 use Medas\StorageManager\UnitOfWork\ActionSet;
@@ -15,11 +20,11 @@ use Medas\StorageManager\UnitOfWork\ActionSet;
 readonly class SelectorQueryBuilder implements SelectorActionBuilder
 {
     public function __construct(
-        private CacheManager                  $cacheManager,
-        private MetaDataManager               $metaDataManager,
-        private StorageManager                $storageManager,
-        private StoreQueryBuilder             $storeQueryBuilder,
-        private ParameterizedQueryToActionSet $parameterizedQueryToActionSet,
+        private CacheManager              $cacheManager,
+        private MetaDataManager           $metaDataManager,
+        private StorageManager            $storageManager,
+        private StoreQueryBuilder         $storeQueryBuilder,
+        private ParameterizedQueryToQuery $parameterizedQueryToQuery,
     )
     {
     }
@@ -37,7 +42,7 @@ readonly class SelectorQueryBuilder implements SelectorActionBuilder
             );
         }
 
-        return $this->parameterizedQueryToActionSet->compile($paraQuery, $arguments);
+        return new QuerySet([$this->parameterizedQueryToQuery->compile($paraQuery, $arguments)]);
     }
 
     private function buildParameterizedQuery(Selector $selector): ParameterizedQuery

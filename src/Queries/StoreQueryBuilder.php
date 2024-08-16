@@ -52,4 +52,33 @@ readonly class StoreQueryBuilder
             $database
         );
     }
+
+    public function buildCountQuery(
+        Database   $database,
+        Definition $definition,
+        string     $storeName,
+        string     $entityName = ''
+    ): ParameterizedQuery
+    {
+        $job = new SelectorQueryBuilder\Job(
+            $database,
+            $this->pdoStorageController->getDatabaseController($database)->driverHandler,
+            $entityName,
+        );
+
+        $quotedMainStore = $job->driverHandler->quote($database, $storeName);
+        $job->stores = [$job->mainEntity => $quotedMainStore];
+        $job->query = 'select count(*) as rowCount from ' . $quotedMainStore;
+
+        $this->relationsProcessor->process($job, $definition->relations);
+        $this->conditionsProcessor->process($job, $definition->conditions);
+        $this->parametersProcessor->process($job, $definition->parameters);
+
+        return new ParameterizedQuery(
+            $job->query,
+            $definition->parameters,
+            $job->foundConstants,
+            $database
+        );
+    }
 }

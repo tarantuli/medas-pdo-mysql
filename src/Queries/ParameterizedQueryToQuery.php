@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\Attributes\Service;
-use Medas\PdoStorage\Queries\{ParameterizedQuery, Query, QuerySet};
+use Medas\PdoStorage\Queries\{ParameterizedQuery, Query};
 
 #[Service]
-readonly class ParameterizedQueryToActionSet
+readonly class ParameterizedQueryToQuery
 {
-    public function compile(ParameterizedQuery $paraQuery, array $arguments = []): QuerySet
+    public function compile(ParameterizedQuery $paraQuery, array $arguments = []): Query
     {
         $query = new Query($paraQuery->query, $paraQuery->constants, $paraQuery->database);
 
@@ -28,6 +28,6 @@ readonly class ParameterizedQueryToActionSet
             $query->arguments[$parameter->name] = $value;
         }
 
-        return QuerySet::fromQuery($query);
+        return $query;
     }
 }
