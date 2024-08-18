@@ -68,6 +68,7 @@ readonly class DefinitionToFieldConverter
                 => Type::Binary,
 
             $remainder->equals('datetime') => Type::DateTime,
+            $remainder->equals('date') => Type::Date,
             $remainder->equals('float') => Type::Float,
             default => throw new CantDetermineTypeFromDefinition((string) $remainder, $definition),
         };
