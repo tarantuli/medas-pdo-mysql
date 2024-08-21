@@ -34,6 +34,7 @@ readonly class TypeHandler implements TypeHandlerInterface
             Type::Boolean => $this->booleanHandler->handle(),
             Type::Float => $this->floatHandler->handle(),
             Type::Collection => $this->collectionHandler->handle(),
+            Type::Date => $this->dateTimeHandler->handle(),
         };
     }
 }
