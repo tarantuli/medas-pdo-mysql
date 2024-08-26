@@ -71,6 +71,7 @@ readonly class DefinitionToFieldConverter
             $remainder->equals('date') => Type::Date,
             $remainder->equals('float') => Type::Float,
             $remainder->equals('double') => Type::Float,
+            $remainder->startsWith('year(') => Type::Integer,
             default => throw new CantDetermineTypeFromDefinition((string) $remainder, $definition),
         };
 
