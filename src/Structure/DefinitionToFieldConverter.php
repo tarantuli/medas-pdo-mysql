@@ -61,10 +61,10 @@ readonly class DefinitionToFieldConverter
         $type = match (true) {
             $intMatch !== null => Type::Integer,
 
-            $remainder->startsWith('varchar('), $remainder->startsWith('char('), $remainder->endsWith('text')
+            $remainder->startsWith('varchar('), $remainder->startsWith('char('), $remainder->startsWith('text'), $remainder->endsWith('text')
                 => Type::Text,
 
-            $remainder->startsWith('varbinary('), $remainder->startsWith('binary('), $remainder->endsWith('blob')
+            $remainder->startsWith('varbinary('), $remainder->startsWith('binary('), $remainder->startsWith('blob'), $remainder->endsWith('blob')
                 => Type::Binary,
 
             $remainder->equals('datetime') => Type::DateTime,
