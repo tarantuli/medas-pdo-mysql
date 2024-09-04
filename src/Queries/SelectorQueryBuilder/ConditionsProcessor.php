@@ -74,7 +74,7 @@ readonly class ConditionsProcessor
             . ($isNull ? ' is null' : ' is not null');
     }
 
-    private function processLikeComparison(Job $job, WhereIs $condition, string $prefix, string $suffix)
+    private function processLikeComparison(Job $job, WhereIs $condition, string $prefix, string $suffix): void
     {
         if ($condition->value instanceof Value) {
             $condition->value->value = $prefix . $condition->value->value . $suffix;
