@@ -95,7 +95,11 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
                 $index->addField($field);
             }
 
-            $index->isUnique = isset($match['isUnique']);
+            $index->isUnique = $match['isUnique'] !== '';
+
+            if ($index->isUnique && count($index->fields()) === 1) {
+                $job->blueprint->fieldByName($index->fields()[0]->name)->isUnique = true;
+            }
 
             $job->blueprint->addIndex($index);
         }
