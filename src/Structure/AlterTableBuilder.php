@@ -106,7 +106,12 @@ readonly class AlterTableBuilder
     private function processIndexes(TableBuilders\Job $job): void
     {
         foreach ($job->changes->addIndexes as $index) {
-            $job->baseQuery .= $this->indexBuilder->buildAdd($job->driverHandler, $job->database, $index)
+            if ($job->baseQuery === null) {
+                $job->baseQuery = $this->startAlterQuery($job);
+            }
+
+            $job->baseQuery .= 'add'
+                . $this->indexBuilder->buildAdd($job->driverHandler, $job->database, $index)
                 . ",\n";
         }
     }
