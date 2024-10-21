@@ -678,12 +678,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-storage-manager.git",
-                "reference": "fcdcba9d9e73fd8ba57ba0bb3eae94d3a95c57ce"
+                "reference": "6f49deecd07f55d3af53e41eaec610fe3b788524"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/fcdcba9d9e73fd8ba57ba0bb3eae94d3a95c57ce",
-                "reference": "fcdcba9d9e73fd8ba57ba0bb3eae94d3a95c57ce",
+                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/6f49deecd07f55d3af53e41eaec610fe3b788524",
+                "reference": "6f49deecd07f55d3af53e41eaec610fe3b788524",
                 "shasum": ""
             },
             "require": {
@@ -727,7 +727,7 @@
                 "source": "https://github.com/tarantuli/medas-storage-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-storage-manager/issues"
             },
-            "time": "2024-10-21T13:51:30+00:00"
+            "time": "2024-10-21T14:17:28+00:00"
         },
         {
             "name": "psr/event-dispatcher",

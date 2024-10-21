@@ -97,8 +97,13 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
 
             $index->isUnique = $match['isUnique'] !== '';
 
-            if ($index->isUnique && count($index->fields()) === 1) {
-                $job->blueprint->fieldByName($index->fields()[0]->name)->isUnique = true;
+            if (count($index->fields()) === 1) {
+                if ($index->isUnique) {
+                    $job->blueprint->fieldByName($index->fields()[0]->name)->isUnique = true;
+                }
+                else {
+                    $job->blueprint->fieldByName($index->fields()[0]->name)->isIndex = true;
+                }
             }
 
             $job->blueprint->addIndex($index);
@@ -130,6 +135,8 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
                 $match['reference'],
                 isset($match['onDeleteCascade'])
             );
+
+            $job->blueprint->fieldByName($foreignKey->field)->isIndex = false;
 
             $job->blueprint->addForeignKey($foreignKey);
         }

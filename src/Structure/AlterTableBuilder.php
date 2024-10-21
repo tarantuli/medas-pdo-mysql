@@ -20,6 +20,7 @@ use Medas\StorageManager\UnitOfWork\Priority;
 readonly class AlterTableBuilder
 {
     public function __construct(
+        private IndexBuilder                $indexBuilder,
         private ForeignKeyConstraintBuilder $foreignKeyConstraintBuilder,
         private JoinTableManager            $joinTableManager,
         private PdoStorageController        $pdoStorageController,
@@ -104,7 +105,10 @@ readonly class AlterTableBuilder
 
     private function processIndexes(TableBuilders\Job $job): void
     {
-        // TODO need to be implemented
+        foreach ($job->changes->addIndexes as $index) {
+            $job->baseQuery .= $this->indexBuilder->buildAdd($job->driverHandler, $job->database, $index)
+                . ",\n";
+        }
     }
 
     private function processForeignKeys(TableBuilders\Job $job): void

@@ -15,7 +15,7 @@ use Medas\PdoStorage\{
 };
 use Medas\StorageManager\ConfigOptions\OriginalClassStorage\DefaultStrategy;
 use Medas\StorageManager\Inheritance\OriginalClassStorageStrategy;
-use Medas\StorageManager\Structure\{Blueprint, Blueprint\Field, Blueprint\Index};
+use Medas\StorageManager\Structure\Blueprint;
 use Medas\StorageManager\UnitOfWork\Priority;
 
 #[Service]
@@ -23,6 +23,7 @@ readonly class CreateTableBuilder
 {
     public function __construct(
         private ForeignKeyConstraintBuilder  $foreignKeyConstraintBuilder,
+        private IndexBuilder                 $indexBuilder,
         private JoinTableManager             $joinTableManager,
         private PdoStorageController         $pdoStorageController,
 
@@ -124,32 +125,12 @@ readonly class CreateTableBuilder
                 }
             }
 
-            if ($index->isPrimary) {
-                $job->baseQuery .= ' primary key (';
-            }
-            else {
-                if ($index->isUnique) {
-                    $job->baseQuery .= ' unique';
-                }
-
-                $job->baseQuery .= ' key '
-                    . $job->driverHandler->quote($job->database, $this->createIndexName($index))
-                    . ' (';
-            }
-
-            foreach ($index->fields() as $field) {
-                $job->baseQuery .= $job->driverHandler->quote($job->database, $field->name) . ',';
-            }
-
-            $job->baseQuery = substr($job->baseQuery, 0, -1) . "),\n";
+            $job->baseQuery .= $this->indexBuilder->buildAdd(
+                $job->driverHandler,
+                $job->database,
+                $index
+            );
         }
-    }
-
-    private function createIndexName(Index $index): string
-    {
-        $names = array_map(fn(Field $field) => $field->name, $index->fields());
-
-        return sha1((implode("\n", $names)));
     }
 
     protected function processForeignKeys(TableBuilders\Job $job): void
