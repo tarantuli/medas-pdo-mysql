@@ -32,7 +32,7 @@ readonly class IndexBuilder
             $definition .= $driver->quote($database, $field->name) . ',';
         }
 
-        return substr($definition, 0, -1) . ")";
+        return substr($definition, 0, -1) . ')';
     }
 
     private function createIndexName(Index $index): string

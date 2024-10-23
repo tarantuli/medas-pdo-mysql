@@ -84,6 +84,12 @@ readonly class AlterTableBuilder
         }
 
         foreach ($job->changes->changeFields as $field) {
+            if ($field->type === Type::Collection) {
+                $job->collections[] = $field;
+
+                continue;
+            }
+
             $definition = $job->driverHandler->fieldHandler()->buildDefinition(
                 $job->database,
                 $field

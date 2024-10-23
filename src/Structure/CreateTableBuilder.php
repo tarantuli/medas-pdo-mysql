@@ -125,11 +125,8 @@ readonly class CreateTableBuilder
                 }
             }
 
-            $job->baseQuery .= $this->indexBuilder->buildAdd(
-                $job->driverHandler,
-                $job->database,
-                $index
-            );
+            $job->baseQuery .= $this->indexBuilder->buildAdd($job->driverHandler, $job->database, $index)
+                . ",\n";
         }
     }
 
