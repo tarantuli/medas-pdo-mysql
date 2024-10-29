@@ -28,6 +28,9 @@ readonly class DefinitionToFieldConverter
         // Strip collation
         $remainder->regexReplace('/ collate \w+/i', '');
 
+        // Strip comment
+        $remainder->regexReplace('/ comment \'.+?\'/i', '');
+
         if ($remainder->chopFromEnd(' auto_increment')) {
             $isNullable = false;
             $isGenerated = true;
