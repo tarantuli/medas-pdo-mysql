@@ -30,9 +30,10 @@ readonly class MigrationBuilder implements MigrationBuilderInterface
         Blueprint        $expectedStructure,
         MethodDefinition $migrateMethod,
         MethodDefinition $undoMethod,
+        bool             $ignoreExistingStructure = false,
     ): bool
     {
-        $queries = $this->buildActions($storage, $expectedStructure);
+        $queries = $this->buildActions($storage, $expectedStructure, $ignoreExistingStructure);
 
         if (count($queries) === 0) {
             return false;
@@ -60,14 +61,23 @@ PHP;
         return true;
     }
 
-    public function buildActions(Storage $storage, Blueprint $blueprint): ActionSet
+    public function buildActions(
+        Storage   $storage,
+        Blueprint $blueprint,
+        bool      $ignoreExistingStructure = false,
+    ): ActionSet
     {
         $driverHandler = $this->pdoStorageController->getDatabaseController($storage)->driverHandler;
 
-        $existingStructure = $driverHandler->tableStructureFinder()->find($this->pdoStorageController->store(
-            $blueprint->name,
-            $storage
-        ));
+        if ($ignoreExistingStructure) {
+            $existingStructure = null;
+        }
+        else {
+            $existingStructure = $driverHandler->tableStructureFinder()->find($this->pdoStorageController->store(
+                $blueprint->name,
+                $storage
+            ));
+        }
 
         if ($existingStructure === null) {
             return $this->createTableBuilder->create($storage, $blueprint);
