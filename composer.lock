@@ -252,12 +252,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-entity-manager.git",
-                "reference": "ba2edc54e368ee385bdb6691800232e8afd77ba0"
+                "reference": "ed279da62053d3335600d37f836144a38359eb24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-entity-manager/zipball/ba2edc54e368ee385bdb6691800232e8afd77ba0",
-                "reference": "ba2edc54e368ee385bdb6691800232e8afd77ba0",
+                "url": "https://api.github.com/repos/tarantuli/medas-entity-manager/zipball/ed279da62053d3335600d37f836144a38359eb24",
+                "reference": "ed279da62053d3335600d37f836144a38359eb24",
                 "shasum": ""
             },
             "require": {
@@ -294,7 +294,7 @@
                 "source": "https://github.com/tarantuli/medas-entity-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-entity-manager/issues"
             },
-            "time": "2025-03-25T15:09:29+00:00"
+            "time": "2025-04-30T14:46:43+00:00"
         },
         {
             "name": "morphp/medas-file-builder",
@@ -678,12 +678,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-storage-manager.git",
-                "reference": "2a306635516486652edb567ac2c5a73dfb9413d7"
+                "reference": "24ed7106917f88873bd66eb986c1427c39fd0624"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/2a306635516486652edb567ac2c5a73dfb9413d7",
-                "reference": "2a306635516486652edb567ac2c5a73dfb9413d7",
+                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/24ed7106917f88873bd66eb986c1427c39fd0624",
+                "reference": "24ed7106917f88873bd66eb986c1427c39fd0624",
                 "shasum": ""
             },
             "require": {
@@ -727,7 +727,7 @@
                 "source": "https://github.com/tarantuli/medas-storage-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-storage-manager/issues"
             },
-            "time": "2025-04-03T09:09:12+00:00"
+            "time": "2025-04-11T10:52:27+00:00"
         },
         {
             "name": "psr/event-dispatcher",
@@ -1157,16 +1157,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.13.0",
+            "version": "1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "024473a478be9df5fdaca2c793f2232fe788e414"
+                "reference": "1720ddd719e16cf0db4eb1c6eca108031636d46c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/024473a478be9df5fdaca2c793f2232fe788e414",
-                "reference": "024473a478be9df5fdaca2c793f2232fe788e414",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/1720ddd719e16cf0db4eb1c6eca108031636d46c",
+                "reference": "1720ddd719e16cf0db4eb1c6eca108031636d46c",
                 "shasum": ""
             },
             "require": {
@@ -1205,7 +1205,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.0"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.1"
             },
             "funding": [
                 {
@@ -1213,7 +1213,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-12T12:17:51+00:00"
+            "time": "2025-04-29T12:36:36+00:00"
         },
         {
             "name": "nikic/php-parser",

@@ -23,6 +23,7 @@ use Medas\EntityManager\Selector\{
     Exceptions\UnhandledConditionType,
     Exceptions\UnhandledOperantType,
     Operants\Argument,
+    Operants\ArgumentArray,
     Operants\Operant,
     Operants\Property,
     Operants\Value,
@@ -112,26 +113,37 @@ readonly class ConditionsProcessor
             return ':' . $operant->name;
         }
 
+        if ($operant instanceof ArgumentArray) {
+            $job->foundArguments[$operant->name] = true;
+
+            return $this->processValues($operant, $job, $addOrIsNull);
+        }
+
         if ($operant instanceof Value) {
             return $this->addValue($operant->value, $job);
         }
 
         if ($operant instanceof Values) {
-            $names = [];
-
-            foreach ($operant->value as $value) {
-                if ($value === null) {
-                    $addOrIsNull = true;
-                }
-                else {
-                    $names[] = $this->addValue($value, $job);
-                }
-            }
-
-            return '(' . implode(',', $names) . ')';
+            return $this->processValues($operant, $job, $addOrIsNull);
         }
 
         throw new UnhandledOperantType($operant);
+    }
+
+    private function processValues(Values|ArgumentArray $operant, Job $job, bool &$addOrIsNull = null): string
+    {
+        $names = [];
+
+        foreach ($operant->value as $value) {
+            if ($value === null) {
+                $addOrIsNull = true;
+            }
+            else {
+                $names[] = $this->addValue($value, $job);
+            }
+        }
+
+        return '(' . implode(',', $names) . ')';
     }
 
     private function addValue(mixed &$value, Job $job): string
