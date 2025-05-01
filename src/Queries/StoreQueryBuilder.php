@@ -49,6 +49,7 @@ readonly class StoreQueryBuilder
             $job->query,
             $definition->parameters,
             $job->foundConstants,
+            $job->variableSizedParameters,
             $database
         );
     }
@@ -78,6 +79,7 @@ readonly class StoreQueryBuilder
             $job->query,
             $definition->parameters,
             $job->foundConstants,
+            $job->variableSizedParameters,
             $database
         );
     }

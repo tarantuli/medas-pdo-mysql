@@ -12,6 +12,7 @@ class Job
     public array $stores;
     public array $foundArguments = [];
     public array $foundConstants = [];
+    public array $variableSizedParameters = [];
 
     public function __construct(
         public Database        $database,

@@ -252,12 +252,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-entity-manager.git",
-                "reference": "ed279da62053d3335600d37f836144a38359eb24"
+                "reference": "2f27b51401624b72362f2c34d581803461d0a567"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-entity-manager/zipball/ed279da62053d3335600d37f836144a38359eb24",
-                "reference": "ed279da62053d3335600d37f836144a38359eb24",
+                "url": "https://api.github.com/repos/tarantuli/medas-entity-manager/zipball/2f27b51401624b72362f2c34d581803461d0a567",
+                "reference": "2f27b51401624b72362f2c34d581803461d0a567",
                 "shasum": ""
             },
             "require": {
@@ -294,7 +294,7 @@
                 "source": "https://github.com/tarantuli/medas-entity-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-entity-manager/issues"
             },
-            "time": "2025-04-30T14:46:43+00:00"
+            "time": "2025-04-30T14:48:05+00:00"
         },
         {
             "name": "morphp/medas-file-builder",
@@ -436,12 +436,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-pdo-storage.git",
-                "reference": "d5e11a29c4d85770f0078342d50eceb577e5af9e"
+                "reference": "ee1f327a694f6f01cc417e615cb7d1d281b46f94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/d5e11a29c4d85770f0078342d50eceb577e5af9e",
-                "reference": "d5e11a29c4d85770f0078342d50eceb577e5af9e",
+                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/ee1f327a694f6f01cc417e615cb7d1d281b46f94",
+                "reference": "ee1f327a694f6f01cc417e615cb7d1d281b46f94",
                 "shasum": ""
             },
             "require": {
@@ -478,7 +478,7 @@
                 "source": "https://github.com/tarantuli/medas-pdo-storage/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-pdo-storage/issues"
             },
-            "time": "2024-10-21T13:42:29+00:00"
+            "time": "2025-05-01T13:46:03+00:00"
         },
         {
             "name": "morphp/medas-php-class-analysis",
@@ -678,12 +678,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-storage-manager.git",
-                "reference": "24ed7106917f88873bd66eb986c1427c39fd0624"
+                "reference": "51c8705f5c5709b245db57bb517a30c7c8864753"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/24ed7106917f88873bd66eb986c1427c39fd0624",
-                "reference": "24ed7106917f88873bd66eb986c1427c39fd0624",
+                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/51c8705f5c5709b245db57bb517a30c7c8864753",
+                "reference": "51c8705f5c5709b245db57bb517a30c7c8864753",
                 "shasum": ""
             },
             "require": {
@@ -727,7 +727,7 @@
                 "source": "https://github.com/tarantuli/medas-storage-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-storage-manager/issues"
             },
-            "time": "2025-04-11T10:52:27+00:00"
+            "time": "2025-05-01T09:52:29+00:00"
         },
         {
             "name": "psr/event-dispatcher",
@@ -1114,12 +1114,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-storage-manager-tests.git",
-                "reference": "e3493e4fbadab960061cae2a77888091d8e0ece1"
+                "reference": "62e57c2a115d7fed2eda241885dd86751392c18b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager-tests/zipball/e3493e4fbadab960061cae2a77888091d8e0ece1",
-                "reference": "e3493e4fbadab960061cae2a77888091d8e0ece1",
+                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager-tests/zipball/62e57c2a115d7fed2eda241885dd86751392c18b",
+                "reference": "62e57c2a115d7fed2eda241885dd86751392c18b",
                 "shasum": ""
             },
             "require": {
@@ -1153,7 +1153,7 @@
                 "source": "https://github.com/tarantuli/medas-storage-manager-tests/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-storage-manager-tests/issues"
             },
-            "time": "2024-03-14T19:59:50+00:00"
+            "time": "2025-05-01T10:03:47+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3452,16 +3452,16 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v5.6.1",
+            "version": "v5.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "a59a13791077fe3d44f90e7133eb68e7d22eaff2"
+                "reference": "24ac4c74f91ee2c193fa1aaa5c249cb0822809af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/a59a13791077fe3d44f90e7133eb68e7d22eaff2",
-                "reference": "a59a13791077fe3d44f90e7133eb68e7d22eaff2",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/24ac4c74f91ee2c193fa1aaa5c249cb0822809af",
+                "reference": "24ac4c74f91ee2c193fa1aaa5c249cb0822809af",
                 "shasum": ""
             },
             "require": {
@@ -3520,7 +3520,7 @@
             ],
             "support": {
                 "issues": "https://github.com/vlucas/phpdotenv/issues",
-                "source": "https://github.com/vlucas/phpdotenv/tree/v5.6.1"
+                "source": "https://github.com/vlucas/phpdotenv/tree/v5.6.2"
             },
             "funding": [
                 {
@@ -3532,7 +3532,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-20T21:52:34+00:00"
+            "time": "2025-04-30T23:37:27+00:00"
         }
     ],
     "aliases": [],

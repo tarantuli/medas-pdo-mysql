@@ -109,14 +109,15 @@ readonly class ConditionsProcessor
 
         if ($operant instanceof Argument) {
             $job->foundArguments[$operant->name] = true;
+            $job->variableSizedParameters[$operant->name] = true;
 
-            return ':' . $operant->name;
+            return '(:' . $operant->name . ')';
         }
 
         if ($operant instanceof ArgumentArray) {
             $job->foundArguments[$operant->name] = true;
 
-            return $this->processValues($operant, $job, $addOrIsNull);
+            return ':' . $operant->name;
         }
 
         if ($operant instanceof Value) {
@@ -124,26 +125,21 @@ readonly class ConditionsProcessor
         }
 
         if ($operant instanceof Values) {
-            return $this->processValues($operant, $job, $addOrIsNull);
+            $names = [];
+
+            foreach ($operant->value as $value) {
+                if ($value === null) {
+                    $addOrIsNull = true;
+                }
+                else {
+                    $names[] = $this->addValue($value, $job);
+                }
+            }
+
+            return '(' . implode(',', $names) . ')';
         }
 
         throw new UnhandledOperantType($operant);
-    }
-
-    private function processValues(Values|ArgumentArray $operant, Job $job, bool &$addOrIsNull = null): string
-    {
-        $names = [];
-
-        foreach ($operant->value as $value) {
-            if ($value === null) {
-                $addOrIsNull = true;
-            }
-            else {
-                $names[] = $this->addValue($value, $job);
-            }
-        }
-
-        return '(' . implode(',', $names) . ')';
     }
 
     private function addValue(mixed &$value, Job $job): string
