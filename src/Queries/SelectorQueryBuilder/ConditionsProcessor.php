@@ -109,15 +109,15 @@ readonly class ConditionsProcessor
 
         if ($operant instanceof Argument) {
             $job->foundArguments[$operant->name] = true;
-            $job->variableSizedParameters[$operant->name] = true;
 
-            return '(:' . $operant->name . ')';
+            return ':' . $operant->name;
         }
 
         if ($operant instanceof ArgumentArray) {
             $job->foundArguments[$operant->name] = true;
+            $job->variableSizedParameters[$operant->name] = true;
 
-            return ':' . $operant->name;
+            return '(:' . $operant->name . ')';
         }
 
         if ($operant instanceof Value) {

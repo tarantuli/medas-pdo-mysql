@@ -12,7 +12,8 @@ readonly class ParameterizedQueryToQuery
 {
     public function compile(ParameterizedQuery $paraQuery, array $arguments = []): Query
     {
-        $query = new Query($paraQuery->query, $paraQuery->constants, $paraQuery->database);
+        $queryArguments = [];
+        $query = $paraQuery->query;
 
         foreach ($paraQuery->parameters as $parameter) {
             if (array_key_exists($parameter->name, $arguments)) {
@@ -25,9 +26,23 @@ readonly class ParameterizedQueryToQuery
                 throw new \Exception('no value given for parameter ' . $parameter->name);
             }
 
-            $query->arguments[$parameter->name] = $value;
+            if (array_key_exists($parameter->name, $paraQuery->variableSizedParameters)) {
+                $counter = 0;
+                $replacements = [];
+
+                foreach ($value as $aValue) {
+                    $name = $parameter->name . '__' . ($counter++);
+                    $queryArguments[$name] = $aValue;
+                    $replacements[] = ':' . $name;
+                }
+
+                $query = str_replace(':' . $parameter->name, implode(',', $replacements), $query);
+            }
+            else {
+                $queryArguments[$parameter->name] = $value;
+            }
         }
 
-        return $query;
+        return new Query($query, $paraQuery->constants + $queryArguments, $paraQuery->database);
     }
 }
