@@ -11,6 +11,6 @@ readonly class FloatHandler
 {
     public function handle(): string
     {
-        return 'float';
+        return 'double';
     }
 }
