@@ -27,7 +27,9 @@ readonly class SortingProcessor
 
         foreach ($sorts as $sort) {
             if ($sort instanceof SortBy && $sort->operant instanceof Property) {
-                $parts[] = $job->driverHandler->quote($job->database, $sort->operant->name)
+                $parts[] = $job->stores[$sort->operant->entity ?? $job->mainEntity]
+                    . '.'
+                    . $job->driverHandler->quote($job->database, $sort->operant->name)
                     . ' '
                     . self::SORTING_DIRECTIONS[$sort->direction->name];
 
