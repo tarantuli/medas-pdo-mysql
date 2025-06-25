@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Queries;
 
-use Medas\Core\{Attributes\Service, Interfaces\CacheManager, Interfaces\NotCacheable};
+use Medas\Core\{Attributes\Service, Interfaces\NotCacheable};
 use Medas\EntityManager\{MetaDataManager, Selector\Selector};
 use Medas\PdoStorage\{
     Database,
@@ -20,7 +20,6 @@ use Medas\StorageManager\UnitOfWork\ActionSet;
 readonly class SelectorQueryBuilder implements SelectorActionBuilder
 {
     public function __construct(
-        private CacheManager              $cacheManager,
         private MetaDataManager           $metaDataManager,
         private StorageManager            $storageManager,
         private StoreQueryBuilder         $storeQueryBuilder,
@@ -36,7 +35,7 @@ readonly class SelectorQueryBuilder implements SelectorActionBuilder
         }
         else {
             /** @var ParameterizedQuery $paraQuery */
-            $paraQuery = $this->cacheManager->get()->get(
+            $paraQuery = cache(
                 [static::class, $selector::class],
                 fn() => $this->buildParameterizedQuery($selector)
             );
