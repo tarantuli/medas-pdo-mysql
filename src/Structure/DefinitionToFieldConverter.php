@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Structure;
 
-use Medas\Core\{Attributes\Service, CaseInsensitiveString};
-use Medas\EntityManager\Types\Integer;
+use Medas\Core\{Attributes\Service, CaseInsensitiveString, Types\Integer};
 use Medas\PdoStorage\Exceptions\{CantDetermineTypeFromDefinition, CantTurnDefinitionIntoVariable};
 use Medas\StorageManager\Structure\Blueprint\{Field, Type};
 

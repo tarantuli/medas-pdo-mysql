@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Queries;
 
-use Medas\Core\{Attributes\ConfigValue, Attributes\Service, Interfaces\ManagedCollection};
-use Medas\EntityManager\Types\Collection;
+use Medas\Core\{
+    Attributes\ConfigValue,
+    Attributes\Service,
+    Interfaces\ManagedCollection,
+    Types\Collection
+};
 use Medas\PdoStorage\ConfigOptions\JoinTables\TableNamingStrategy;
 use Medas\PdoStorage\JoinTables\NamingStrategy;
 use Medas\PdoStorage\PdoStorageController;

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Types;
 
-use Medas\Core\Attributes\Service;
-use Medas\EntityManager\Types\Integer;
+use Medas\Core\{Attributes\Service, Types\Integer};
 use Medas\StorageManager\Structure\Blueprint\Field;
 
 #[Service]
