@@ -12,12 +12,14 @@ use Medas\PdoStorage\{Database, PdoStorageController, Queries\ParameterizedQuery
 readonly class StoreQueryBuilder
 {
     public function __construct(
-        private PdoStorageController                     $pdoStorageController,
-        private SelectorQueryBuilder\ConditionsProcessor $conditionsProcessor,
-        private SelectorQueryBuilder\PaginationProcessor $paginationProcessor,
-        private SelectorQueryBuilder\ParametersProcessor $parametersProcessor,
-        private SelectorQueryBuilder\RelationsProcessor  $relationsProcessor,
-        private SelectorQueryBuilder\SortingProcessor    $sortingProcessor,
+        private PdoStorageController                    $pdoStorageController,
+        private StoreQueryBuilder\CalculationsProcessor $calculationsProcessor,
+        private StoreQueryBuilder\GroupingProcessor     $groupingProcessor,
+        private StoreQueryBuilder\OutputValuesProcessor $outputValuesProcessor,
+        private StoreQueryBuilder\PaginationProcessor   $paginationProcessor,
+        private StoreQueryBuilder\ParametersProcessor   $parametersProcessor,
+        private StoreQueryBuilder\RelationsProcessor    $relationsProcessor,
+        private StoreQueryBuilder\SortingProcessor      $sortingProcessor,
     )
     {
     }
@@ -29,7 +31,7 @@ readonly class StoreQueryBuilder
         string     $entityName = ''
     ): ParameterizedQuery
     {
-        $job = new SelectorQueryBuilder\Job(
+        $job = new StoreQueryBuilder\Job(
             $database,
             $this->pdoStorageController->getDatabaseController($database)->driverHandler,
             $entityName,
@@ -37,11 +39,22 @@ readonly class StoreQueryBuilder
 
         $quotedMainStore = $job->driverHandler->quote($database, $storeName);
         $job->stores = [$job->mainEntity => $quotedMainStore];
-        $job->query = 'select * from ' . $quotedMainStore;
+
+        $this->outputValuesProcessor->process($job, $definition->outputValues);
+
+        $outputValues = $job->outputValues ? implode(', ', $job->stores) : '*';
+        $job->query = sprintf("select %s from %s", $outputValues, $quotedMainStore);
 
         $this->relationsProcessor->process($job, $definition->relations);
-        $this->conditionsProcessor->process($job, $definition->conditions);
+
+        if ($definition->conditions) {
+            $this->calculationsProcessor->process($job, $definition->conditions);
+
+            $job->query .= ' where ' . $job->currentCalculation;
+        }
+
         $this->sortingProcessor->process($job, $definition->sorts);
+        $this->groupingProcessor->process($job, $definition->groupings);
         $this->parametersProcessor->process($job, $definition->parameters);
         $this->paginationProcessor->process($job, $definition->pagination);
 
@@ -61,7 +74,7 @@ readonly class StoreQueryBuilder
         string     $entityName = ''
     ): ParameterizedQuery
     {
-        $job = new SelectorQueryBuilder\Job(
+        $job = new StoreQueryBuilder\Job(
             $database,
             $this->pdoStorageController->getDatabaseController($database)->driverHandler,
             $entityName,
@@ -72,7 +85,13 @@ readonly class StoreQueryBuilder
         $job->query = 'select count(*) as rowCount from ' . $quotedMainStore;
 
         $this->relationsProcessor->process($job, $definition->relations);
-        $this->conditionsProcessor->process($job, $definition->conditions);
+
+        if ($definition->conditions) {
+            $this->calculationsProcessor->process($job, $definition->conditions);
+
+            $job->query .= ' where ' . $job->currentCalculation;
+        }
+
         $this->parametersProcessor->process($job, $definition->parameters);
 
         return new ParameterizedQuery(

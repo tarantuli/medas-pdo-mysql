@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Medas\PdoMysql\Queries\SelectorQueryBuilder;
+namespace Medas\PdoMysql\Queries\StoreQueryBuilder;
 
 use Medas\Core\Attributes\Service;
 use Medas\EntityManager\Selector\Pagination;

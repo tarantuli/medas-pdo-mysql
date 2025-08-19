@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Medas\PdoMysql\Queries\StoreQueryBuilder;
+
+use Medas\Core\Attributes\Service;
+use Medas\EntityManager\Selector\Grouping\GroupBy;
+
+#[Service]
+readonly class GroupingProcessor
+{
+    /** @param GroupBy[] $groupings */
+    public function process(Job $job, array $groupings): void
+    {
+        $parts = [];
+
+        foreach ($groupings as $grouping) {
+            $parts[] = $job->stores[$sort->operant->entity ?? $job->mainEntity]
+                . '.'
+                . $job->driverHandler->quote($job->database, $grouping->property->name);
+        }
+
+        if ($parts) {
+            $job->query .= ' group by ' . implode(', ', $parts);
+        }
+    }
+}
