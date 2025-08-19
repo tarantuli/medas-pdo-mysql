@@ -16,9 +16,14 @@ readonly class GroupingProcessor
         $parts = [];
 
         foreach ($groupings as $grouping) {
-            $parts[] = $job->stores[$sort->operant->entity ?? $job->mainEntity]
-                . '.'
-                . $job->driverHandler->quote($job->database, $grouping->property->name);
+            if (in_array($grouping->property->name, $job->aliases, true)) {
+                $parts[] = $job->driverHandler->quote($job->database, $grouping->property->name);
+            }
+            else {
+                $parts[] = $job->stores[$sort->operant->entity ?? $job->mainEntity]
+                    . '.'
+                    . $job->driverHandler->quote($job->database, $grouping->property->name);
+            }
         }
 
         if ($parts) {

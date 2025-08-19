@@ -15,6 +15,7 @@ class Job
     public array $foundConstants = [];
     public array $variableSizedParameters = [];
     public string|null $currentCalculation = null;
+    public array $aliases = [];
 
     public function __construct(
         public Database        $database,

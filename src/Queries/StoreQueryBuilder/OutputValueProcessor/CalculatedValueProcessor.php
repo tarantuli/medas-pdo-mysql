@@ -32,6 +32,10 @@ readonly class CalculatedValueProcessor
 
         $this->calculationsProcessor->process($job, $outputValue->calculations);
 
+        if ($outputValue->alias) {
+            $job->aliases[] = $outputValue->alias;
+        }
+
         $job->outputValues[] = sprintf(
             "%s(%s)%s",
             self::TYPE_MAPPING[$outputValue::class],
