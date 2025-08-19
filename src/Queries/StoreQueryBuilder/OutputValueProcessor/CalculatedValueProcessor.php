@@ -33,9 +33,12 @@ readonly class CalculatedValueProcessor
         $this->calculationsProcessor->process($job, $outputValue->calculations);
 
         $job->outputValues[] = sprintf(
-            "%s(%s)",
+            "%s(%s)%s",
             self::TYPE_MAPPING[$outputValue::class],
-            $job->currentCalculation
+            $job->currentCalculation,
+            $outputValue->alias
+                ? sprintf(" as %s", $job->driverHandler->quote($job->database, $outputValue->alias))
+                : ''
         );
     }
 }

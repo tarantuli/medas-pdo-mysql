@@ -42,7 +42,7 @@ readonly class StoreQueryBuilder
 
         $this->outputValuesProcessor->process($job, $definition->outputValues);
 
-        $outputValues = $job->outputValues ? implode(', ', $job->stores) : '*';
+        $outputValues = $job->outputValues ? implode(', ', $job->outputValues) : '*';
         $job->query = sprintf("select %s from %s", $outputValues, $quotedMainStore);
 
         $this->relationsProcessor->process($job, $definition->relations);

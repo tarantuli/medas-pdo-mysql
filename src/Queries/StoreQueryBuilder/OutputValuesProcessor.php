@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries\StoreQueryBuilder;
 
 use Medas\Core\Attributes\Service;
-use Medas\EntityManager\Selector\OutputValues\{CalculatedValue, OutputValue};
+use Medas\EntityManager\Selector\OutputValues\{CalculatedValue, OutputValue, PropertyValue};
 
 #[Service]
 readonly class OutputValuesProcessor
@@ -26,6 +26,7 @@ readonly class OutputValuesProcessor
                     $outputValue
                 ),
 
+                $outputValue instanceof PropertyValue => $job->outputValues[] = $outputValue->name,
                 default => throw new \LogicException('Unsupported output value type'),
             };
         }
