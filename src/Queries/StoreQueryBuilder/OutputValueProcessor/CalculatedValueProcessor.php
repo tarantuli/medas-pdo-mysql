@@ -13,6 +13,7 @@ use Medas\PdoMysql\Queries\StoreQueryBuilder\{CalculationsProcessor, Job};
 readonly class CalculatedValueProcessor
 {
     private const TYPE_MAPPING = [
+        CalculatedValue::class => '',
         Count::class => 'count',
         Sum::class => 'sum',
     ];
