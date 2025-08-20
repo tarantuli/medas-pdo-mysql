@@ -96,11 +96,7 @@ readonly class CalculationsProcessor
                     ),
 
                     RowCount::class => $this->processRowCount($job),
-                    Literal::class => $job->driverHandler->quote(
-                        $job->database,
-                        $calculation->literal
-                    ),
-
+                    Literal::class => $this->processLiteral($job, $calculation),
                     default => throw new UnhandledCalculationType($calculation),
                 };
             }
@@ -199,5 +195,13 @@ readonly class CalculationsProcessor
     private function processRowCount(Job $job): void
     {
         $job->currentCalculation = '*';
+    }
+
+    private function processLiteral(Job $job, Literal $calculation): void
+    {
+        $job->currentCalculation = $job->driverHandler->quote(
+            $job->database,
+            $calculation->literal
+        );
     }
 }
