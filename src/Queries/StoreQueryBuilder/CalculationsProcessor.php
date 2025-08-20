@@ -7,6 +7,7 @@ namespace Medas\PdoMysql\Queries\StoreQueryBuilder;
 use Medas\Core\Attributes\Service;
 use Medas\EntityManager\Selector\{
     Calculations\Calculation,
+    Calculations\Literal,
     Calculations\RowCount,
     Conditions\WhereContains,
     Conditions\WhereEndsWith,
@@ -91,6 +92,11 @@ readonly class CalculationsProcessor
                     ),
 
                     RowCount::class => $this->processRowCount($job),
+                    Literal::class => $job->driverHandler->quote(
+                        $job->database,
+                        $calculation->literal
+                    ),
+
                     default => throw new UnhandledCalculationType($calculation),
                 };
             }
