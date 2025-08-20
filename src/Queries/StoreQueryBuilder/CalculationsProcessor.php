@@ -183,15 +183,6 @@ readonly class CalculationsProcessor
         throw new UnhandledOperantType($operant);
     }
 
-    private function addValue(mixed &$value, Job $job): string
-    {
-        $value = service(ValueSerializer::class)->serialize($value);
-        $name = 'c' . count($job->foundConstants);
-        $job->foundConstants[$name] = $value;
-
-        return ':' . $name;
-    }
-
     private function processRowCount(Job $job): void
     {
         $job->currentCalculation = '*';
@@ -199,9 +190,15 @@ readonly class CalculationsProcessor
 
     private function processLiteral(Job $job, Literal $calculation): void
     {
-        $job->currentCalculation = $job->driverHandler->quote(
-            $job->database,
-            $calculation->literal
-        );
+        $job->currentCalculation = $this->addValue($calculation->literal, $job);
+    }
+
+    private function addValue(mixed &$value, Job $job): string
+    {
+        $value = service(ValueSerializer::class)->serialize($value);
+        $name = 'c' . count($job->foundConstants);
+        $job->foundConstants[$name] = $value;
+
+        return ':' . $name;
     }
 }

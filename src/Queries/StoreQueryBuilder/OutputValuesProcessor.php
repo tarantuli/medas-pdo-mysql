@@ -46,5 +46,9 @@ readonly class OutputValuesProcessor
             $outputValue instanceof PropertyValue => $job->outputValues[] = $outputValue->name,
             default => throw new \LogicException('Unsupported output value type'),
         };
+
+        if ($outputValue->alias) {
+            $job->aliases[] = $outputValue->alias;
+        }
     }
 }

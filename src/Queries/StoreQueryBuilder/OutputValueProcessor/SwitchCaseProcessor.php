@@ -20,7 +20,7 @@ readonly class SwitchCaseProcessor
     public function process(Job $job, SwitchCase $switchCase): void
     {
         $count = count($switchCase->cases);
-        $output = 'case ';
+        $output = 'case';
 
         for ($i = 0; $i < $count; $i += 2) {
             if (array_key_exists($i + 1, $switchCase->cases)) {
@@ -32,14 +32,14 @@ readonly class SwitchCaseProcessor
                 $this->calculationsProcessor->process($job, $switchCase->cases[$i + 1]);
 
                 $then = $job->currentCalculation;
-                $output .= "when $when then $then";
+                $output .= " when $when then $then";
             }
             else {
                 // else Z
                 $this->calculationsProcessor->process($job, $switchCase->cases[$i]);
 
                 $else = $job->currentCalculation;
-                $output .= "else $else";
+                $output .= " else $else";
             }
         }
 
