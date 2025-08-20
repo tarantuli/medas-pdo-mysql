@@ -17,7 +17,7 @@ readonly class SwitchCaseProcessor
     {
     }
 
-    public function process(Job $job, SwitchCase $switchCase): void
+    public function process(Job $job, SwitchCase $switchCase): string
     {
         $count = count($switchCase->cases);
         $output = 'case';
@@ -44,6 +44,7 @@ readonly class SwitchCaseProcessor
         }
 
         $output .= ' end';
-        $job->outputValues[] = $output;
+
+        return $output;
     }
 }

@@ -32,7 +32,7 @@ readonly class OutputValuesProcessor
 
     private function processOutputValue(OutputValue $outputValue, Job $job): void
     {
-        match (true) {
+        $result = match (true) {
             $outputValue instanceof CalculatedValue => $this->calculatedValueProcessor->process(
                 $job,
                 $outputValue
@@ -43,12 +43,16 @@ readonly class OutputValuesProcessor
                 $outputValue
             ),
 
-            $outputValue instanceof PropertyValue => $job->outputValues[] = $outputValue->name,
+            $outputValue instanceof PropertyValue => $outputValue->name,
             default => throw new \LogicException('Unsupported output value type'),
         };
 
         if ($outputValue->alias) {
             $job->aliases[] = $outputValue->alias;
+            $job->outputValues[] = "$result as $outputValue->alias";
+        }
+        else {
+            $job->outputValues[] = $result;
         }
     }
 }

@@ -24,7 +24,7 @@ readonly class CalculatedValueProcessor
     {
     }
 
-    public function process(Job $job, CalculatedValue $outputValue): void
+    public function process(Job $job, CalculatedValue $outputValue): string
     {
         if (!array_key_exists($outputValue::class, self::TYPE_MAPPING)) {
             throw new UnsupportedOutputValueType($outputValue);
@@ -32,13 +32,6 @@ readonly class CalculatedValueProcessor
 
         $this->calculationsProcessor->process($job, $outputValue->calculations);
 
-        $job->outputValues[] = sprintf(
-            "%s(%s)%s",
-            self::TYPE_MAPPING[$outputValue::class],
-            $job->currentCalculation,
-            $outputValue->alias
-                ? sprintf(" as %s", $job->driverHandler->quote($job->database, $outputValue->alias))
-                : ''
-        );
+        return sprintf("%s(%s)", self::TYPE_MAPPING[$outputValue::class], $job->currentCalculation);
     }
 }
