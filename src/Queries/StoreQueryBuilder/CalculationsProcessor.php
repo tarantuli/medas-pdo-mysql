@@ -38,9 +38,13 @@ use Medas\StorageManager\Shared\ValueSerializer;
 #[Service]
 readonly class CalculationsProcessor
 {
-    /** @param Calculation[] $calculations */
-    public function process(Job $job, array $calculations): void
+    /** @param Calculation[]|Calculation $calculations */
+    public function process(Job $job, array|Calculation $calculations): void
     {
+        if (!is_array($calculations)) {
+            $calculations = [$calculations];
+        }
+
         $job->currentCalculation = $calculations ? '' : null;
         $isFirstCalculation = true;
 

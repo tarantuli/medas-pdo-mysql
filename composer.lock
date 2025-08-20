@@ -252,12 +252,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-entity-manager.git",
-                "reference": "ffcbb867d261692d953bde6886bf7e948d302040"
+                "reference": "33cc2d2609cf123f78e06d2f0f9fc6cdd19f6c7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-entity-manager/zipball/ffcbb867d261692d953bde6886bf7e948d302040",
-                "reference": "ffcbb867d261692d953bde6886bf7e948d302040",
+                "url": "https://api.github.com/repos/tarantuli/medas-entity-manager/zipball/33cc2d2609cf123f78e06d2f0f9fc6cdd19f6c7a",
+                "reference": "33cc2d2609cf123f78e06d2f0f9fc6cdd19f6c7a",
                 "shasum": ""
             },
             "require": {
@@ -295,7 +295,7 @@
                 "source": "https://github.com/tarantuli/medas-entity-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-entity-manager/issues"
             },
-            "time": "2025-08-20T07:42:20+00:00"
+            "time": "2025-08-20T07:47:04+00:00"
         },
         {
             "name": "morphp/medas-file-builder",
