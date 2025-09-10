@@ -8,6 +8,7 @@ use Medas\Core\Attributes\Service;
 use Medas\EntityManager\Selector\{
     Exceptions\UnhandledSortType,
     Operants\Property,
+    Operants\Value,
     Sorting\SortBy,
     Sorting\SortDirection
 };
@@ -30,6 +31,14 @@ readonly class SortingProcessor
                 $parts[] = $job->stores[$sort->operant->entity ?? $job->mainEntity]
                     . '.'
                     . $job->driverHandler->quote($job->database, $sort->operant->name)
+                    . ' '
+                    . self::SORTING_DIRECTIONS[$sort->direction->name];
+
+                continue;
+            }
+
+            if ($sort instanceof SortBy && $sort->operant instanceof Value) {
+                $parts[] = $sort->operant->value
                     . ' '
                     . self::SORTING_DIRECTIONS[$sort->direction->name];
 
