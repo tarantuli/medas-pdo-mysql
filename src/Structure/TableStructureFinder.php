@@ -157,6 +157,6 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
             throw new \Exception('Invalid on delete/update action string');
         }
 
-        return Action::from($match[1]);
+        return Action::from(strtolower($match[1]));
     }
 }
