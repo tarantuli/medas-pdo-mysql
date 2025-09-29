@@ -90,8 +90,11 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
 
         foreach ($matches as $match) {
             $index = new Index();
+            $names = $this->getNames($match['fields']);
 
-            foreach ($job->blueprint->fieldsByName($this->getNames($match['fields'])) as $field) {
+            foreach ($names as $name) {
+                $field = $job->blueprint->fieldByName($name);
+
                 $index->addField($field);
             }
 
