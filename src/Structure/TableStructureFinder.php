@@ -137,13 +137,26 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
                 $match['field'],
                 $match['table'],
                 $match['reference'],
-                isset($match['onDelete']) ? Action::from($match['onDelete']) : Action::NoAction,
-                isset($match['onUpdate']) ? Action::from($match['onUpdate']) : Action::NoAction,
+                isset($match['onDelete']) ? $this->getAction($match['onDelete']) : Action::NoAction,
+                isset($match['onUpdate']) ? $this->getAction($match['onUpdate']) : Action::NoAction,
             );
 
             $job->blueprint->fieldByName($foreignKey->field)->isIndex = false;
 
             $job->blueprint->addForeignKey($foreignKey);
         }
+    }
+
+    private function getAction(string $string): Action
+    {
+        if (!preg_match(
+            '/ on (?:delete|update) (cascade|set null|set default|restrict|no action)/i',
+            $string,
+            $match
+        )) {
+            throw new \Exception('Invalid on delete/update action string');
+        }
+
+        return Action::from($match[1]);
     }
 }
