@@ -19,12 +19,13 @@ readonly class ForeignKeyConstraintBuilder
     ): string
     {
         return sprintf(
-            " add constraint %s\n  foreign key (%s)\n  references %s (%s)%s",
+            " add constraint %s\n  foreign key (%s)\n  references %s (%s) %s %s",
             $driver->quote($database, $this->createForeignKeyName($entityName, $foreignKey)),
             $driver->quote($database, $foreignKey->field),
             $driver->quote($database, $foreignKey->foreignEntity),
             $driver->quote($database, $foreignKey->foreignField),
-            $foreignKey->doCascade ? ' on delete cascade on update cascade' : ''
+            'on delete ' . $foreignKey->onDelete->value,
+            'on update ' . $foreignKey->onUpdate->value,
         );
     }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Structure;
 
 use Medas\Core\Attributes\{ConfigValue, Service};
+use Medas\EntityManager\Attributes\Relations\Action;
 use Medas\PdoMysql\Queries\ForeignKeyConstraintBuilder;
 use Medas\PdoStorage\{
     Database,
@@ -75,7 +76,8 @@ readonly class CreateTableBuilder
                         $field->name,
                         $field->store,
                         $field->name,
-                        true
+                        Action::Cascade,
+                        Action::Cascade
                     );
 
                     $job->blueprint->addForeignKey($foreignKey);

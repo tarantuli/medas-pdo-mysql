@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Structure;
 
 use Medas\Core\Attributes\Service;
+use Medas\EntityManager\Attributes\Relations\Action;
 use Medas\PdoStorage\Drivers\Interfaces\TableStructureFinder as TableStructureFinderInterface;
 use Medas\PdoStorage\PdoStorageController;
 use Medas\PdoStorage\Table;
@@ -123,7 +124,7 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
     protected function findForeignKeys(TableStructureFinder\Job $job): void
     {
         if (!preg_match_all(
-            '/constraint `(?<name>[^`]+)` foreign key \(`(?<field>[^`]+)`\) references `(?<table>[^`]+)` \(`(?<reference>[^`]+)`\)(?<onDeleteCascade> on delete cascade)?/i',
+            '/constraint `(?<name>[^`]+)` foreign key \(`(?<field>[^`]+)`\) references `(?<table>[^`]+)` \(`(?<reference>[^`]+)`\)(?<onDelete> on delete (?:cascade|set null|set default|restrict|no action))?(?<onUpdate> on update (?:cascade|set null|set default|restrict|no action))?/i',
             $job->createTable,
             $matches,
             PREG_SET_ORDER
@@ -136,7 +137,8 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
                 $match['field'],
                 $match['table'],
                 $match['reference'],
-                isset($match['onDeleteCascade'])
+                isset($match['onDelete']) ? Action::from($match['onDelete']) : Action::NoAction,
+                isset($match['onUpdate']) ? Action::from($match['onUpdate']) : Action::NoAction,
             );
 
             $job->blueprint->fieldByName($foreignKey->field)->isIndex = false;
