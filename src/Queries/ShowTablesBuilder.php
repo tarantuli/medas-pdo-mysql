@@ -19,7 +19,7 @@ readonly class ShowTablesBuilder implements ShowTablesBuilderInterface
     {
     }
 
-    public function build(Database $database, string $name = null): QuerySet
+    public function build(Database $database, string|null $name = null): QuerySet
     {
         if ($name === null) {
             return QuerySet::fromQuery(new Query('show tables', [], $database));

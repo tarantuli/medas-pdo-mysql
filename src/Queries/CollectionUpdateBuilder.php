@@ -26,10 +26,10 @@ readonly class CollectionUpdateBuilder implements CollectionUpdateBuilderInterfa
     public function __construct(
         private DeleteBuilder        $deleteBuilder,
         private InsertBuilder        $insertBuilder,
-        private PdoStorageController $pdoStorageController,
 
         #[ConfigValue(TableNamingStrategy::class)]
         private NamingStrategy       $namingStrategy,
+        private PdoStorageController $pdoStorageController,
     )
     {
     }

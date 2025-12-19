@@ -17,8 +17,8 @@ use Medas\PdoStorage\{
 readonly class TableStructureStringFinder
 {
     public function __construct(
-        public QueryExecutor        $queryExecutor,
         public PdoStorageController $pdoStorageController,
+        public QueryExecutor        $queryExecutor,
     )
     {
     }

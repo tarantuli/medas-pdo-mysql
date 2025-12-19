@@ -140,7 +140,7 @@ readonly class CalculationsProcessor
         }
     }
 
-    private function operantToQuery(Job $job, Operant $operant, bool &$addOrIsNull = null): string
+    private function operantToQuery(Job $job, Operant $operant, bool|null &$addOrIsNull = null): string
     {
         if ($operant instanceof Property) {
             return $job->stores[$operant->entity ?? $job->mainEntity]

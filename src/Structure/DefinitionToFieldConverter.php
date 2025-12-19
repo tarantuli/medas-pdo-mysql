@@ -11,8 +11,8 @@ use Medas\StorageManager\Structure\Blueprint\{Field, Type};
 #[Service]
 readonly class DefinitionToFieldConverter
 {
-    const CREATION_TIMESTAMP_DEFINITION = ' default current_timestamp()';
-    const MODIFICATION_TIMESTAMP_DEFINITION = ' default current_timestamp() on update current_timestamp()';
+    const string CREATION_TIMESTAMP_DEFINITION = ' default current_timestamp()';
+    const string MODIFICATION_TIMESTAMP_DEFINITION = ' default current_timestamp() on update current_timestamp()';
 
     public function convert(string $name, string $definition): Field
     {

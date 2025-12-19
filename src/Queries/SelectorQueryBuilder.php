@@ -21,9 +21,9 @@ readonly class SelectorQueryBuilder implements SelectorActionBuilder
 {
     public function __construct(
         private MetaDataManager           $metaDataManager,
+        private ParameterizedQueryToQuery $parameterizedQueryToQuery,
         private StorageManager            $storageManager,
         private StoreQueryBuilder         $storeQueryBuilder,
-        private ParameterizedQueryToQuery $parameterizedQueryToQuery,
     )
     {
     }

@@ -20,8 +20,8 @@ use Medas\StorageManager\UnitOfWork\Priority;
 readonly class AlterTableBuilder
 {
     public function __construct(
-        private IndexBuilder                $indexBuilder,
         private ForeignKeyConstraintBuilder $foreignKeyConstraintBuilder,
+        private IndexBuilder                $indexBuilder,
         private JoinTableManager            $joinTableManager,
         private PdoStorageController        $pdoStorageController,
     )
