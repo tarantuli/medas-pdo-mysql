@@ -201,12 +201,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-core.git",
-                "reference": "d8864aa827ae6ff1777ced987d3ad0e979aa1cf0"
+                "reference": "8294fdf22c5af0c90f4328c959cb6bb0d3d0998c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-core/zipball/d8864aa827ae6ff1777ced987d3ad0e979aa1cf0",
-                "reference": "d8864aa827ae6ff1777ced987d3ad0e979aa1cf0",
+                "url": "https://api.github.com/repos/tarantuli/medas-core/zipball/8294fdf22c5af0c90f4328c959cb6bb0d3d0998c",
+                "reference": "8294fdf22c5af0c90f4328c959cb6bb0d3d0998c",
                 "shasum": ""
             },
             "require": {
@@ -244,7 +244,7 @@
                 "source": "https://github.com/tarantuli/medas-core/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-core/issues"
             },
-            "time": "2026-01-15T08:35:10+00:00"
+            "time": "2026-01-21T08:33:03+00:00"
         },
         {
             "name": "morphp/medas-entity-manager",
@@ -483,12 +483,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-pdo-storage.git",
-                "reference": "834aa7651fc18e6572f16380caa68396f9a09ecb"
+                "reference": "d9369295add46ba9dbbf03081e5ba88a8a403e88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/834aa7651fc18e6572f16380caa68396f9a09ecb",
-                "reference": "834aa7651fc18e6572f16380caa68396f9a09ecb",
+                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/d9369295add46ba9dbbf03081e5ba88a8a403e88",
+                "reference": "d9369295add46ba9dbbf03081e5ba88a8a403e88",
                 "shasum": ""
             },
             "require": {
@@ -525,7 +525,7 @@
                 "source": "https://github.com/tarantuli/medas-pdo-storage/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-pdo-storage/issues"
             },
-            "time": "2025-12-19T12:20:02+00:00"
+            "time": "2026-01-20T14:35:36+00:00"
         },
         {
             "name": "morphp/medas-php-class-analysis",

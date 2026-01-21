@@ -30,6 +30,7 @@ readonly class CollectionUpdateBuilder implements CollectionUpdateBuilderInterfa
         #[ConfigValue(TableNamingStrategy::class)]
         private NamingStrategy       $namingStrategy,
         private PdoStorageController $pdoStorageController,
+        private UpdateBuilder        $updateBuilder,
     )
     {
     }
@@ -49,10 +50,10 @@ readonly class CollectionUpdateBuilder implements CollectionUpdateBuilderInterfa
 
         $queries = new QuerySet();
 
-        foreach ($values->getAdditions() as $value) {
+        foreach ($values->getAdditions() as $order => $value) {
             foreach ($this->insertBuilder->build(
                 $joinTable,
-                ['id' => $entity, 'value' => $value],
+                ['id' => $entity, 'value' => $value, 'order' => $order],
                 Priority::UpdateCollection
             ) as $query) {
                 $queries[] = $query;
@@ -64,6 +65,16 @@ readonly class CollectionUpdateBuilder implements CollectionUpdateBuilderInterfa
                 $joinTable,
                 ['id' => $entity, 'value' => $value],
                 Priority::UpdateCollection
+            ) as $query) {
+                $queries[] = $query;
+            }
+        }
+
+        foreach ($values->getModifications() as $order => $value) {
+            foreach ($this->updateBuilder->build(
+                $joinTable,
+                ['order' => $order],
+                ['id' => $entity, 'value' => $value],
             ) as $query) {
                 $queries[] = $query;
             }
