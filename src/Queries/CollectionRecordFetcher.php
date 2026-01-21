@@ -10,6 +10,7 @@ use Medas\EntityManager\Selector\{
     Conditions\WhereIs,
     Operants\Argument,
     Operants\Property,
+    Parameter,
     Sorting\SortBy
 };
 use Medas\PdoStorage\ConfigOptions\JoinTables\TableNamingStrategy;
@@ -38,10 +39,15 @@ readonly class CollectionRecordFetcher implements CollectionRecordFetcherInterfa
     {
         $joinTable = $this->getJoinTable($store, $property);
 
-        $actionSet = $this->definitionQueryBuilder->build($joinTable, [
-            WhereIs::c(Property::c('id'), Argument::c('entity')),
-            SortBy::c(Property::c('order')),
-        ], ['entity' => $entity]);
+        $actionSet = $this->definitionQueryBuilder->build(
+            $joinTable,
+            [
+                WhereIs::c(Property::c('id'), Argument::c('entity')),
+                SortBy::c(Property::c('order')),
+                Parameter::c('entity')
+            ],
+            ['entity' => $entity]
+        );
 
         $this->pdoStorageController->actionExecutor()->executeSet($actionSet);
 
