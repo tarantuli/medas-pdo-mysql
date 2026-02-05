@@ -53,8 +53,8 @@ readonly class StoreQueryBuilder
             $job->query .= ' where ' . $job->currentCalculation;
         }
 
-        $this->sortingProcessor->process($job, $definition->sorts);
         $this->groupingProcessor->process($job, $definition->groupings);
+        $this->sortingProcessor->process($job, $definition->sorts);
         $this->parametersProcessor->process($job, $definition->parameters);
         $this->paginationProcessor->process($job, $definition->pagination);
 
