@@ -21,7 +21,7 @@ readonly class DefinitionQueryBuilder
 
     public function build(Store $store, array $elements, array $arguments): QuerySet
     {
-        $definition = new Definition('')
+        $definition = (new Definition(''))
             ->add(...$elements);
 
         $paraQuery = $this->storeQueryBuilder->buildQuery(

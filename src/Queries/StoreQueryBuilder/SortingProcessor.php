@@ -16,7 +16,7 @@ use Medas\EntityManager\Selector\{
 #[Service]
 readonly class SortingProcessor
 {
-    public const array SORTING_DIRECTIONS = [
+    public const  SORTING_DIRECTIONS = [
         SortDirection::ASC->name => 'asc',
         SortDirection::DESC->name => 'desc',
     ];
