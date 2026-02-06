@@ -1,7 +1,7 @@
 {
   "name": "morphp/medas-pdo-mysql",
   "description": "Medas pdo mysql",
-  "version": "v2.0.0",
+  "version": "2.0.0",
   "keywords": [
     "storage"
   ],
