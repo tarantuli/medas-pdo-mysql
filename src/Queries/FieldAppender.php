@@ -11,7 +11,7 @@ use Medas\PdoStorage\{Database, PdoStorageController};
 readonly class FieldAppender
 {
     public function __construct(
-        public PdoStorageController $pdoStorageController,
+        private PdoStorageController $pdoStorageController,
     )
     {
     }

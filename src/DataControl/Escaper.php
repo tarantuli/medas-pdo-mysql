@@ -22,7 +22,7 @@ readonly class Escaper
             return 'null';
         }
 
-        if (is_object($value) && enum_exists($value::class)) {
+        if ($value instanceof \BackedEnum) {
             $value = $value->value;
         }
 

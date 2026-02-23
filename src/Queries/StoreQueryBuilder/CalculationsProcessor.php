@@ -38,6 +38,12 @@ use Medas\StorageManager\Shared\ValueSerializer;
 #[Service]
 readonly class CalculationsProcessor
 {
+    public function __construct(
+        private ValueSerializer $valueSerializer,
+    )
+    {
+    }
+
     /** @param Calculation[]|Calculation $calculations */
     public function process(Job $job, array|Calculation $calculations): void
     {
@@ -119,7 +125,8 @@ readonly class CalculationsProcessor
     private function processLikeComparison(Job $job, WhereIs $calculation, string $prefix, string $suffix): void
     {
         if ($calculation->value instanceof Value) {
-            $calculation->value->value = $prefix . $calculation->value->value . $suffix;
+            $likeValue = new Value($prefix . $calculation->value->value . $suffix);
+            $calculation = new WhereIs($calculation->property, $likeValue);
         }
 
         $this->processComparison($job, $calculation, ' like ');
@@ -195,7 +202,7 @@ readonly class CalculationsProcessor
 
     private function addValue(mixed &$value, Job $job): string
     {
-        $value = service(ValueSerializer::class)->serialize($value);
+        $value = $this->valueSerializer->serialize($value);
         $name = 'c' . count($job->foundConstants);
         $job->foundConstants[$name] = $value;
 

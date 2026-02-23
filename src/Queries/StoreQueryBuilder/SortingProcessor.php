@@ -12,6 +12,7 @@ use Medas\EntityManager\Selector\{
     Sorting\SortBy,
     Sorting\SortDirection
 };
+use Medas\PdoMysql\Exceptions\UntrustedValueUsedInSorting;
 
 #[Service]
 readonly class SortingProcessor
@@ -38,6 +39,10 @@ readonly class SortingProcessor
             }
 
             if ($sort instanceof SortBy && $sort->operant instanceof Value) {
+                if (!$sort->operant->isTrusted) {
+                    throw new UntrustedValueUsedInSorting($sort->operant);
+                }
+
                 $parts[] = $sort->operant->value
                     . ' '
                     . self::SORTING_DIRECTIONS[$sort->direction->name];

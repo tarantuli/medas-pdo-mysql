@@ -10,15 +10,20 @@ use Medas\StorageManager\Interfaces\{Fetchers, RecordFetchers as RecordFetchersI
 #[Service]
 readonly class RecordFetchers implements RecordFetchersInterface
 {
+    public function __construct(
+        private CollectionRecordFetcher $collectionRecordFetcher,
+        private FilteredFetcher         $filteredFetcher,
+    )
+    {
+    }
+
     public function filteredFetcher(): Fetchers\FilteredFetcher
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(FilteredFetcher::class);
+        return $this->filteredFetcher;
     }
 
     public function collectionRecordFetcher(): Fetchers\CollectionRecordFetcher
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(CollectionRecordFetcher::class);
+        return $this->collectionRecordFetcher;
     }
 }

@@ -16,6 +16,7 @@ readonly class TypeHandler implements TypeHandlerInterface
         private BinaryHandler     $binaryHandler,
         private BooleanHandler    $booleanHandler,
         private CollectionHandler $collectionHandler,
+        private DateHandler       $dateHandler,
         private DateTimeHandler   $dateTimeHandler,
         private FloatHandler      $floatHandler,
         private IntegerHandler    $integerHandler,
@@ -27,14 +28,14 @@ readonly class TypeHandler implements TypeHandlerInterface
     public function getBaseDefinition(Database $database, Field $field): string|null
     {
         return match ($field->type) {
-            Type::Text => $this->textHandler->handle($field),
             Type::Binary => $this->binaryHandler->handle($field),
-            Type::DateTime => $this->dateTimeHandler->handle(),
-            Type::Integer => $this->integerHandler->handle($field),
             Type::Boolean => $this->booleanHandler->handle(),
-            Type::Float => $this->floatHandler->handle(),
             Type::Collection => $this->collectionHandler->handle(),
-            Type::Date => $this->dateTimeHandler->handle(),
+            Type::Date => $this->dateHandler->handle(),
+            Type::DateTime => $this->dateTimeHandler->handle(),
+            Type::Float => $this->floatHandler->handle(),
+            Type::Integer => $this->integerHandler->handle($field),
+            Type::Text => $this->textHandler->handle($field),
         };
     }
 }

@@ -11,6 +11,7 @@ use Medas\EntityManager\Selector\OutputValues\{
     PropertyValue,
     SwitchCase
 };
+use Medas\PdoMysql\Exceptions\UnsupportedOutputValueType;
 
 #[Service]
 readonly class OutputValuesProcessor
@@ -44,7 +45,7 @@ readonly class OutputValuesProcessor
             ),
 
             $outputValue instanceof PropertyValue => $outputValue->name,
-            default => throw new \LogicException('Unsupported output value type'),
+            default => throw new UnsupportedOutputValueType($outputValue),
         };
 
         if ($outputValue->alias) {

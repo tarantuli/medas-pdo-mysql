@@ -25,8 +25,15 @@ readonly class MysqlHandler implements DriverHandler
     private TableCollection $tableCollection;
 
     public function __construct(
-        private DataControl\Escaper $escaper,
-        private ValueSerializer     $valueSerializer,
+        private DataControl\Escaper                                       $escaper,
+        private Queries\QueryBuilders                                     $queryBuilders,
+        private Queries\RecordFetchers                                    $recordFetchers,
+        private Structure\FieldToDefinitionConverter                      $fieldToDefinitionConverter,
+        private Structure\MigrationBuilder                                $migrationBuilder,
+        private Structure\TableStructureFinder                            $tableStructureFinder,
+        private Structure\TableStructureFinder\TableStructureStringFinder $tableStructureStringFinder,
+        private Types\TypeHandler                                         $typeHandler,
+        private ValueSerializer                                           $valueSerializer,
     )
     {
         $this->tableCollection = new TableCollection();
@@ -44,7 +51,7 @@ readonly class MysqlHandler implements DriverHandler
 
     public function quote(Database $database, string $identifier): string
     {
-        return '`' . $identifier . '`';
+        return '`' . str_replace('`', '``', $identifier) . '`';
     }
 
     public function escape(Database $database, mixed $value): string
@@ -59,26 +66,22 @@ readonly class MysqlHandler implements DriverHandler
 
     public function tableStructureFinder(): TableStructureFinderInterface
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(Structure\TableStructureFinder::class);
+        return $this->tableStructureFinder;
     }
 
     public function fieldHandler(): FieldHandler
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(Structure\FieldToDefinitionConverter::class);
+        return $this->fieldToDefinitionConverter;
     }
 
     public function migrationBuilder(): Structure\MigrationBuilder
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(Structure\MigrationBuilder::class);
+        return $this->migrationBuilder;
     }
 
     public function queryBuilders(): QueryBuildersInterface
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(Queries\QueryBuilders::class);
+        return $this->queryBuilders;
     }
 
     public function serializer(): Serializer
@@ -88,19 +91,16 @@ readonly class MysqlHandler implements DriverHandler
 
     public function typeHandler(): TypeHandlerInterface
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(Types\TypeHandler::class);
+        return $this->typeHandler;
     }
 
     public function recordFetchers(): RecordFetchersInterface
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(Queries\RecordFetchers::class);
+        return $this->recordFetchers;
     }
 
     public function tableStructureString(Table $table): string|null
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(Structure\TableStructureFinder\TableStructureStringFinder::class)->find($table);
+        return $this->tableStructureStringFinder->find($table);
     }
 }

@@ -13,8 +13,8 @@ use Medas\StorageManager\UnitOfWork\ActionSet;
 readonly class GetBuilder implements GetBuilderInterface
 {
     public function __construct(
-        public ConditionAppender    $conditionAppender,
-        public PdoStorageController $pdoStorageController,
+        private ConditionAppender    $conditionAppender,
+        private PdoStorageController $pdoStorageController,
     )
     {
     }

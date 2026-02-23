@@ -13,8 +13,8 @@ use Medas\StorageManager\UnitOfWork\{ActionSet, Priority};
 readonly class DeleteBuilder implements DeleteBuilderInterface
 {
     public function __construct(
-        public ConditionAppender    $conditionAppender,
-        public PdoStorageController $pdoStorageController,
+        private ConditionAppender    $conditionAppender,
+        private PdoStorageController $pdoStorageController,
     )
     {
     }

@@ -14,57 +14,62 @@ use Medas\StorageManager\Interfaces\Builders;
 #[Service]
 readonly class QueryBuilders implements QueryBuildersInterface
 {
+    public function __construct(
+        private CollectionUpdateBuilder $collectionUpdateBuilder,
+        private CreateStoreBuilder      $createStoreBuilder,
+        private DeleteBuilder           $deleteBuilder,
+        private DropTableBuilder        $dropTableBuilder,
+        private GetBuilder              $getBuilder,
+        private InsertBuilder           $insertBuilder,
+        private SelectorQueryBuilder    $selectorQueryBuilder,
+        private ShowTablesBuilder       $showTablesBuilder,
+        private UpdateBuilder           $updateBuilder,
+    )
+    {
+    }
+
     public function createStore(): Builders\CreateStoreBuilder
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(CreateStoreBuilder::class);
+        return $this->createStoreBuilder;
     }
 
     public function deleteStore(): Builders\DeleteStoreBuilder
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(DropTableBuilder::class);
+        return $this->dropTableBuilder;
     }
 
     public function selectorAction(): Builders\SelectorActionBuilder
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(SelectorQueryBuilder::class);
+        return $this->selectorQueryBuilder;
     }
 
     public function insert(): Builders\InsertBuilder
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(InsertBuilder::class);
+        return $this->insertBuilder;
     }
 
     public function get(): Builders\GetBuilder
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(GetBuilder::class);
+        return $this->getBuilder;
     }
 
     public function update(): Builders\UpdateBuilder
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(UpdateBuilder::class);
+        return $this->updateBuilder;
     }
 
     public function delete(): Builders\DeleteBuilder
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(DeleteBuilder::class);
+        return $this->deleteBuilder;
     }
 
     public function collectionUpdate(): Builders\CollectionUpdateBuilder
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(CollectionUpdateBuilder::class);
+        return $this->collectionUpdateBuilder;
     }
 
     public function showTables(): ShowTablesBuilder
     {
-        // Don't use injection, so it's only initialized when needed
-        return service(ShowTablesBuilder::class);
+        return $this->showTablesBuilder;
     }
 }

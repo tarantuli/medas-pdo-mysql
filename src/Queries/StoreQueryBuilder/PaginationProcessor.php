@@ -6,6 +6,7 @@ namespace Medas\PdoMysql\Queries\StoreQueryBuilder;
 
 use Medas\Core\Attributes\Service;
 use Medas\EntityManager\Selector\Pagination;
+use Medas\PdoMysql\Exceptions\InvalidPaginationPage;
 
 #[Service]
 readonly class PaginationProcessor
@@ -14,6 +15,10 @@ readonly class PaginationProcessor
     {
         if ($pagination === null) {
             return;
+        }
+
+        if ($pagination->page <= 0) {
+            throw new InvalidPaginationPage($pagination->page);
         }
 
         $limit = $pagination->perPage;

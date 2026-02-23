@@ -12,7 +12,7 @@ use Medas\PdoStorage\{Database, PdoStorageController};
 readonly class ConditionAppender
 {
     public function __construct(
-        public PdoStorageController $pdoStorageController,
+        private PdoStorageController $pdoStorageController,
     )
     {
     }
@@ -46,7 +46,7 @@ readonly class ConditionAppender
             }
             elseif ($value instanceof Between) {
                 $query .= $driverHandler->quote($database, $value->field)
-                    . 'between ? and ? '
+                    . ' between ? and ? '
                     . $separator
                     . ' ';
 
@@ -54,7 +54,7 @@ readonly class ConditionAppender
                 $arguments[] = $value->upperValue;
             }
             else {
-                if ($value === null && $separator === 'and') {
+                if ($value === null) {
                     $query .= $driverHandler->quote($database, $field)
                         . ' is null '
                         . $separator

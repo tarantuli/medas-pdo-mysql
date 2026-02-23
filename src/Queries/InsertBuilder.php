@@ -13,7 +13,7 @@ use Medas\StorageManager\UnitOfWork\{ActionSet, Priority};
 readonly class InsertBuilder implements InsertBuilderInterface
 {
     public function __construct(
-        public PdoStorageController $pdoStorageController,
+        private PdoStorageController $pdoStorageController,
     )
     {
     }

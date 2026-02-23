@@ -155,7 +155,7 @@ readonly class CreateTableBuilder
         }
     }
 
-    protected function processCollections(TableBuilders\Job $job): void
+    private function processCollections(TableBuilders\Job $job): void
     {
         if (!$job->collections) {
             return;

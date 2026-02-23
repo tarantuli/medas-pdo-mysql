@@ -13,9 +13,9 @@ use Medas\StorageManager\UnitOfWork\{ActionSet, Priority};
 readonly class UpdateBuilder implements UpdateBuilderInterface
 {
     public function __construct(
-        public ConditionAppender    $conditionAppender,
-        public FieldAppender        $fieldAppender,
-        public PdoStorageController $pdoStorageController,
+        private ConditionAppender    $conditionAppender,
+        private FieldAppender        $fieldAppender,
+        private PdoStorageController $pdoStorageController,
     )
     {
     }

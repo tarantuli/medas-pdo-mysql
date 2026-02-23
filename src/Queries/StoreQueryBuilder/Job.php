@@ -8,8 +8,8 @@ use Medas\PdoStorage\{Database, Drivers\DriverHandler};
 
 class Job
 {
-    public string $query;
-    public array $stores;
+    public string $query = '';
+    public array $stores = [];
     public array $outputValues = [];
     public array $foundArguments = [];
     public array $foundConstants = [];
