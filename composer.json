@@ -29,7 +29,11 @@
   },
   "autoload": {
     "psr-4": {
-      "Medas\\PdoMysql\\": "src/",
+      "Medas\\PdoMysql\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
       "Medas\\PdoMysqlTest\\": "tests/"
     }
   }

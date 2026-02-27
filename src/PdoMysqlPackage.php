@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql;
 
-use Medas\Core\AsSingleton;
+use Medas\Core\{AsSingleton, BasePackage, Interfaces\ServiceConfig};
 use Medas\PdoStorage\{Drivers\DriverHandlerManager, PdoStoragePackage};
-use Medas\ServiceManager\{BasePackage, ServiceConfig};
 
 class PdoMysqlPackage extends BasePackage
 {
