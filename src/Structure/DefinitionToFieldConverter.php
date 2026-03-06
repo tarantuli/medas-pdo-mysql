@@ -25,29 +25,30 @@ readonly class DefinitionToFieldConverter
         $isModificationTimestamp = false;
 
         // Strip collation
-        $remainder->regexReplace('/ collate \w+/i', '');
+        $remainder = $remainder->regexReplace('/ collate \w+/i', '');
 
         // Strip comment
-        $remainder->regexReplace('/ comment \'.+?\'/i', '');
+        $remainder = $remainder->regexReplace('/ comment \'.+?\'/i', '');
 
-        if ($remainder->chopFromEnd(' auto_increment')) {
+        if ($remainder->endsWith(' auto_increment')) {
+            $remainder = $remainder->chopFromEnd(' auto_increment');
             $isNullable = false;
             $isGenerated = true;
         }
 
-        if ($remainder->chopFromEnd(self::CREATION_TIMESTAMP_DEFINITION)) {
+        if ($remainder->endsWith(self::CREATION_TIMESTAMP_DEFINITION)) {
+            $remainder = $remainder->chopFromEnd(self::CREATION_TIMESTAMP_DEFINITION);
             $isCreationTimestamp = true;
         }
 
-        if ($remainder->chopFromEnd(self::MODIFICATION_TIMESTAMP_DEFINITION)) {
+        if ($remainder->endsWith(self::MODIFICATION_TIMESTAMP_DEFINITION)) {
+            $remainder = $remainder->chopFromEnd(self::MODIFICATION_TIMESTAMP_DEFINITION);
             $isModificationTimestamp = true;
         }
 
         if ($match = $remainder->regexMatch('/ default (.+)$/i')) {
             $hasDefault = true;
-
-            $remainder->chopFromEnd($match[0]);
-
+            $remainder = $remainder->chopFromEnd($match[0]);
             $default = $this->parseString($match[1]);
 
             if ($default === null) {
@@ -55,7 +56,8 @@ readonly class DefinitionToFieldConverter
             }
         }
 
-        if ($remainder->chopFromEnd(' not null')) {
+        if ($remainder->endsWith(' not null')) {
+            $remainder = $remainder->chopFromEnd(' not null');
             $isNullable = false;
         }
 
