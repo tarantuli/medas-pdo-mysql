@@ -13,6 +13,7 @@ use Medas\PdoStorage\Drivers\{
     Interfaces\TableStructureFinder as TableStructureFinderInterface,
     Interfaces\TypeHandler as TypeHandlerInterface
 };
+use Medas\PdoStorage\Exceptions\ExceptionType;
 use Medas\PdoStorage\Table;
 use Medas\StorageManager\{
     Interfaces\RecordFetchers as RecordFetchersInterface,
@@ -102,5 +103,20 @@ readonly class MysqlHandler implements DriverHandler
     public function tableStructureString(Table $table): string|null
     {
         return $this->tableStructureStringFinder->find($table);
+    }
+
+    public function exceptionTypeFinder(\Exception|\Error $e): ExceptionType
+    {
+        // PDOException carries driver-specific error info in errorInfo[1] (MySQL errno)
+        $errno = $e instanceof \PDOException ? ($e->errorInfo[1] ?? null) : null;
+
+        return match ($errno) {
+            1062 => ExceptionType::DuplicateKey,
+            1216, 1217, 1452 => ExceptionType::ForeignKeyViolation,
+            1213 => ExceptionType::DeadlockDetected,
+            1205 => ExceptionType::LockWaitTimeout,
+            2006, 2013 => ExceptionType::ConnectionLost,
+            default => ExceptionType::Unknown,
+        };
     }
 }
