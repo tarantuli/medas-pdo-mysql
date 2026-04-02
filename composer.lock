@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10de952ca16cedc0f77fe247ac30900a",
+    "content-hash": "d009e5be872c49eee02748a138700cc7",
     "packages": [
         {
             "name": "morphp/medas-cache",
@@ -471,16 +471,16 @@
         },
         {
             "name": "morphp/medas-pdo-storage",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tarantuli/medas-pdo-storage.git",
-                "reference": "bd11b688eeef19a60f51ba5c21ead24bbef284ac"
+                "reference": "c254779e083d71fd6a9a5e9a470109c89162368e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/bd11b688eeef19a60f51ba5c21ead24bbef284ac",
-                "reference": "bd11b688eeef19a60f51ba5c21ead24bbef284ac",
+                "url": "https://api.github.com/repos/tarantuli/medas-pdo-storage/zipball/c254779e083d71fd6a9a5e9a470109c89162368e",
+                "reference": "c254779e083d71fd6a9a5e9a470109c89162368e",
                 "shasum": ""
             },
             "require": {
@@ -519,10 +519,10 @@
                 "storage"
             ],
             "support": {
-                "source": "https://github.com/tarantuli/medas-pdo-storage/tree/v3.0.4",
+                "source": "https://github.com/tarantuli/medas-pdo-storage/tree/v3.0.5",
                 "issues": "https://github.com/tarantuli/medas-pdo-storage/issues"
             },
-            "time": "2026-04-02T08:12:53+00:00"
+            "time": "2026-04-02T08:16:53+00:00"
         },
         {
             "name": "morphp/medas-php-class-analysis",
@@ -3545,6 +3545,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
+        "ext-pdo": "*",
         "php": "^8.4"
     },
     "platform-dev": {},

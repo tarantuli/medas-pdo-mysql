@@ -8,12 +8,12 @@ use Medas\Core\{Attributes\Service, Interfaces\Serializer};
 use Medas\PdoStorage\Database;
 use Medas\PdoStorage\Drivers\{
     DriverHandler,
+    Interfaces\ExceptionTypeFinder,
     Interfaces\FieldHandler,
     Interfaces\QueryBuilders as QueryBuildersInterface,
     Interfaces\TableStructureFinder as TableStructureFinderInterface,
     Interfaces\TypeHandler as TypeHandlerInterface
 };
-use Medas\PdoStorage\Exceptions\ExceptionType;
 use Medas\PdoStorage\Table;
 use Medas\StorageManager\{
     Interfaces\RecordFetchers as RecordFetchersInterface,
@@ -27,6 +27,7 @@ readonly class MysqlHandler implements DriverHandler
 
     public function __construct(
         private DataControl\Escaper                                       $escaper,
+        private Exceptions\TypeFinder                                     $typeFinder,
         private Queries\QueryBuilders                                     $queryBuilders,
         private Queries\RecordFetchers                                    $recordFetchers,
         private Structure\FieldToDefinitionConverter                      $fieldToDefinitionConverter,
@@ -105,18 +106,8 @@ readonly class MysqlHandler implements DriverHandler
         return $this->tableStructureStringFinder->find($table);
     }
 
-    public function exceptionTypeFinder(\Exception|\Error $e): ExceptionType
+    public function exceptionTypeFinder(): ExceptionTypeFinder
     {
-        // PDOException carries driver-specific error info in errorInfo[1] (MySQL errno)
-        $errno = $e instanceof \PDOException ? ($e->errorInfo[1] ?? null) : null;
-
-        return match ($errno) {
-            1062 => ExceptionType::DuplicateKey,
-            1216, 1217, 1452 => ExceptionType::ForeignKeyViolation,
-            1213 => ExceptionType::DeadlockDetected,
-            1205 => ExceptionType::LockWaitTimeout,
-            2006, 2013 => ExceptionType::ConnectionLost,
-            default => ExceptionType::Unknown,
-        };
+        return $this->typeFinder;
     }
 }
