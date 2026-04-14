@@ -4,18 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Exceptions;
 
-use Medas\Core\Exceptions\BaseException;
-use Medas\EntityManager\Selector\OutputValues\OutputValue;
+use Medas\PdoStorage\Exceptions\UnsupportedOutputValueType as ExcepUnsupportedOutputValueType;
 
-class UnsupportedOutputValueType extends BaseException
+#[\Deprecated("use the class from pdo-storage instead")]
+class UnsupportedOutputValueType extends ExcepUnsupportedOutputValueType
 {
-    public function __construct(OutputValue $value)
-    {
-        parent::__construct($value::class);
-    }
-
-    public function pattern(): string
-    {
-        return 'Unsupported output value type %s';
-    }
 }

@@ -4,32 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Queries;
 
-use Medas\Core\Attributes\Service;
-use Medas\EntityManager\Selector\Definition;
-use Medas\PdoStorage\Queries\QuerySet;
-use Medas\StorageManager\Interfaces\Store;
+use Medas\PdoStorage\Queries\Builders\DefinitionQueryBuilder as BuildDefinitionQueryBuilder;
 
-#[Service]
-readonly class DefinitionQueryBuilder
+#[\Deprecated("use the class from pdo-storage instead")]
+readonly class DefinitionQueryBuilder extends BuildDefinitionQueryBuilder
 {
-    public function __construct(
-        private ParameterizedQueryToQuery $parameterizedQueryToQuery,
-        private StoreQueryBuilder         $storeQueryBuilder,
-    )
-    {
-    }
-
-    public function build(Store $store, array $elements, array $arguments): QuerySet
-    {
-        $definition = new Definition('')
-            ->add(...$elements);
-
-        $paraQuery = $this->storeQueryBuilder->buildQuery(
-            $store->storage(),
-            $definition,
-            $store->name()
-        );
-
-        return new QuerySet([$this->parameterizedQueryToQuery->compile($paraQuery, $arguments)]);
-    }
 }

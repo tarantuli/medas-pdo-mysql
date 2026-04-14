@@ -4,30 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Queries\StoreQueryBuilder;
 
-use Medas\Core\Attributes\Service;
-use Medas\EntityManager\Selector\Grouping\GroupBy;
+use Medas\PdoStorage\Queries\Builders\StoreQueryBuilder\GroupingProcessor as StoreGroupingProcessor;
 
-#[Service]
-readonly class GroupingProcessor
+#[\Deprecated("use the class from pdo-storage instead")]
+readonly class GroupingProcessor extends StoreGroupingProcessor
 {
-    /** @param GroupBy[] $groupings */
-    public function process(Job $job, array $groupings): void
-    {
-        $parts = [];
-
-        foreach ($groupings as $grouping) {
-            if (in_array($grouping->property->name, $job->aliases, true)) {
-                $parts[] = $job->driverHandler->quote($job->database, $grouping->property->name);
-            }
-            else {
-                $parts[] = $job->stores[$sort->operant->entity ?? $job->mainEntity]
-                    . '.'
-                    . $job->driverHandler->quote($job->database, $grouping->property->name);
-            }
-        }
-
-        if ($parts) {
-            $job->query .= ' group by ' . implode(', ', $parts);
-        }
-    }
 }

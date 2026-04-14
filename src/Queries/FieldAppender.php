@@ -4,27 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Queries;
 
-use Medas\Core\Attributes\Service;
-use Medas\PdoStorage\{Database, PdoStorageController};
+use Medas\PdoStorage\Queries\Builders\FieldAppender as BuildFieldAppender;
 
-#[Service]
-readonly class FieldAppender
+#[\Deprecated("use the class from pdo-storage instead")]
+readonly class FieldAppender extends BuildFieldAppender
 {
-    public function __construct(
-        private PdoStorageController $pdoStorageController,
-    )
-    {
-    }
-
-    public function append(Database $database, string &$query, array &$arguments, array $fields): void
-    {
-        $driverHandler = $this->pdoStorageController->getDatabaseController($database)->driverHandler;
-
-        foreach ($fields as $field => $value) {
-            $query .= $driverHandler->quote($database, $field) . ' = ?, ';
-            $arguments[] = $value;
-        }
-
-        $query = substr($query, 0, -2);
-    }
 }

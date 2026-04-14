@@ -4,21 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Queries\StoreQueryBuilder;
 
-use Medas\Core\Attributes\Service;
-use Medas\EntityManager\Selector\{Exceptions\UndeclaredParameters, Parameter};
+use Medas\PdoStorage\Queries\Builders\StoreQueryBuilder\ParametersProcessor as StoreParametersProcessor;
 
-#[Service]
-readonly class ParametersProcessor
+#[\Deprecated("use the class from pdo-storage instead")]
+readonly class ParametersProcessor extends StoreParametersProcessor
 {
-    /** @param Parameter[] $parameters */
-    public function process(Job $job, array $parameters): void
-    {
-        foreach ($parameters as $parameter) {
-            unset($job->foundArguments[$parameter->name]);
-        }
-
-        if ($job->foundArguments) {
-            throw new UndeclaredParameters(array_keys($job->foundArguments));
-        }
-    }
 }

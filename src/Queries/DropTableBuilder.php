@@ -4,29 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Queries;
 
-use Medas\Core\Attributes\Service;
-use Medas\PdoStorage\{PdoStorageController, Queries\Query, Queries\QuerySet};
-use Medas\StorageManager\Interfaces\{Builders\DeleteStoreBuilder, Store};
-use Medas\StorageManager\UnitOfWork\ActionSet;
+use Medas\PdoStorage\Queries\Builders\DropTableBuilder as BuildDropTableBuilder;
 
-#[Service]
-readonly class DropTableBuilder implements DeleteStoreBuilder
+#[\Deprecated("use the class from pdo-storage instead")]
+readonly class DropTableBuilder extends BuildDropTableBuilder
 {
-    public function __construct(
-        private PdoStorageController $pdoStorageController,
-    )
-    {
-    }
-
-    public function build(Store $store): ActionSet
-    {
-        $query = new Query(
-            'drop table if exists '
-                . $this->pdoStorageController->quote($store->storage(), $store->name()),
-            [],
-            $store->storage()
-        );
-
-        return QuerySet::fromQuery($query);
-    }
 }

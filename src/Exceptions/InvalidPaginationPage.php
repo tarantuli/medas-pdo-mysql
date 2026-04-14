@@ -4,17 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql\Exceptions;
 
-use Medas\Core\Exceptions\BaseException;
+use Medas\PdoStorage\Exceptions\InvalidPaginationPage as ExcepInvalidPaginationPage;
 
-class InvalidPaginationPage extends BaseException
+#[\Deprecated("use the class from pdo-storage instead")]
+class InvalidPaginationPage extends ExcepInvalidPaginationPage
 {
-    public function __construct(int $page)
-    {
-        parent::__construct($page);
-    }
-
-    public function pattern(): string
-    {
-        return 'Invalid pagination page: %s';
-    }
 }

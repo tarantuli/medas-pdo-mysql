@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\Attributes\Service;
+use Medas\PdoStorage\Queries\Builders as PdoStorageBuilders;
 use Medas\StorageManager\Interfaces\{Fetchers, RecordFetchers as RecordFetchersInterface};
 
 #[Service]
 readonly class RecordFetchers implements RecordFetchersInterface
 {
     public function __construct(
-        private CollectionRecordFetcher $collectionRecordFetcher,
-        private FilteredFetcher         $filteredFetcher,
+        private PdoStorageBuilders\CollectionRecordFetcher $collectionRecordFetcher,
+        private PdoStorageBuilders\FilteredFetcher         $filteredFetcher,
     )
     {
     }

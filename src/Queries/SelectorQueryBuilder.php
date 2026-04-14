@@ -9,6 +9,7 @@ use Medas\EntityManager\{MetaDataManager, Selector\Selector};
 use Medas\PdoStorage\{
     Database,
     Exceptions\StorageIsNotDatabase,
+    Queries\Builders as PdoStorageBuilders,
     Queries\ParameterizedQuery,
     Queries\QuerySet
 };
@@ -20,10 +21,10 @@ use Medas\StorageManager\UnitOfWork\ActionSet;
 readonly class SelectorQueryBuilder implements SelectorActionBuilder
 {
     public function __construct(
-        private MetaDataManager           $metaDataManager,
-        private ParameterizedQueryToQuery $parameterizedQueryToQuery,
-        private StorageManager            $storageManager,
-        private StoreQueryBuilder         $storeQueryBuilder,
+        private MetaDataManager                              $metaDataManager,
+        private PdoStorageBuilders\ParameterizedQueryToQuery $parameterizedQueryToQuery,
+        private PdoStorageBuilders\StoreQueryBuilder         $storeQueryBuilder,
+        private StorageManager                               $storageManager,
     )
     {
     }

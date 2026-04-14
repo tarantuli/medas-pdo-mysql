@@ -9,21 +9,22 @@ use Medas\PdoStorage\Drivers\Interfaces\{
     QueryBuilders as QueryBuildersInterface,
     ShowTablesBuilder
 };
+use Medas\PdoStorage\Queries\Builders as PdoStorageBuilders;
 use Medas\StorageManager\Interfaces\Builders;
 
 #[Service]
 readonly class QueryBuilders implements QueryBuildersInterface
 {
     public function __construct(
-        private CollectionUpdateBuilder $collectionUpdateBuilder,
-        private CreateStoreBuilder      $createStoreBuilder,
-        private DeleteBuilder           $deleteBuilder,
-        private DropTableBuilder        $dropTableBuilder,
-        private GetBuilder              $getBuilder,
-        private InsertBuilder           $insertBuilder,
-        private SelectorQueryBuilder    $selectorQueryBuilder,
-        private ShowTablesBuilder       $showTablesBuilder,
-        private UpdateBuilder           $updateBuilder,
+        private CreateStoreBuilder                         $createStoreBuilder,
+        private PdoStorageBuilders\CollectionUpdateBuilder $collectionUpdateBuilder,
+        private PdoStorageBuilders\DeleteBuilder           $deleteBuilder,
+        private PdoStorageBuilders\DropTableBuilder        $dropTableBuilder,
+        private PdoStorageBuilders\GetBuilder              $getBuilder,
+        private PdoStorageBuilders\InsertBuilder           $insertBuilder,
+        private PdoStorageBuilders\UpdateBuilder           $updateBuilder,
+        private SelectorQueryBuilder                       $selectorQueryBuilder,
+        private ShowTablesBuilder                          $showTablesBuilder,
     )
     {
     }
