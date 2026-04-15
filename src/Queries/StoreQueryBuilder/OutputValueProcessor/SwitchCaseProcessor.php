@@ -6,7 +6,7 @@ namespace Medas\PdoMysql\Queries\StoreQueryBuilder\OutputValueProcessor;
 
 use Medas\PdoStorage\Queries\Builders\StoreQueryBuilder\OutputValueProcessor\SwitchCaseProcessor as OutpuSwitchCaseProcessor;
 
-#[\Deprecated("use the class from pdo-storage instead")]
+/** @deprecated Use the class from pdo-storage instead */
 readonly class SwitchCaseProcessor extends OutpuSwitchCaseProcessor
 {
 }

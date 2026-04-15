@@ -6,7 +6,7 @@ namespace Medas\PdoMysql\Exceptions;
 
 use Medas\PdoStorage\Exceptions\InvalidPaginationPage as ExcepInvalidPaginationPage;
 
-#[\Deprecated("use the class from pdo-storage instead")]
+/** @deprecated Use the class from pdo-storage instead */
 class InvalidPaginationPage extends ExcepInvalidPaginationPage
 {
 }

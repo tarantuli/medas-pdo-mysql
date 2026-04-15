@@ -6,7 +6,7 @@ namespace Medas\PdoMysql\Exceptions;
 
 use Medas\PdoStorage\Exceptions\UntrustedValueUsedInSorting as ExcepUntrustedValueUsedInSorting;
 
-#[\Deprecated("use the class from pdo-storage instead")]
+/** @deprecated Use the class from pdo-storage instead */
 class UntrustedValueUsedInSorting extends ExcepUntrustedValueUsedInSorting
 {
 }

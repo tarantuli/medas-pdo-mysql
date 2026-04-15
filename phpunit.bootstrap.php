@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 use Medas\ConfigManager\ConfigManager;
 use Medas\ConfigManager\ConfigManagerPackage;
+use Medas\ConfigOptions\ConfigOptionsPackage;
 use Medas\Events\EventsPackage;
+use Medas\ObjectInstantiator\ObjectInstantiator;
 use Medas\PdoMysql\PdoMysqlPackage;
 use Medas\PdoStorage\Database;
 use Medas\RamseyUuidBridge\RamseyUuidBridgePackage;
@@ -17,10 +19,11 @@ chdir(__DIR__);
 require 'vendor/autoload.php';
 
 new ServiceManager(function (): ServiceConfig {
-    $config = new ServiceConfig();
+    $config = new ServiceConfig(ObjectInstantiator::class);
 
     $config->addPackages([
         ConfigManagerPackage::instance(),
+        ConfigOptionsPackage::instance(),
         EventsPackage::instance(),
         PdoMysqlPackage::instance(),
         RamseyUuidBridgePackage::instance(),

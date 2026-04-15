@@ -6,7 +6,7 @@ namespace Medas\PdoMysql\Queries;
 
 use Medas\PdoStorage\Queries\Builders\FilteredFetcher as BuildFilteredFetcher;
 
-#[\Deprecated("use the class from pdo-storage instead")]
+/** @deprecated Use the class from pdo-storage instead */
 readonly class FilteredFetcher extends BuildFilteredFetcher
 {
 }

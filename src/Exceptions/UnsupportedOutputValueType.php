@@ -6,7 +6,7 @@ namespace Medas\PdoMysql\Exceptions;
 
 use Medas\PdoStorage\Exceptions\UnsupportedOutputValueType as ExcepUnsupportedOutputValueType;
 
-#[\Deprecated("use the class from pdo-storage instead")]
+/** @deprecated Use the class from pdo-storage instead */
 class UnsupportedOutputValueType extends ExcepUnsupportedOutputValueType
 {
 }

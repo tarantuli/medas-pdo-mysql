@@ -6,7 +6,7 @@ namespace Medas\PdoMysql\Queries\StoreQueryBuilder;
 
 use Medas\PdoStorage\Queries\Builders\StoreQueryBuilder\RelationsProcessor as StoreRelationsProcessor;
 
-#[\Deprecated("use the class from pdo-storage instead")]
+/** @deprecated Use the class from pdo-storage instead */
 readonly class RelationsProcessor extends StoreRelationsProcessor
 {
 }

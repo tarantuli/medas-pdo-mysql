@@ -6,7 +6,7 @@ namespace Medas\PdoMysql\Queries\StoreQueryBuilder;
 
 use Medas\PdoStorage\Queries\Builders\StoreQueryBuilder\PaginationProcessor as StorePaginationProcessor;
 
-#[\Deprecated("use the class from pdo-storage instead")]
+/** @deprecated Use the class from pdo-storage instead */
 readonly class PaginationProcessor extends StorePaginationProcessor
 {
 }
