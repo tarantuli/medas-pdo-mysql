@@ -137,8 +137,8 @@ readonly class TableStructureFinder implements TableStructureFinderInterface
                 $match['field'],
                 $match['table'],
                 $match['reference'],
-                isset($match['onDelete']) ? $this->getAction($match['onDelete']) : Action::NoAction,
-                isset($match['onUpdate']) ? $this->getAction($match['onUpdate']) : Action::NoAction,
+                $match['onDelete'] !== '' ? $this->getAction($match['onDelete']) : Action::Restrict,
+                $match['onUpdate'] !== '' ? $this->getAction($match['onUpdate']) : Action::Restrict,
             );
 
             $job->blueprint->fieldByName($foreignKey->field)->isIndex = false;
