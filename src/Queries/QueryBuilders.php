@@ -6,6 +6,7 @@ namespace Medas\PdoMysql\Queries;
 
 use Medas\Core\Attributes\Service;
 use Medas\PdoStorage\Drivers\Interfaces\{
+    DeleteStoreBuilder as DeleteStoreBuilderInterface,
     QueryBuilders as QueryBuildersInterface,
     ShowTablesBuilder
 };
@@ -16,7 +17,6 @@ use Medas\StorageManager\Interfaces\Builders;
 readonly class QueryBuilders implements QueryBuildersInterface
 {
     public function __construct(
-        private CreateStoreBuilder                         $createStoreBuilder,
         private PdoStorageBuilders\CollectionUpdateBuilder $collectionUpdateBuilder,
         private PdoStorageBuilders\DeleteBuilder           $deleteBuilder,
         private PdoStorageBuilders\DropTableBuilder        $dropTableBuilder,
@@ -29,12 +29,7 @@ readonly class QueryBuilders implements QueryBuildersInterface
     {
     }
 
-    public function createStore(): Builders\CreateStoreBuilder
-    {
-        return $this->createStoreBuilder;
-    }
-
-    public function deleteStore(): Builders\DeleteStoreBuilder
+    public function deleteStore(): DeleteStoreBuilderInterface
     {
         return $this->dropTableBuilder;
     }
