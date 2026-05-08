@@ -10,7 +10,7 @@ use Medas\PdoStorage\Drivers\Interfaces\{
     QueryBuilders as QueryBuildersInterface,
     ShowTablesBuilder
 };
-use Medas\PdoStorage\Queries\Builders as PdoStorageBuilders;
+use Medas\PdoStorage\Queries\{Builders as PdoStorageBuilders, Builders\SelectorQueryBuilder};
 use Medas\StorageManager\Interfaces\Builders;
 
 #[Service]

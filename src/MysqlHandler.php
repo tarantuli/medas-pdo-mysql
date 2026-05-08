@@ -6,11 +6,10 @@ namespace Medas\PdoMysql;
 
 use Medas\Core\{Attributes\Service, Interfaces\Serializer};
 use Medas\PdoStorage\Database;
-use Medas\PdoStorage\Drivers\{
-    DriverHandler,
+use Medas\PdoStorage\Drivers\{DriverHandler,
     Interfaces\ExceptionTypeFinder,
-    Interfaces\QueryBuilders as QueryBuildersInterface,
-};
+    Interfaces\QueryBuilders as QueryBuildersInterface,};
+use Medas\PdoStorage\Queries\Builders\RecordFetchers;
 use Medas\PdoStorage\Table;
 use Medas\StorageManager\Interfaces\RecordFetchers as RecordFetchersInterface;
 use Medas\StorageManager\Shared\ValueSerializer;
@@ -21,11 +20,11 @@ readonly class MysqlHandler implements DriverHandler
     private TableCollection $tableCollection;
 
     public function __construct(
-        private DataControl\Escaper    $escaper,
-        private Exceptions\TypeFinder  $typeFinder,
-        private Queries\QueryBuilders  $queryBuilders,
-        private Queries\RecordFetchers $recordFetchers,
-        private ValueSerializer        $valueSerializer,
+        private ValueEscaper                        $valueEscaper,
+        private \Medas\PdoMysql\ExceptionTypeFinder $exceptionTypeFinder,
+        private Queries\QueryBuilders               $queryBuilders,
+        private RecordFetchers                      $recordFetchers,
+        private ValueSerializer                     $valueSerializer,
     )
     {
         $this->tableCollection = new TableCollection();
@@ -48,7 +47,7 @@ readonly class MysqlHandler implements DriverHandler
 
     public function escape(Database $database, mixed $value): string
     {
-        return $this->escaper->escape($database, $value);
+        return $this->valueEscaper->escape($database, $value);
     }
 
     public function table(Database $database, string $name): Table
@@ -73,6 +72,6 @@ readonly class MysqlHandler implements DriverHandler
 
     public function exceptionTypeFinder(): ExceptionTypeFinder
     {
-        return $this->typeFinder;
+        return $this->exceptionTypeFinder;
     }
 }

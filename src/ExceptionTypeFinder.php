@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Medas\PdoMysql\Exceptions;
+namespace Medas\PdoMysql;
 
 use Medas\Core\{Attributes\Service, Exceptions\StorageExceptionType};
-use Medas\PdoStorage\Drivers\Interfaces\ExceptionTypeFinder;
+use Medas\PdoStorage\Drivers\Interfaces\ExceptionTypeFinder as ExceptionTypeFinderInterface;
 
 #[Service]
-readonly class TypeFinder implements ExceptionTypeFinder
+readonly class ExceptionTypeFinder implements ExceptionTypeFinderInterface
 {
     public function find(\Exception|\Error $e): StorageExceptionType
     {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Medas\PdoMysql\DataControl;
+namespace Medas\PdoMysql;
 
 use Medas\Core\Attributes\Service;
 use Medas\PdoStorage\{Database, PdoStorageController};
 
 #[Service]
-readonly class Escaper
+readonly class ValueEscaper
 {
     public function __construct(
         private PdoStorageController $pdoStorageController,
