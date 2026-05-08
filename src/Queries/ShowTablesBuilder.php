@@ -24,10 +24,14 @@ readonly class ShowTablesBuilder implements ShowTablesBuilderInterface
         if ($name === null) {
             return QuerySet::fromQuery(new Query('show tables', [], $database));
         }
-        else {
-            $escapedName = $this->pdoStorageController->escape($database, $name);
 
-            return QuerySet::fromQuery(new Query('show tables like ' . $escapedName, [], $database));
-        }
+        $escaped = $this->pdoStorageController->escape($database, $this->escapeLike($name));
+
+        return QuerySet::fromQuery(new Query('show tables like ' . $escaped, [], $database));
+    }
+
+    private function escapeLike(string $value): string
+    {
+        return str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $value);
     }
 }

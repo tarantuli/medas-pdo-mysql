@@ -6,13 +6,13 @@ namespace Medas\PdoMysql;
 
 use Medas\Core\{Attributes\Service, Interfaces\Serializer};
 use Medas\PdoStorage\Database;
-use Medas\PdoStorage\Drivers\{DriverHandler,
-    Interfaces\ExceptionTypeFinder,
-    Interfaces\QueryBuilders as QueryBuildersInterface,};
+use Medas\PdoStorage\Drivers\{DriverHandler, Interfaces\QueryBuilders as QueryBuildersInterface};
 use Medas\PdoStorage\Queries\Builders\RecordFetchers;
 use Medas\PdoStorage\Table;
-use Medas\StorageManager\Interfaces\RecordFetchers as RecordFetchersInterface;
-use Medas\StorageManager\Shared\ValueSerializer;
+use Medas\StorageManager\{
+    Interfaces\RecordFetchers as RecordFetchersInterface,
+    Shared\ValueSerializer
+};
 
 #[Service]
 readonly class MysqlHandler implements DriverHandler
@@ -20,11 +20,11 @@ readonly class MysqlHandler implements DriverHandler
     private TableCollection $tableCollection;
 
     public function __construct(
-        private ValueEscaper                        $valueEscaper,
-        private \Medas\PdoMysql\ExceptionTypeFinder $exceptionTypeFinder,
-        private Queries\QueryBuilders               $queryBuilders,
-        private RecordFetchers                      $recordFetchers,
-        private ValueSerializer                     $valueSerializer,
+        private ExceptionTypeFinder   $exceptionTypeFinder,
+        private Queries\QueryBuilders $queryBuilders,
+        private RecordFetchers        $recordFetchers,
+        private ValueEscaper          $valueEscaper,
+        private ValueSerializer       $valueSerializer,
     )
     {
         $this->tableCollection = new TableCollection();
