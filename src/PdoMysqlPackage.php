@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\PdoMysql;
 
-use Medas\Core\{AsSingleton, BasePackage, Interfaces\ServiceConfig};
+use Medas\Core\{AsSingleton, BasePackage};
 use Medas\PdoStorage\{Drivers\DriverHandlerManager, PdoStoragePackage};
 
 class PdoMysqlPackage extends BasePackage
@@ -23,10 +23,8 @@ class PdoMysqlPackage extends BasePackage
         return __DIR__;
     }
 
-    public function initialize(ServiceConfig $config): void
+    public function ready(): void
     {
-        parent::initialize($config);
-
         service(DriverHandlerManager::class)->addHandler(service(MysqlHandler::class));
     }
 }
