@@ -25,6 +25,7 @@
     "morphp/medas-object-instantiator": "^3",
     "morphp/medas-ramsey-uuid-bridge": "^3",
     "morphp/medas-service-manager": "^3",
+    "morphp/medas-storage-manager-tests": "^3",
     "phpunit/phpunit": "^10"
   },
   "autoload": {

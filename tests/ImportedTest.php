@@ -10,7 +10,7 @@ use Medas\StorageManager\{
     Interfaces\Store,
     StorageManager
 };
-use Medas\StorageManagerTests\Functional\AllTests;
+use Medas\StorageManagerTests\Integration\AllTests;
 use PHPUnit\Framework\TestCase;
 
 class ImportedTest extends TestCase
