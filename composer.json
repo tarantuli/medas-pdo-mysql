@@ -14,7 +14,7 @@
   "require": {
     "ext-pdo": "*",
     "morphp/medas-core": "^4",
-    "morphp/medas-pdo-storage": "^4",
+    "morphp/medas-pdo-storage": "^4.3",
     "morphp/medas-storage-manager": "^4",
     "php": "^8.4"
   },

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Medas\PdoMysql;
 
 use Medas\Core\{AsSingleton, BasePackage};
-use Medas\PdoStorage\{Drivers\DriverHandlerManager, PdoStoragePackage};
+use Medas\PdoStorage\PdoStoragePackage;
 
 class PdoMysqlPackage extends BasePackage
 {
@@ -21,10 +21,5 @@ class PdoMysqlPackage extends BasePackage
     public function sourceDirectory(): string
     {
         return __DIR__;
-    }
-
-    public function ready(): void
-    {
-        service(DriverHandlerManager::class)->addHandler(service(MysqlHandler::class));
     }
 }
