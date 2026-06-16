@@ -5,17 +5,11 @@ declare(strict_types=1);
 namespace Medas\PdoMysql;
 
 use Medas\Core\Attributes\Service;
-use Medas\PdoStorage\{Database, PdoStorageController};
+use Medas\PdoStorage\{Database, Events\EscapeValueRequest};
 
 #[Service]
 readonly class ValueEscaper
 {
-    public function __construct(
-        private PdoStorageController $pdoStorageController,
-    )
-    {
-    }
-
     public function escape(Database $database, mixed $value): string
     {
         if (null === $value) {
@@ -30,6 +24,8 @@ readonly class ValueEscaper
             $value = (int) $value;
         }
 
-        return $this->pdoStorageController->getDatabaseController($database)->pdo->quote((string) $value);
+        $request = dispatch(new EscapeValueRequest($database, $value));
+
+        return $request->escapedValue;
     }
 }
