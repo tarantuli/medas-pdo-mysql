@@ -6,7 +6,9 @@ use Medas\ConfigManager\{ConfigManager, ConfigManagerPackage};
 use Medas\ConfigOptions\ConfigOptionsPackage;
 use Medas\Events\EventsPackage;
 use Medas\ObjectInstantiator\ObjectInstantiator;
+use Medas\ObjectInstantiator\ObjectInstantiatorPackage;
 use Medas\PdoMysql\PdoMysqlPackage;
+use Medas\PdoMysqlMigrationBuilder\PdoMysqlMigrationBuilderPackage;
 use Medas\PdoStorage\Database;
 use Medas\RamseyUuidBridge\RamseyUuidBridgePackage;
 use Medas\ServiceManager\{ServiceConfigBuilder, ServiceManager};
@@ -24,7 +26,9 @@ new ServiceManager(function (): ServiceConfigBuilder {
         ConfigManagerPackage::instance(),
         ConfigOptionsPackage::instance(),
         EventsPackage::instance(),
+        ObjectInstantiatorPackage::instance(),
         PdoMysqlPackage::instance(),
+        PdoMysqlMigrationBuilderPackage::instance(),
         RamseyUuidBridgePackage::instance(),
         StorageManagerTestsPackage::instance(),
     ]);

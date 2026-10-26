@@ -23,6 +23,7 @@
     "morphp/medas-config-options": "^3",
     "morphp/medas-events": "^3",
     "morphp/medas-object-instantiator": "^4",
+    "morphp/medas-pdo-mysql-migration-builder": "^1",
     "morphp/medas-ramsey-uuid-bridge": "^3",
     "morphp/medas-service-manager": "^4",
     "morphp/medas-storage-manager-tests": "^3",
